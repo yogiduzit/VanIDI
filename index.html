@@ -7,6 +7,8 @@
   <meta charset="utf-8">
   <!-- Load jQuery -->
   <script src="jquery-3.4.1.js"></script>
+  <script src ="JSONUtils.js"></script>
+  <script src ="/data/requests.js" type= "module"></script>
   <style>
     /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -130,18 +132,7 @@
             }
           ]
       });
-      let marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        title: 'point a'
-        
-      });
-      let marker2 = new google.maps.Marker({
-        position: myLatLngB,
-        map: map,
-        title: 'point b'
-        
-      });
+
 
     }
   </script>
@@ -156,15 +147,16 @@
 
 
 <script>
-connectBikeData();
+  let bikeData = connectBikeData().then( (data) =>{
+    addLinesToMap(data);
+
+  });
+
 async function connectBikeData(){
 
     let bikeCounts = await getAverageBikeData();
     let countsLocations = await getBikeLocations();
-
-    console.log(bikeCounts);
-    console.log(countsLocations);
-
+    //join data 
       for(c in bikeCounts){
         bikeCounts[c].lat = countsLocations[c].lat;
         bikeCounts[c].lng = countsLocations[c].lng;
@@ -172,12 +164,11 @@ async function connectBikeData(){
 
       }
 
-
-
-
-
+    return bikeCounts;
 
 }
+
+
 
 async function getAverageBikeData(){
 
@@ -258,37 +249,7 @@ async function getBikeLocations(){
 
 
 
-// distance is in metres (1000 is a km)
-// dir is the direction (west,east,north,south)
-// long is east (increases) or west (decreases more)
-// lat is north (increases) or south (decreases)
-function getOffsetLocation(lat, long, dir, distance){
 
-  let res = {};
-  const EARTH = 6378.137;
-  const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
-  cos = Math.cos;
-  let newLat = lat;
-  let newLong = long;
-
-  switch(dir){
-    case 'west':
-      newLong += (distance*M)/(cos(newLat * (Math.PI / 180)));
-      break;
-    case 'east':
-      newLong -= (distance*M)/cos(newLat * (Math.PI / 180));
-      break;
-    case 'north':
-      newLat += distance*M;
-      break;
-    default:
-      newLat -= distance*M;
-  }
-
-  res.lat = newLat;
-  res.lng = newLong;
-  return res;
-}
 
 // returns the distance from one point on a map to another. 
 function getDistanceFrom(coord1,coord2) {
@@ -309,3 +270,4 @@ function deg2rad(deg) {
   return deg * (Math.PI/180); 
 }
 </script>
+
