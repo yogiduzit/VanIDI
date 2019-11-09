@@ -13,7 +13,8 @@ function isCtrlDown(event){
             var rectangle = new google.maps.Rectangle({
                 bounds: bounds,
                 editable: true,
-                map: map
+                map: map,
+                draggable: true
             })
         });
     }
