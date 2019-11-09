@@ -1,136 +1,75 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
+<head>
+  <title>Simple Map</title>
+  <meta name="viewport" content="initial-scale=1.0">
+  <meta charset="utf-8">
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- CSS -->
-    <link rel="stylesheet" href="stylesheets/stylesheet.css">
 
-  </head>
+  <!-- Boostrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Custom -->
+  <link rel="stylesheet" href="stylesheets/stylesheet.css">
+</head>
 
-  <body>
+<body>
+    <div id="container-header" class="container-fluid text-center">
+    <!-- Branding/ Login Row -->
+    <div class="row my-2 align-middle">
+      <div class="col-2 text-left">Logo</div>
+      <div class="col-3 text-right ml-auto">
+        <button type="button" class="btn btn-primary">Login</button>
+      </div>
+    </div>
+    <!-- Input Row -->
+    <div class="row">
+      <div class="col-2">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Street Mode
+          </label>
+          <label class="btn btn-secondary">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Intersection Mode
+          </label>
+        </div>
+      </div>
+      <!-- Intersection Input Form -->
+      <div class="col-5 text-left mr-auto">
+        <div class="input-group align-middle">
+          <span class="mx-2">Intersection of</span>
+          <input type="text" class="form-control" name="intersection-street1">
+          <span class="mx-2">and</span>
+          <input type="text" class="form-control" name="intersection-street2">
+          <span class="mx-2">km Radius: </span>
+          <input type="number" class="form-control" name="intersection-radius" min="0">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary text-white" type="button">Submit</button>
+          </div>
+        </div>
+      </div>
+      <div id="col-filter-dropout" class="col-2 ml-auto">Filter panel</div>
+    </div>
+    <div id="row-map" class="row">
+          <div id="map" onmousedown="isCtrlDown(event)"></div>
+    </div>
+  </div>
 
-    <div id="map"></div>
-    <!-- Load jQuery -->
-    <script src="js/jquery-3.4.1.js"></script>
-    <!-- Boostrap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <!-- Requests -->
-    <script src="js/data/requests.js" type="module"></script>
-    
-    <script src="js/JSONUtils.js"></script>
 
-    <!-- JS for Map -->
-    <script>
-      var map;
-      function initMap()  {
-        map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 49.2827, lng: -123.1207 },
-        zoom: 15,
+  <!-- Load jQuery -->
+  <script src="js/jquery-3.4.1.js"></script>
+  <!-- Bootstrap js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <!-- Requests -->
+  <script src="data/requests.js" type="module"></script>
+  <!-- JS for Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
+  async defer></script>
+  <script src="js/map.js"></script>
+  <!-- Cropper JS -->
+  <script src="js/cropper.js"></script>
 
-        styles:
-        [
-        {
-            "featureType": "administrative",
-            "elementType": "labels.text.fill",
-            "stylers": [
-            {
-                "color": "#444444"
-            }
-            ]
-        },
-        {
-            "featureType": "landscape",
-            "elementType": "all",
-            "stylers": [
-            {
-                "color": "#f2f2f2"
-            }
-            ]
-        },
-        {
-            "featureType": "landscape",
-            "elementType": "labels.text",
-            "stylers": [
-            {
-                "visibility": "on"
-            },
-            {
-                "hue": "#ff0000"
-            }
-            ]
-        },
-        {
-            "featureType": "poi",
-            "elementType": "all",
-            "stylers": [
-            {
-                "visibility": "off"
-            }
-            ]
-        },
-        {
-            "featureType": "road",
-            "elementType": "all",
-            "stylers": [
-            {
-                "saturation": -100
-            },
-            {
-                "lightness": 45
-            }
-            ]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "all",
-            "stylers": [
-            {
-                "visibility": "simplified"
-            }
-            ]
-        },
-        {
-            "featureType": "road.arterial",
-            "elementType": "labels.icon",
-            "stylers": [
-            {
-                "visibility": "off"
-            }
-            ]
-        },
-        {
-            "featureType": "transit",
-            "elementType": "all",
-            "stylers": [
-            {
-                "visibility": "off"
-            }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "all",
-            "stylers": [
-            {
-                "color": "#10ade4"
-            },
-            {
-                "visibility": "on"
-            }
-            ]
-        }
-        ]
-      });
-    }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&callback=initMap" async defer></script>
-    
-  </body>
+</body>
+
 </html>

@@ -71,7 +71,9 @@ export const Bike =  {
           default:
             bikeVolumeData[text].dir = null;
 
+
         }
+        
         if (bikeData[text]) {
           // Get the data from bikeVolume and bikeData and combine into one.
           bikeVolumeData[text] = {...bikeVolumeData[text], ...bikeData[text]};

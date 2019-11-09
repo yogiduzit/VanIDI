@@ -1,3 +1,4 @@
+
 import {JSONUtils} from './JSONUtils.js';
 
 var map;
@@ -103,7 +104,3 @@ function initMap()  {
 
 
 }
-$(document).ready(function() {
-    initMap();
-})
-
