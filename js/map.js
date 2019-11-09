@@ -101,4 +101,5 @@
             }
             ]
         });
+        infoWindow = new google.maps.InfoWindow();
     }
