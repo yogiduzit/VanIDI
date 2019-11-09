@@ -1,4 +1,4 @@
-export const JSONUtils = {
+const JSONUtils = {
   
   // distance is in metres (1000 is a km)
   // dir is the direction (west,east,north,south)
