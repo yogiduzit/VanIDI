@@ -4,9 +4,9 @@ function showNewRect(event) {
     var ne = rectangle.getBounds().getNorthEast();
     var sw = rectangle.getBounds().getSouthWest();
 
-    var contentString = '<b>Rectangle moved.</b><br>' +
-        'New north-east corner: ' + ne.lat() + ', ' + ne.lng() + '<br>' +
-        'New south-west corner: ' + sw.lat() + ', ' + sw.lng();
+    var contentString = '<b>Rectangle co-ords.</b><br>' +
+        'north-east:' + ne.lat() + ', ' + ne.lng() + '<br>' +
+        'south-west: ' + sw.lat() + ', ' + sw.lng();
 
     // Set the info window's content and position.
     infoWindow.setContent(contentString);
