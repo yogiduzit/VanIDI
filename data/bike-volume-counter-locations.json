@@ -1,0 +1,590 @@
+[
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "6a0e8315fa4fc9766cea54c6eed633192d51c2d5",
+        "fields": {
+            "latitude": "49.261444",
+            "geopoint": [
+                49.261444,
+                -123.07885
+            ],
+            "longitude": "-123.07885",
+            "counters": "10th and Clark - Westbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.07885,
+                49.261444
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "e5f2be9e2a346789f142b2dcb9f002fd6a66fbe7",
+        "fields": {
+            "latitude": "49.2832222",
+            "geopoint": [
+                49.2832222,
+                -123.115763
+            ],
+            "longitude": "-123.115763",
+            "counters": "600 - Dunsmuir - Westbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.115763,
+                49.2832222
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "38c86b622aa0de633e379f9973317bfe22c56ba7",
+        "fields": {
+            "latitude": "49.2832222",
+            "geopoint": [
+                49.2832222,
+                -123.115763
+            ],
+            "longitude": "-123.115763",
+            "counters": "600 - Dunsmuir - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.115763,
+                49.2832222
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "de8caca267d5b9a2104cb5894c1e192451bbbde8",
+        "fields": {
+            "latitude": "49.261433",
+            "geopoint": [
+                49.261433,
+                -123.104965
+            ],
+            "longitude": "-123.104965",
+            "counters": "Ontario and 11th - Northbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.104965,
+                49.261433
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "1e0d56271580c06b82d4258ec0d92a33e6710b7b",
+        "fields": {
+            "latitude": "49.261433",
+            "geopoint": [
+                49.261433,
+                -123.104965
+            ],
+            "longitude": "-123.104965",
+            "counters": "Ontario and 11th - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.104965,
+                49.261433
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "e7bd12619c99431482f294309b5c89bb6c2b7b26",
+        "fields": {
+            "latitude": "49.2774996978",
+            "geopoint": [
+                49.2774996978,
+                -123.087531906
+            ],
+            "longitude": "-123.087531906",
+            "counters": "Union and Hawks - Westbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.087531906,
+                49.2774996978
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "2be0c5daf34c75fa39ed06fd39946cf8a040ee57",
+        "fields": {
+            "latitude": "49.297516",
+            "geopoint": [
+                49.297516,
+                -123.126305
+            ],
+            "longitude": "-123.126305",
+            "counters": "Seawall at HMS Discovery - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.126305,
+                49.297516
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "494c2c89ee99afb4fec710f1f1982fa71a6d0d88",
+        "fields": {
+            "latitude": "49.2756888535",
+            "geopoint": [
+                49.2756888535,
+                -123.11459139
+            ],
+            "longitude": "-123.11459139",
+            "counters": "Smithe & Expo - Westbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.11459139,
+                49.2756888535
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "a3228374c23d7a64f0d364ca3132fe60a63b9a0f",
+        "fields": {
+            "latitude": "49.2774996978",
+            "geopoint": [
+                49.2774996978,
+                -123.087531906
+            ],
+            "longitude": "-123.087531906",
+            "counters": "Union and Hawks - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.087531906,
+                49.2774996978
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "67e20c2b3de5bffb83cb620b342e076badcdf671",
+        "fields": {
+            "latitude": "49.2776219632",
+            "geopoint": [
+                49.2776219632,
+                -123.100267116
+            ],
+            "longitude": "-123.100267116",
+            "counters": "Dunsmuir Viaduct - Union and Main - Westbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.100267116,
+                49.2776219632
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "795df833d3903b9a3c00d8edbb2a1d256676a94b",
+        "fields": {
+            "latitude": "49.261444",
+            "geopoint": [
+                49.261444,
+                -123.07885
+            ],
+            "longitude": "-123.07885",
+            "counters": "10th and Clark - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.07885,
+                49.261444
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "e071cecca921424a62dd0f4f504cd00d50d01c2e",
+        "fields": {
+            "latitude": "49.282671",
+            "geopoint": [
+                49.282671,
+                -123.121661
+            ],
+            "longitude": "-123.121661",
+            "counters": "Hornby and Robson - Southbound - Grouped"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.121661,
+                49.282671
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "13ee6975e92a56fb0dd4f69a8e771d051334f460",
+        "fields": {
+            "latitude": "49.273327",
+            "geopoint": [
+                49.273327,
+                -123.10275
+            ],
+            "longitude": "-123.10275",
+            "counters": "Science World - Northbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.10275,
+                49.273327
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "e212ee05c11867bff6c875801b967888bd4399d0",
+        "fields": {
+            "latitude": "49.2725506029",
+            "geopoint": [
+                49.2725506029,
+                -123.146632906
+            ],
+            "longitude": "-123.146632906",
+            "counters": "1800 Cornwall - Westbound side"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.146632906,
+                49.2725506029
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "b307da24452b61ac855845b3c6bb05e8d48b11c6",
+        "fields": {
+            "latitude": "49.2776219632",
+            "geopoint": [
+                49.2776219632,
+                -123.100267116
+            ],
+            "longitude": "-123.100267116",
+            "counters": "Dunsmuir Viaduct - Union and Main - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.100267116,
+                49.2776219632
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "c80d38c54f5d00e6bd5af2b3dbc704639c6615e8",
+        "fields": {
+            "latitude": "49.297386",
+            "geopoint": [
+                49.297386,
+                -123.15381
+            ],
+            "longitude": "-123.15381",
+            "counters": "Seawall 2nd Beach Pool - Southbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.15381,
+                49.297386
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "691195a66ca9b2d3095b8b1380c1b3ea8d0d1751",
+        "fields": {
+            "latitude": "49.297386",
+            "geopoint": [
+                49.297386,
+                -123.15381
+            ],
+            "longitude": "-123.15381",
+            "counters": "Seawall 2nd Beach Pool - Northbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.15381,
+                49.297386
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "3015f68da5f4c987dbf7aec75ca4c66116514ac7",
+        "fields": {
+            "latitude": "49.2717",
+            "geopoint": [
+                49.2717,
+                -123.12519
+            ],
+            "longitude": "-123.12519",
+            "counters": "Seawall David Lam Park - Westbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.12519,
+                49.2717
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "7785de4522c99a97101536d7ac7cc11f1fd48f2b",
+        "fields": {
+            "latitude": "49.272274",
+            "geopoint": [
+                49.272274,
+                -123.11461
+            ],
+            "longitude": "-123.11461",
+            "counters": "Cambie Bridge - East Sidewalk - Northbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.11461,
+                49.272274
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "e4ec4882822c968209e6fef6dc94f466e6faa9ae",
+        "fields": {
+            "latitude": "49.2725612471",
+            "geopoint": [
+                49.2725612471,
+                -123.144829603
+            ],
+            "longitude": "-123.144829603",
+            "counters": "Burrard Bridge - Burrard and Cornwall - Eastside"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.144829603,
+                49.2725612471
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "2f21c51f17d6261dc7c50c202e3004e60ef27c6e",
+        "fields": {
+            "latitude": "49.282671",
+            "geopoint": [
+                49.282671,
+                -123.121661
+            ],
+            "longitude": "-123.121661",
+            "counters": "Hornby and Robson - Northbound - Grouped"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.121661,
+                49.282671
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "693178b93c460caa17ab862b8ef142e51da8a936",
+        "fields": {
+            "latitude": "49.273327",
+            "geopoint": [
+                49.273327,
+                -123.10275
+            ],
+            "longitude": "-123.10275",
+            "counters": "Science World - Southbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.10275,
+                49.273327
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "ed700d602ce323bf4d353ce574ea4fe57b6185dd",
+        "fields": {
+            "latitude": "49.30192",
+            "geopoint": [
+                49.30192,
+                -123.1257
+            ],
+            "longitude": "-123.1257",
+            "counters": "Seawall at Lumberman Arch - Southbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.1257,
+                49.30192
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "5dcd3344738b3ed98d3955594fbeddf0505ecfac",
+        "fields": {
+            "latitude": "49.30192",
+            "geopoint": [
+                49.30192,
+                -123.1257
+            ],
+            "longitude": "-123.1257",
+            "counters": "Seawall at Lumberman Arch - Northbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.1257,
+                49.30192
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "8c3eb65a46a2ca3fdb3b3070c681a4ad30594749",
+        "fields": {
+            "latitude": "49.297516",
+            "geopoint": [
+                49.297516,
+                -123.126305
+            ],
+            "longitude": "-123.126305",
+            "counters": "Seawall at HMS Discovery - Westbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.126305,
+                49.297516
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "5f7dafcb571878aab2489eed44efccfaf7f5c5c2",
+        "fields": {
+            "latitude": "49.2717",
+            "geopoint": [
+                49.2717,
+                -123.12519
+            ],
+            "longitude": "-123.12519",
+            "counters": "Seawall David Lam Park - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.12519,
+                49.2717
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "f50e5c150cc5c3693d05b0de859eb9d7afa3e639",
+        "fields": {
+            "latitude": "49.2756888535",
+            "geopoint": [
+                49.2756888535,
+                -123.11459139
+            ],
+            "longitude": "-123.11459139",
+            "counters": "Smithe & Expo - Eastbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.11459139,
+                49.2756888535
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    },
+    {
+        "datasetid": "bike-volume-counter-locations",
+        "recordid": "94c5cd873feb6162f789b0b68fbf4ade95e215d3",
+        "fields": {
+            "latitude": "49.272274",
+            "geopoint": [
+                49.272274,
+                -123.11461
+            ],
+            "longitude": "-123.11461",
+            "counters": "Cambie Bridge - East Sidewalk - Southbound"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [
+                -123.11461,
+                49.272274
+            ]
+        },
+        "record_timestamp": "2019-10-18T15:09:23.452-07:00"
+    }
+]

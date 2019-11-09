@@ -5,6 +5,8 @@
   <title>Simple Map</title>
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
+  <!-- Load jQuery -->
+  <script src="jquery-3.4.1.js"></script>
   <style>
     /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -133,4 +135,72 @@
     async defer></script>
 </body>
 
+
+
+
 </html>
+
+
+<script>
+
+getAverageBikeData();
+async function connectBikeData(){
+
+    //Retrieving bike counts information 
+    let resLocations = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-volume-counter-locations&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
+      return res;
+    });
+
+    //Retrieving bike counts location data
+    let resCounts = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-data-2015jan-2019jul&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
+      return res;
+    });
+
+    let countsJSON = await resCounts.json();
+    let countsLocations = await resLocations.json(); 
+
+    console.log(countsJSON);
+    console.log(countsLocations);
+
+}
+
+async function getAverageBikeData(){
+
+  //Retrieving bike counts information 
+  let resCounts = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-data-2015jan-2019jul&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
+    return res;
+  });
+
+
+  let countsJSON = await resCounts.json().then((data) =>{
+    console.log(data.records);
+
+    let countObjects = {};
+    data.records.forEach(element => {
+      for(e in element.fields){
+        if(e == "date") continue;
+
+        
+        if(countObjects[e]){
+          countObjects[e].total += typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
+          countObjects[e].count++;
+
+        }else{
+          countObjects[e] = {};
+          countObjects[e].total = typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
+          countObjects[e].count = 1;
+        }
+      }
+    });
+
+    for(c in countObjects){
+      countObjects[c].average = countObjects[c].total/countObjects[c].count;
+    }
+    console.log(countObjects);
+
+  });
+
+  
+}
+
+</script>
