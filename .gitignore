@@ -94,4 +94,7 @@ public/
 # DynamoDB Local files
 .dynamodb/
 
+#API_KEYS 
+/js/data/url.js
+
 # End of https://www.gitignore.io/api/node
