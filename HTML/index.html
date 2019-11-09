@@ -1,142 +1,136 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <title>Simple Map</title>
-  <meta name="viewport" content="initial-scale=1.0">
-  <meta charset="utf-8">
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- CSS -->
-  <link rel="stylesheet" href="stylesheets/stylesheet.css">
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
 
-</head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="stylesheets/stylesheet.css">
 
-<body>
-  <div id="map"></div>
-  <!-- Load jQuery -->
-  <script src="js/jquery-3.4.1.js"></script>
-  <!-- Boostrap -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <!-- Requests -->
-  <script src="data/requests.js" type="module"></script>
-  <!-- JS for Map -->
-  <script src="js/map.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&callback=initMap"
-  async defer></script>
-</body>
+  </head>
 
-</html>
+  <body>
 
+    <div id="map"></div>
+    <!-- Load jQuery -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <!-- Boostrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Requests -->
+    <script src="js/data/requests.js" type="module"></script>
+    
+    <script src="js/JSONUtils.js"></script>
 
-<script>
-connectBikeData();
-async function connectBikeData(){
+    <!-- JS for Map -->
+    <script>
+      var map;
+      function initMap()  {
+        map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 49.2827, lng: -123.1207 },
+        zoom: 15,
 
-    let bikeCounts = await getAverageBikeData();
-    let countsLocations = await getBikeLocations();
-
-    console.log(bikeCounts);
-    console.log(countsLocations);
-
-      for(c in bikeCounts){
-        bikeCounts[c].lat = countsLocations[c].lat;
-        bikeCounts[c].lng = countsLocations[c].lng;
-        bikeCounts[c].dir = countsLocations[c].dir;
-
-      }
-
-
-
-
-
-
-}
-
-async function getAverageBikeData(){
-
-  //Retrieving bike counts information 
-  let resCounts = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-data-2015jan-2019jul&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
-    return res;
-  });
-
-
-  let countsJSON = await resCounts.json().then((data) =>{
-    let countObjects = {};
-    data.records.forEach(element => {
-      for(e in element.fields){
-        if(e == "date") continue;
-        if(countObjects[e]){
-          countObjects[e].total += typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
-          countObjects[e].count++;
-
-        }else{
-          countObjects[e] = {};
-          countObjects[e].total = typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
-          countObjects[e].count = 1;
+        styles:
+        [
+        {
+            "featureType": "administrative",
+            "elementType": "labels.text.fill",
+            "stylers": [
+            {
+                "color": "#444444"
+            }
+            ]
+        },
+        {
+            "featureType": "landscape",
+            "elementType": "all",
+            "stylers": [
+            {
+                "color": "#f2f2f2"
+            }
+            ]
+        },
+        {
+            "featureType": "landscape",
+            "elementType": "labels.text",
+            "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "hue": "#ff0000"
+            }
+            ]
+        },
+        {
+            "featureType": "poi",
+            "elementType": "all",
+            "stylers": [
+            {
+                "visibility": "off"
+            }
+            ]
+        },
+        {
+            "featureType": "road",
+            "elementType": "all",
+            "stylers": [
+            {
+                "saturation": -100
+            },
+            {
+                "lightness": 45
+            }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "all",
+            "stylers": [
+            {
+                "visibility": "simplified"
+            }
+            ]
+        },
+        {
+            "featureType": "road.arterial",
+            "elementType": "labels.icon",
+            "stylers": [
+            {
+                "visibility": "off"
+            }
+            ]
+        },
+        {
+            "featureType": "transit",
+            "elementType": "all",
+            "stylers": [
+            {
+                "visibility": "off"
+            }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "all",
+            "stylers": [
+            {
+                "color": "#10ade4"
+            },
+            {
+                "visibility": "on"
+            }
+            ]
         }
-      }
-    });
-
-    for(c in countObjects){
-      countObjects[c].average = countObjects[c].total/countObjects[c].count;
+        ]
+      });
     }
-    return countObjects;
-  });
-
-  return countsJSON;
-  
-}
-
-async function getBikeLocations(){
-
-    //Retrieving bike location information 
-    let resLocations = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-volume-counter-locations&rows=1000&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
-      return res;
-    });
-
-    let locationObjects = {};
-    let locationData = await resLocations.json().then((data) =>{
-      data.records.forEach(element => {
-
-        //Edit the text names
-        let text = element.fields["counters"];
-        
-        text = text.replace('_', ' ').replace('&', '').replace(/\s{2,}/g,' ').split(' ').filter(word => word !== '-').map(word => word.toLowerCase()).join('_');
-
-        //Add our data to the location objects
-        locationObjects[text] = {};
-        locationObjects[text].lat = element.fields["latitude"];
-        locationObjects[text].lng = element.fields["longitude"];
-
-        switch(true){
-          case text.includes('westb'):
-            locationObjects[text].dir = 'west';
-            break;
-          case text.includes('eastb'):
-            locationObjects[text].dir = 'east';
-            break;
-          case text.includes('northb'):
-            locationObjects[text].dir = 'north';
-            break;
-          case text.includes('southb'):
-            locationObjects[text].dir = 'south';
-          default:
-            locationObjects[text].dir = null;
-
-        }
-
-      });    
-    });
-
-
-    return locationObjects;
-}
-
-
-
-
-
-
-</script>
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&callback=initMap" async defer></script>
+    
+  </body>
+</html>
