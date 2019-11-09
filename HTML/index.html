@@ -14,7 +14,122 @@
 
 <body>
   <div id="map"></div>
-  
+  <script>
+    var map;
+    function initMap() {
+      // let myLatLng = {lat: 49.261433, lng: -123.104965};
+      // let myLatLngB = getOffsetLocation(49.261433, -123.104965, 'north', 1000);
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 49.2827, lng: -123.1207 },
+        zoom: 15,
+
+
+        styles:
+          [
+            {
+              "featureType": "administrative",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#444444"
+                }
+              ]
+            },
+            {
+              "featureType": "landscape",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "color": "#f2f2f2"
+                }
+              ]
+            },
+            {
+              "featureType": "landscape",
+              "elementType": "labels.text",
+              "stylers": [
+                {
+                  "visibility": "on"
+                },
+                {
+                  "hue": "#ff0000"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "saturation": -100
+                },
+                {
+                  "lightness": 45
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "simplified"
+                }
+              ]
+            },
+            {
+              "featureType": "road.arterial",
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "transit",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "all",
+              "stylers": [
+                {
+                  "color": "#10ade4"
+                },
+                {
+                  "visibility": "on"
+                }
+              ]
+            }
+          ]
+      });
+      // let marker = new google.maps.Marker({
+      //   position: myLatLng,
+      //   map: map,
+      //   title: 'point a'
+        
+      // });
+      // let marker2 = new google.maps.Marker({
+      //   position: myLatLngB,
+      //   map: map,
+      //   title: 'point b'
+        
+      // });
 
 
   <!-- Load jQuery -->
@@ -32,11 +147,12 @@
 
 
 
+<script src="/data/requests.js" type="module"></script>
 
 </html>
 
 
-<script>
+<!-- <script>
 connectBikeData();
 async function connectBikeData(){
 
@@ -126,8 +242,11 @@ async function getBikeLocations(){
           case text.includes('northb'):
             locationObjects[text].dir = 'north';
             break;
-          default:
+          case text.includes('southb'):
             locationObjects[text].dir = 'south';
+          default:
+            locationObjects[text].dir = null;
+
         }
 
       });    
@@ -139,52 +258,8 @@ async function getBikeLocations(){
 
 
 
-// distance is in metres (1000 is a km)
-// dir is the direction (west,east,north,south)
-// long is east (increases) or west (decreases more)
-// lat is north (increases) or south (decreases)
-function getOffsetLocation(lat, long, dir, distance){
 
-  let res = {};
-  const EARTH = 6378.137;
-  const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
-  cos = Math.cos;
-  let newLat = lat;
-  let newLong = long;
 
-  switch(dir){
-    case 'west':
-      newLong += (distance*M)/(cos(newLat * (Math.PI / 180)));
-      break;
-    case 'east':
-      newLong -= (distance*M)/cos(newLat * (Math.PI / 180));
-      break;
-    case 'north':
-      newLat += distance*M;
-      break;
-    default:
-      newLat -= distance*M;
-  }
-
-  res.lat = newLat;
-  res.lng = newLong;
-  return res;
-}
-
-// returns the distance from one point on a map to another. 
-function getDistanceFrom(coord1,coord2) {
-
-  let R = 6371; // Radius of the earth in km
-  let dLat = deg2rad(coord2.lat-coord1.lat);  // deg2rad below
-  let dLon = deg2rad(coord2.lng-coord1.lng); 
-  let a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-          Math.cos(deg2rad(coord1.lat)) * Math.cos(deg2rad(coord2.lat)) * 
-          Math.sin(dLon/2) * Math.sin(dLon/2); 
-
-  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  let d = R * c; // Distance in km
-  return d;
-}
 
 function deg2rad(deg) {
   return deg * (Math.PI/180); 
