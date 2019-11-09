@@ -1,0 +1,23 @@
+{
+  "name": "decodeproject",
+  "version": "1.0.0",
+  "description": "##Git Rules",
+  "main": "jquery-3.4.1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yogiduzit/DecodeProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yogiduzit/DecodeProject/issues"
+  },
+  "homepage": "https://github.com/yogiduzit/DecodeProject#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.4"
+  }
+}
