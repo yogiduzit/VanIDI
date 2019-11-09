@@ -41,6 +41,6 @@ export const Bike =  {
 }
 
 const bikeData = Bike.getBikeData().then(data => {
-  console.log(data);
-  console.log(Bike.getAverageBikeData(data));
+  //console.log(data);
+  //console.log(Bike.getAverageBikeData(data));
 });
