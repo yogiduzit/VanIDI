@@ -12,3 +12,15 @@ body {
   margin: 0;
   padding: 0;
 }
+
+#container-header{
+  top: 0;
+  left: 0;
+  position: fixed;
+  background-color: #005c82;
+  color: white;
+}
+
+#row-map{
+  height: 100vh;
+}
