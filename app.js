@@ -10,13 +10,13 @@ const app = express();
 
 
 app.use(parser.urlencoded({  extended: true}));
-app.use('/CSS', express.static('CSS'));
-app.use('/HTML', express.static('HTML'));
+app.use('/stylesheets', express.static('stylesheets'));
+app.use('/html', express.static('html'));
 app.use('/js', express.static('js'));
 app.use('/data', express.static('js/data'));
 
 app.get('/', function (req, res) {
-  let doc = fs.readFileSync('./HTML/index.html', "utf8");
+  let doc = fs.readFileSync('./html/index.html', "utf8");
   res.send(doc);
 })
 
