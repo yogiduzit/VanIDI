@@ -156,8 +156,7 @@
 
 
 <script>
-
-getOffsetLocation(49.261433, -123.104965, 'north', 1000);
+connectBikeData();
 async function connectBikeData(){
 
     let bikeCounts = await getAverageBikeData();
@@ -168,12 +167,11 @@ async function connectBikeData(){
 
       for(c in bikeCounts){
         bikeCounts[c].lat = countsLocations[c].lat;
-        bikeCounts[c].long = countsLocations[c].long;
+        bikeCounts[c].lng = countsLocations[c].lng;
         bikeCounts[c].dir = countsLocations[c].dir;
 
       }
 
-      console.log(bikeCounts);
 
 
 
@@ -216,7 +214,6 @@ async function getAverageBikeData(){
   
 }
 
-
 async function getBikeLocations(){
 
     //Retrieving bike location information 
@@ -236,7 +233,7 @@ async function getBikeLocations(){
         //Add our data to the location objects
         locationObjects[text] = {};
         locationObjects[text].lat = element.fields["latitude"];
-        locationObjects[text].long = element.fields["longitude"];
+        locationObjects[text].lng = element.fields["longitude"];
 
         switch(true){
           case text.includes('westb'):
@@ -261,7 +258,7 @@ async function getBikeLocations(){
 
 
 
-// distance is in metres
+// distance is in metres (1000 is a km)
 // dir is the direction (west,east,north,south)
 // long is east (increases) or west (decreases more)
 // lat is north (increases) or south (decreases)
@@ -291,5 +288,24 @@ function getOffsetLocation(lat, long, dir, distance){
   res.lat = newLat;
   res.lng = newLong;
   return res;
+}
+
+// returns the distance from one point on a map to another. 
+function getDistanceFrom(coord1,coord2) {
+
+  let R = 6371; // Radius of the earth in km
+  let dLat = deg2rad(coord2.lat-coord1.lat);  // deg2rad below
+  let dLon = deg2rad(coord2.lng-coord1.lng); 
+  let a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+          Math.cos(deg2rad(coord1.lat)) * Math.cos(deg2rad(coord2.lat)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2); 
+
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  let d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180); 
 }
 </script>
