@@ -151,7 +151,7 @@
 
 
 
-
+<script src="/data/requests.js" type="module"></script>
 </html>
 
 
@@ -266,7 +266,7 @@ function getOffsetLocation(lat, long, dir, distance){
 
   let res = {};
   const EARTH = 6378.137;
-  const M = (1 / ((2 * Math.PI / 360) * EARTH)) / 1000;  //1 meter in degree
+  const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
   cos = Math.cos;
   let newLat = lat;
   let newLong = long;
