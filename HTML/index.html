@@ -5,76 +5,6 @@
   <title>Simple Map</title>
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- CSS -->
-  <link rel="stylesheet" href="stylesheets/stylesheet.css">
-
-</head>
-
-<body>
-  
-
-
-  <div id="container-header" class="container-fluid text-center">
-    <div class="row my-2 align-middle">
-      <div class="col-2">Logo</div>
-      <div class="col-3 ml-auto">
-        <button type="button" class="btn btn-primary">Login</button>
-      </div>
-    </div>
-    <div class="row mb-3 align-middle">
-      <div class="col-2">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
-          </label>
-          <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Radio
-          </label>
-        </div>
-      </div>
-      <div class="col-5 text-left mr-auto">
-        <div class="input-group">
-          <span class="mx-2">Intersection of</span>
-          <input type="text" class="form-control" name="intersection-street1">
-          <span class="mx-2">and</span>
-          <input type="text" class="form-control" name="intersection-street2">
-        </div>
-      </div>
-      <div class="col-3">Filter panel</div>
-    </div>
-    <div id="row-map" class="row">
-      <div id="map"></div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   <!-- Load jQuery -->
   <script src="js/jquery-3.4.1.js"></script>
@@ -87,10 +17,45 @@
   <script src="js/map.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&callback=initMap"
   async defer></script>
+  <!-- Cropper JS -->
+  <script src="js/cropper.js"></script>
+  <link rel="stylesheet" href="stylesheets/stylesheet.css">
+</head>
+
+<body>
+    <div id="container-header" class="container-fluid text-center">
+        <div class="row my-2 align-middle">
+          <div class="col-2">Logo</div>
+          <div class="col-3 ml-auto">
+            <button type="button" class="btn btn-primary">Login</button>
+          </div>
+        </div>
+        <div class="row mb-3 align-middle">
+          <div class="col-2">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+              </label>
+            </div>
+          </div>
+          <div class="col-5 text-left mr-auto">
+            <div class="input-group">
+              <span class="mx-2">Intersection of</span>
+              <input type="text" class="form-control" name="intersection-street1">
+              <span class="mx-2">and</span>
+              <input type="text" class="form-control" name="intersection-street2">
+            </div>
+          </div>
+          <div class="col-3">Filter panel</div>
+        </div>
+        <div id="row-map" class="row">
+          <div id="map" onmousedown="isCtrlDown(event)"></div>
+        </div>
+      </div>
 </body>
-
-
-
 
 </html>
 
