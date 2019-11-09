@@ -9,40 +9,45 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- CSS -->
   <link rel="stylesheet" href="stylesheets/stylesheet.css">
-
+  <link rel="stylesheet" type="text/css" href="stylesheets/inter.css">
 </head>
 
 <body>
-  
-
-
   <div id="container-header" class="container-fluid text-center">
+    <!-- Branding/ Login Row -->
     <div class="row my-2 align-middle">
-      <div class="col-2">Logo</div>
-      <div class="col-3 ml-auto">
+      <div class="col-2 text-left">Logo</div>
+      <div class="col-3 text-right ml-auto">
         <button type="button" class="btn btn-primary">Login</button>
       </div>
     </div>
-    <div class="row mb-3 align-middle">
+    <!-- Input Row -->
+    <div class="row">
       <div class="col-2">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Street Mode
           </label>
           <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Radio
+            <input type="radio" name="options" id="option2" autocomplete="off"> Intersection Mode
           </label>
         </div>
       </div>
+      <!-- Intersection Input Form -->
       <div class="col-5 text-left mr-auto">
-        <div class="input-group">
+        <div class="input-group align-middle">
           <span class="mx-2">Intersection of</span>
           <input type="text" class="form-control" name="intersection-street1">
           <span class="mx-2">and</span>
           <input type="text" class="form-control" name="intersection-street2">
+          <span class="mx-2">km Radius: </span>
+          <input type="number" class="form-control" name="intersection-radius" min="0">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary text-white" type="button">Submit</button>
+          </div>
         </div>
       </div>
-      <div class="col-3">Filter panel</div>
+      <div id="col-filter-dropout" class="col-2 ml-auto">Filter panel</div>
     </div>
     <div id="row-map" class="row">
       <div id="map"></div>
