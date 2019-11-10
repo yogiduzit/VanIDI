@@ -121,6 +121,8 @@ body {
   position: absolute;
   margin: 0;
   top: 25%;
+  font-weight: 300;
+  font-size: 13pt;
 }
 
 #logo{

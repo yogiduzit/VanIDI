@@ -21,7 +21,7 @@
   <div id="container-header" class="container-fluid text-center animated fadeIn">
     <!-- Branding/ Login Row -->
     <div id="header-row-1" class="header-row row py-2 align-middle">
-      <h1 id="logo" class="col-2 text-left"><span id="light-van">Van</span><b>IDI</b></h1>
+      <h1 id="logo" class="col-6 text-left"><span id="light-van">Van</span><b>IDI</b></h1>
       <div class="col-3 text-right ml-auto">
         <button id="login-btn" type="button" class="btn btn-hollow">Login</button>
       </div>
@@ -30,7 +30,7 @@
     <div id="header-row-2" class="header-row row">
       <div class="col-lg-6 col-sm-12 text-left pb-3 header-interact">
         <div class="btn-group btn-group-toggle pr-3" data-toggle="buttons">
-          <button id="mode-rec-btn" class="btn btn-pri active">
+          <button id="mode-rec-btn" class="btn btn-pri btn-mode-active active">
             <input type="radio" name="options" id="option1" autocomplete="off" checked> 
             <img width="32px" height="auto" src="../img/crop-64.png">
           </button>
@@ -48,7 +48,7 @@
           </button>
         </div>
         <span id="mode-label">
-          Mode: <span id="modeText">Rectangle Snip</span>
+          MODE: <span id="modeText">RECTANGLE SNIP</span>
         </span>
       </div>
       <!-- Intersection Input Form -->
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div id="filter-panel" class="col-2 ml-auto text-left pt-3">
-        <h4 id="filter-panel-title" class="mb-3">Filters and Export</h4>        
+        <h4 id="filter-panel-title" class="mb-3"><span style="font-weight: 300">DATA AND FILTERS</span></h4>        
         <div class="accordion mb-3" id="accordionExample">
           <div class="card">
             <div class="card-header" id="headingOne">
@@ -137,6 +137,12 @@
                 </div>
                 <div>
                   <input type="checkbox" name="Pedestrian"> Pedestrian
+                </div>
+                <div class="dropdown-divider"></div>              
+                <h6>From - To </h6>
+                <div class="input-group">
+                  <input class="form-control" type="datetime-local" placeholder="Start Datetime">
+                  <input class="form-control" type="datetime-local" placeholder="End Datetime">
                 </div>
                 <div class="dropdown-divider"></div>
               </div>

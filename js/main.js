@@ -5,7 +5,7 @@ $(".file-type-selector").click(function(){
 });
 
 $("#mode-rec-btn").click(function(){
-	setModeText("Rectangle Snip");
+	setModeText("RECTANGLE SNIP");
 	$("#adv-select-section").css({"display" : "none", "visibility": "hidden"});
 	$(".btn-mode-active").toggleClass('btn-mode-active');
 	$(this).addClass('btn-mode-active');
@@ -14,7 +14,7 @@ $("#mode-rec-btn").click(function(){
 	modePoly = false;
 });
 $("#mode-circ-btn").click(function(){
-	setModeText("Circle Snip");
+	setModeText("CIRCLE SNIP");
 	$(".btn-mode-active").toggleClass('btn-mode-active');
 	$(this).addClass('btn-mode-active');
 	modeRec = false;
@@ -22,7 +22,7 @@ $("#mode-circ-btn").click(function(){
 	modePoly = false;
 });
 $("#mode-poly-btn").click(function(){
-	setModeText("Polygon Snip");
+	setModeText("POLYGON SNIP");
 	$(".btn-mode-active").toggleClass('btn-mode-active');
 	$(this).addClass('btn-mode-active');
 	modeRec = false;
@@ -30,7 +30,7 @@ $("#mode-poly-btn").click(function(){
 	modePoly = true;
 });
 $("#mode-adv-btn").click(function(){
-	setModeText("Advanced");
+	setModeText("ADVANCED");
 	$(".btn-mode-active").toggleClass('btn-mode-active');
 	$(this).addClass('btn-mode-active');
 	modeRec = false;
