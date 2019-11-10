@@ -101,8 +101,30 @@ export const Bike =  {
     return coords;
   }
 }
-export const Projects = {
-  async getCurrentRoadClosureLocations(){
+export const Projects ={
+
+  // distance is in metres (1000 is a km)
+  // dir is the direction (west,east,north,south)
+  // long is east (increases) or west (decreases more)
+  // lat is north (increases) or south (decreases)
+  async getCurrentRoadClosureLocations(params){
+
+    let maxLat = 180;
+    let maxLng = 180;
+    let minLat = -180;
+    let minLng = -180;
+
+    if(params !== undefined){
+      maxLat = params.maxLat;
+      maxLng = params.maxLng;
+      minLat = params.minLat;
+      minLng = params.minLng;
+      // maxLat = 49.28930634203633;
+      // maxLng = -123.12517973696282;
+      // minLat = 49.28619923209591;
+      // minLng = -123.13281866823723;
+    }
+    
     let res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-current-road-closures&rows=1000&facet=comp_date=${APIKEY_VANCOUVER}`);
     let data = await res.json();
     let dataArray = [];
@@ -118,10 +140,12 @@ export const Projects = {
         //for each element in the new array, add to the coordinate array
         let arr = geom.flat();
         for(let i = 0; i < arr.length; i+=2){
-          let object = {};
-          object.lat = arr[i+1];
-          object.lng = arr[i];
-          coords.push(object);
+          if(minLat <= arr[i+1] && arr[i+1] <= maxLat && minLng <= arr[i] && arr[i] <= maxLng){
+            let object = {};
+            object.lat = arr[i+1];
+            object.lng = arr[i];
+            coords.push(object);
+          }
         }
         //set the coords value to the finished array
         object.coords = coords;
@@ -140,27 +164,17 @@ export const Projects = {
       let coords = d.coords;
       let flightPath = new google.maps.Polyline({
         path: coords,
-        geodesic: true,
         strokeColor: '#DC143C',
         strokeOpacity: 0.5,
         strokeWeight: 5,
         });
-        
-      var lineSymbol = new google.maps.Marker({
-        icon: {
-        scaledSize: new google.maps.Size(1000, 100),
-        size: new google.maps.Size(1000, 1000),
-        url: "./img/no-entry.svg"
-        },
-        position: coords[coords[0]],
-        map: map
-      });
+      
       flightPath.setMap(map);
       flightPaths.push(flightPath);
     });
     return flightPaths;
   },
-  async getUpcoming() {
+  async getUpcomingProjects() {
     const res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-upcoming-projects&rows=1000&facet=comp_date&apikey=${APIKEY_VANCOUVER}`);
     const data = await res.json();
 
@@ -190,6 +204,6 @@ export const Projects = {
       coordPath[i].lng = coords[i][1];
     }
     return coordPath;
-  }
+  },
 }
 
