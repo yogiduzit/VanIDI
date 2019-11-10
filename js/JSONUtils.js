@@ -3,6 +3,7 @@ export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
     this.currentRoadClosureLocationsOn = false;
+    this.bikeAccidentMarkersOn = false;
     this.layers = {};
     this.map = map;
   }
@@ -10,15 +11,18 @@ export class JSONUtils{
 //must have heatmaps
 toggleBikeHeatMaps(on){
   let bikeVolumeData = null;
-  if(on == true && this.bikeHeatMapOn == false){
+  if(on && this.bikeHeatMapOn){
+
     Bike.getBikeData().then((bikeData) => {
       Bike.getBikeVolumeCounterLocations().then(volumeData => {
+
         bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
         this.addBikeHeatLayer(bikeVolumeData);
         this.bikeHeatMapOn = true;
+
       });
     });
-  }else{
+  } else {
     this.layers.bike.setMap(null);
     this.bikeHeatMapOn = false;
   }
@@ -114,8 +118,8 @@ getOffsetLocation(lat, long, dir, distance){
         });
         attachInstructionText(marker, myRoute.steps[i].instructions);
         markerArray[i] = marker;
+      }
     }
-  }
 
   attachInstructionText(marker, text) {
     google.maps.event.addListener(marker, 'click', function() {
@@ -146,6 +150,31 @@ getOffsetLocation(lat, long, dir, distance){
     if(this.currentRoadClosureLocationsOn) this.toggleCurrentRoadClosureLocations(false); // turn the current road collisions map if on.
     //49.28930634203633 -123.12517973696282 49.28619923209591 -123.13281866823723
     //robson jervis
+  }
+  
+  async addBikeAccidentClusters() {
+    const coords = Bike.getAccidentCoords(await Bike.getAccidents());
+    if (this.bikeAccidentMarkersOn) {
+      const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
+      const markerCluster = new MarkerClusterer(this.map, markers,
+        {
+          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        }
+      );
+    }
+  }
+  async drawUpcomingProjects() {
+    const paths = Projects.getProjectCoords(await Projects.getUpcomingProjects());
+    paths.forEach(path => {
+      const flightPath = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: '#FFFF00',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+      flightPath.setMap(this.map);
+    });
   }
 
 
