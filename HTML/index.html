@@ -189,29 +189,31 @@
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/table.js"></script>
   <!-- JSONUtil Filters -->
-  <script type = "module">
-  import {JSONUtils} from "/js/JSONUtils.js";
-  import {Bike, Projects} from '/js/data/requests.js'
 
-    const utils = new JSONUtils(map);
-    utils.bikeAccidentMarkersOn = true;
-    utils.bikeHeatMapOn = true;
-    utils.toggleBikeHeatMaps(map);
-    utils.addBikeAccidentClusters();
-    utils.drawUpcomingProjects();
-
-    utils.toggleBikeHeatMaps(true);
-    utils.toggleCurrentRoadClosureLocations(true);
-
-    console.log(utils);
-    setTimeout(function(){
-      utils.reloadData();
-    }, 5000);
-</script>
 
 
   <!-- Cropper JS -->
-  <script src="js/cropper.js"></script>
+  <script src="js/cropper.js" type = "module"></script>
 
+  <script type = "module">
+    import {JSONUtils} from "/js/JSONUtils.js";
+    import {Bike, Projects} from '/js/data/requests.js'
+    window.utils = new JSONUtils(map);
+
+      var utils = new JSONUtils(map);
+      utils.bikeAccidentMarkersOn = true;
+      utils.bikeHeatMapOn = true;
+      utils.toggleBikeHeatMaps(map);
+      utils.addBikeAccidentClusters();
+      utils.drawUpcomingProjects();
+  
+      utils.toggleBikeHeatMaps(true);
+      utils.toggleCurrentRoadClosureLocations(true);
+  
+      console.log(utils);
+      setTimeout(function(){
+        utils.reloadData();
+      }, 5000);
+  </script>
 </body>
 </html>

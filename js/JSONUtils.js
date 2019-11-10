@@ -6,8 +6,8 @@ export class JSONUtils{
     this.bikeAccidentMarkersOn = false;
     this.layers = {};
     this.map = map;
+    
   }
-
 //must have heatmaps
 toggleBikeHeatMaps(on){
   let bikeVolumeData = null;
