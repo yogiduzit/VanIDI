@@ -1,4 +1,4 @@
-import {Bike, Projects} from "/js/data/requests.js";
+import {Bike, Projects, Traffic} from "/js/data/requests.js";
 export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
@@ -9,77 +9,94 @@ export class JSONUtils{
     
   }
 //must have heatmaps
-toggleBikeHeatMaps(on){
-  let bikeVolumeData = null;
-  if(on && this.bikeHeatMapOn){
-
-    Bike.getBikeData().then((bikeData) => {
-      Bike.getBikeVolumeCounterLocations().then(volumeData => {
-
-        bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
-        this.addBikeHeatLayer(bikeVolumeData);
-        this.bikeHeatMapOn = true;
-
+  toggleBikeHeatMaps(on){
+    let bikeVolumeData = null;
+    if(on == true && !this.bikeHeatMapOn){
+      Bike.getBikeData().then((bikeData) => {
+        Bike.getBikeVolumeCounterLocations().then(volumeData => {
+          bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
+          this.addBikeHeatLayer(bikeVolumeData);
+          this.bikeHeatMapOn = true;
+        });
       });
-    });
-  } else {
-    this.layers.bike.setMap(null);
-    this.bikeHeatMapOn = false;
+    } else {
+      this.layers.bike.setMap(null);
+      this.bikeHeatMapOn = false;
+    }
+
   }
 
-}
+  toggleCurrentRoadClosureLocations(on){
+    let currentRoadClosureData = null;
+    if(on == true && !this.currentRoadClosureLocationsOn){
+      Projects.getCurrentRoadClosureLocations().then((data) => {
+        let paths = Projects.drawCurrentRoadClosureLocations(data);
+        this.layers.currentRoadClosures = paths;
+        this.currentRoadClosureLocationsOn = true;
+      });
+    }else{
+      this.layers.currentRoadClosures.forEach( (path) =>{
+        path.setMap(null);
+      });
+      this.layers.currentRoadClosures = null;
+      this.currentRoadClosureLocationsOn = false;
+  }
+  }
+  //requires google maps
+  addBikeHeatLayer(data){
+      let heatMapData = [];
+      for(let p in data){
+        let myLatLng = {};
+        myLatLng.lat = parseFloat(data[p].lat);
+        myLatLng.lng = parseFloat(data[p].lng);
+        heatMapData.push({location: new google.maps.LatLng(myLatLng.lat, myLatLng.lng), weight: (data[p].average/100)});
+      }
+      let heatmap = new google.maps.visualization.HeatmapLayer({
+          data: heatMapData,
+          opacity: 0.5,
+          radius: 50,
+      });
+      this.layers.bike = heatmap;
+      heatmap.setMap(map);
+  }
 
-//requires google maps
-addBikeHeatLayer(data){
-    let heatMapData = [];
+  async addTrafficCountClusters() {
+    const data = Traffic.getTrafficCoords(await Traffic.getTrafficData("07:00"));
+    // const filteredData = filterTrafficData(data, "07:00");
+    
+  }
 
-    for(let p in data){
-      let myLatLng = {};
-      myLatLng.lat = parseFloat(data[p].lat);
-      myLatLng.lng = parseFloat(data[p].lng);
-      heatMapData.push({location: new google.maps.LatLng(myLatLng.lat, myLatLng.lng), weight: (data[p].average/100)});
-    }
-    let heatmap = new google.maps.visualization.HeatmapLayer({
-        data: heatMapData,
-        opacity: 0.5,
-        radius: 50,
-    });
-    this.layers.bike = heatmap;
-    heatmap.setMap(map);
-}
-
-// distance is in metres (1000 is a km)
-// dir is the direction (west,east,north,south)
-// long is east (increases) or west (decreases more)
-// lat is north (increases) or south (decreases)
-getOffsetLocation(lat, long, dir, distance){
-
-    let res = {};
-    const EARTH = 6378.137;
-    const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
-    cos = Math.cos;
-    let newLat = lat;
-    let newLong = long;
+  // distance is in metres (1000 is a km)
+  // dir is the direction (west,east,north,south)
+  // long is east (increases) or west (decreases more)
+  // lat is north (increases) or south (decreases)
+  getOffsetLocation(lat, long, dir, distance){
+      let res = {};
+      const EARTH = 6378.137;
+      const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
+      cos = Math.cos;
+      let newLat = lat;
+      let newLong = long;
 
 
-    switch(dir){
-      case 'west':
-        newLong += ( distance * M )/ (cos(newLat * (Math.PI / 180)));
-        break;
-      case 'east':
-        newLong -= (distance*M) / cos(newLat * (Math.PI / 180));
-        break;
-      case 'north':
-        newLat += distance * M;
-        break;
-      default:
-        newLat -= distance * M;
-    }
+      switch(dir){
+        case 'west':
+          newLong += ( distance * M )/ (cos(newLat * (Math.PI / 180)));
+          break;
+        case 'east':
+          newLong -= (distance*M) / cos(newLat * (Math.PI / 180));
+          break;
+        case 'north':
+          newLat += distance * M;
+          break;
+        default:
+          newLat -= distance * M;
+      }
 
-    res.lat = newLat;
-    res.lng = newLong;
+      res.lat = newLat;
+      res.lng = newLong;
 
-    return res;
+      return res;
   }
 
   // returns the distance from one point on a map to another. 
@@ -128,26 +145,17 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
-  toggleCurrentRoadClosureLocations(on){
-    let currentRoadClosureData = null;
-    if(on == true && this.currentRoadClosureLocationsOn == false){
-      Projects.getCurrentRoadClosureLocations().then((data) => {
-        let paths = Projects.drawCurrentRoadClosureLocations(data);
-        this.layers.currentRoadClosures = paths;
-        this.currentRoadClosureLocationsOn = true;
-      });
-    }else{
-      this.layers.currentRoadClosures.forEach( (path) =>{
-        path.setMap(null);
-      });
-      this.layers.currentRoadClosuures = null;
-      this.currentRoadClosureLocationsOn = false;
-  }
-  }
-
   reloadData(params){
-    if(this.bikeHeatMapOn) this.toggleBikeHeatMaps(false); // turn the bike heat map off if on.
-    if(this.currentRoadClosureLocationsOn) this.toggleCurrentRoadClosureLocations(false); // turn the current road collisions map if on.
+    console.log(params);
+    if(this.bikeHeatMapOn == true) {
+      console.log('turned off');
+      this.toggleBikeHeatMaps(false,null);
+    }// turn the bike heat map off if on.
+    if(this.currentRoadClosureLocationsOn == true) {
+      this.toggleCurrentRoadClosureLocations(false);
+    } 
+    
+    // turn the current road collisions map if on.
     //49.28930634203633 -123.12517973696282 49.28619923209591 -123.13281866823723
     //robson jervis
   }
@@ -177,7 +185,10 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
-
+  async downloadBikeAccidentClusters(){
+    const data = Bike.getAccidentCoords(await Bike.getAccidents());
+    console.log(data);
+  }
 
 }
 

@@ -62,8 +62,9 @@ $('#map').on('click', function() {
                 object.minLat = currentSW.lat();
                 object.maxLng = currentNE.lng();
                 object.minLng = currentSW.lng();
-                console.log(object);
-                console.log(window.utils);
+
+                
+                window.utils.reloadData(object);
             });
         }
         else if(modeCir){
