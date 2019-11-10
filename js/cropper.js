@@ -1,11 +1,24 @@
+//Shapes
 var rectangle;
+var circle;
+var rectPoly;
+
+//flags for different shape modes
+var modeRec = true;
+var modeCir = false;
+var modePoly = false;
+
+//counter for naming windows -- global to all shapes
 var counter = 0;
+
+//Square coordinates
 var currentNE;
 var currentSW;
 
-var rectPoly;
+//holder for selected rectangle
 var currentRectangle;
 
+//flag for ctrl key press
 var cntrlIsPressed = false;
 
 //key for control is 17 
@@ -25,7 +38,6 @@ $().keydown(function(){
 
 });
 
-
     $('#map').on('click', function() {
         google.maps.event.addListener(map, "click", function (event) { 
         if(cntrlIsPressed){    
@@ -38,34 +50,65 @@ $().keydown(function(){
                 east: longitude,
                 west: longitude
             }
-            rectangle = new google.maps.Rectangle({
-                bounds: bounds,
-                editable: true,
-                map: map,
-                draggable: true,
-                title: "Window" + counter
-            })
+            if(modeRec){
+                rectangle = new google.maps.Rectangle({
+                    bounds: bounds,
+                    editable: true,
+                    map: map,
+                    draggable: true,
+                    title: "Window" + counter
+                })
+                rectangle.addListener('click', function(){
+                    currentNE = this.getBounds().getNorthEast();
+                    currentSW = this.getBounds().getSouthWest();
+                    currentShape = this;
+                    console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+                });
+            }
+            else if(modeCir){
+                console.log("test")
+                circle = new google.maps.Circle({
+                    editable: true,
+                    map: map,
+                    draggable: true,
+                    center: {lat: latitude, lng: longitude},
+                    radius: 100,
+                    title: "Window" + counter
+                })
+                console.log("test");
+                circle.addListener('click', function(){
+                    currentNE = this.getBounds().getNorthEast();
+                    currentSW = this.getBounds().getSouthWest();
+                    currentShape = this;
+                    console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+                });
+            }
+            else if(modePoly){
+                rectangle = new google.maps.Rectangle({
+                    bounds: bounds,
+                    editable: true,
+                    map: map,
+                    draggable: true,
+                    title: "Window" + counter
+                })
+                rectPoly = createPolygonFromRectangle(rectangle);
+                rectPoly.addListener('click', function(e) {
+                    currentNE = this.getPath();
+                    console.log(this.title, currentNE.getAt(0).lat());
+                    //rotatePolygon(rectPoly,10);
+                });
+    
+            }
+           
             counter++;
 
-            //rectPoly = createPolygonFromRectangle(rectangle);
-            // rectPoly.addListener('click', function(e) {
-            //     currentNE = this.getPath();
-            //     //infoWindow.setPosition(this.getCenter());
-            //     console.log(this.title, currentNE.getAt(0).lat());
-            //     //rotatePolygon(rectPoly,10);
-            // });
-
-            rectangle.addListener('click', function(){
-                currentNE = this.getBounds().getNorthEast();
-                currentSW = this.getBounds().getSouthWest();
-                currentRectangle = this;
-                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
-            });
+           
+            
             $('#map').keyup(function(e){
                 var code = (e.keyCode ? e.keyCode : e.which);
 
                 if(code == 8){
-                    currentRectangle.setMap(null);
+                    currentShape.setMap(null);
                 }
             })
         };
