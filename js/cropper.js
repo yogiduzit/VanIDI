@@ -3,9 +3,33 @@ var counter = 0;
 var currentNE;
 var currentSW;
 
+<<<<<<< HEAD
 function isCtrlDown(event) {
     if (event.ctrlKey) {
         google.maps.event.addListener(map, "click", function (event) {
+=======
+var cntrlIsPressed = false;
+
+// function showNewRect(event) {
+//   }
+
+$(document).keydown(function(event){
+    if(event.which=="17")
+        cntrlIsPressed = true;
+        console.log("keyDown");
+});
+
+$(document).keyup(function(){
+    if(event.which=="17")
+        cntrlIsPressed = false;
+        console.log("keyUp");
+});
+
+
+    $('#map').on('click', function(){
+        google.maps.event.addListener(map, "click", function (event) { 
+        if(cntrlIsPressed){    
+>>>>>>> e6d9c6bb9cb3a06b026ebc619737d983fb13ba3d
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
             console.log(latitude + ', ' + longitude);
@@ -30,6 +54,7 @@ function isCtrlDown(event) {
                 console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
             });
 
+<<<<<<< HEAD
             var rectPoly = createPolygonFromRectangle(rectangle); //create a polygom from a rectangle
 
             rectPoly.addListener('click', function (e) {
@@ -38,6 +63,14 @@ function isCtrlDown(event) {
 
         });
     }
+=======
+                
+            // });
+        };
+        cntrlIsPressed = false;
+    });
+    });
+>>>>>>> e6d9c6bb9cb3a06b026ebc619737d983fb13ba3d
 
     function createPolygonFromRectangle(rectangle) {
         var map = rectangle.getMap();
