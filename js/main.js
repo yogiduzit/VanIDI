@@ -35,8 +35,28 @@ $("#mode-adv-btn").click(function(){
 	$(this).addClass('btn-mode-active');
 	modeRec = false;
 	modeCir = false;
-	modePoly = true;
+	modePoly = false;
 
+});
+
+
+$('#display-heatmap-btn').click(function(){
+	// $('#display-heatmap-btn').toggleClass('btn-mode-active');
+	// console.log(window.utils);
+	// if ($('#display-heatmap-btn').hasClass('btn-mode-active')){
+	// 	window.utils.toggleBikeHeatMaps(true);
+	// } else{
+	// 	window.utils.toggleBikeHeatMaps(false);
+	// }
+});
+
+$('#display-marker-btn').click(function(){
+	// $('#display-marker-btn').toggleClass('btn-mode-active');
+	// if ($('#display-marker-btn').hasClass('btn-mode-active')){
+		
+	// } else{
+		
+	// }
 });
 
 

@@ -191,4 +191,3 @@ getOffsetLocation(lat, long, dir, distance){
     return cropData;
   }
 }
-

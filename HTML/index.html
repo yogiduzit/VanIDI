@@ -67,19 +67,17 @@
         </span>
       </div>
       <!-- Intersection Input Form -->
-      <div id="adv-select-section" class="col-5 text-left mr-auto pl-0 pb-3 header-interact">
-<!--         <div class="input-group align-middle">
-          <span class="mx-2 align-middle">Intersection of</span>
-          <input type="text" class="form-control" name="intersection-street1">
-          <span class="mx-2 align-middle">and</span>
-          <input type="text" class="form-control" name="intersection-street2">
-          <span class="mx-2 align-middle">km Radius: </span>
-          <input type="number" class="form-control" name="intersection-radius" min="0">
-          <div class="input-group-append">
-            <button class="btn btn-pri text-white" type="button">Submit</button>
-          </div>
-        </div> -->
+      <div class="col-4 text-right mr-auto pl-0 pb-3 header-interact">
+        <div class="btn-group" data-toggle="buttons">
+          <button id="display-heatmap-btn" class="btn btn-pri btn-mode-active active">
+            <img width="32px" height="auto" src="../img/fire-64.png">
+          </button>
+          <button id="display-marker-btn" class="btn btn-pri btn-mode-active">
+            <img width="32px" height="auto" src="../img/marker-64.png">
+          </button>
+        </div>
       </div>
+      <div class="col-2"></div>
     </div>
     <!-- Filter SidePane -->
     <div id="filter-map-row" class="row animated fadeIn">
@@ -277,7 +275,7 @@
       utils.drawUpcomingProjects();
 
       utils.toggleBikeHeatMaps(true);
-      utils.toggleCurrentRoadClosureLocations(true);
+      //utils.toggleCurrentRoadClosureLocations(true);
 
       setTimeout(function() {
         utils.reloadData();
