@@ -1,11 +1,29 @@
+class JSONUtils{
+  constructor(map){
+    this.bikeHeatMapOn = false;
+    this.layers = {};
+    this.map = map;
+  }
 
-const JSONUtils = {
-  
-  //requires google maps
-  addLinesToMap(data) {
+//must have heatmaps
+toggleBikeHeatMaps(on){
+  if(on == true && this.bikeHeatMapOn == false){
+    let bikeData = connectBikeData().then( (data) =>{
+      this.addBikeHeatLayer(data);
+    });
+  }else{
+    this.layers.bike.setMap(null);
+    this.bikeHeatMapOn = false;
+  }
+
+}
+
+
+//requires google maps
+addBikeHeatLayer(data){
     let heatMapData = [];
 
-    for(p in data){
+    for(let p in data){
       let myLatLng = {};
       myLatLng.lat = parseFloat(data[p].lat);
       myLatLng.lng = parseFloat(data[p].lng);
@@ -16,16 +34,17 @@ const JSONUtils = {
         opacity: 0.5,
         radius: 50,
     });
-
+    this.layers.bike = heatmap;
     heatmap.setMap(map);
-},
+}
+
+
 
 // distance is in metres (1000 is a km)
 // dir is the direction (west,east,north,south)
 // long is east (increases) or west (decreases more)
 // lat is north (increases) or south (decreases)
 getOffsetLocation(lat, long, dir, distance){
-
 
     let res = {};
     const EARTH = 6378.137;
@@ -53,7 +72,7 @@ getOffsetLocation(lat, long, dir, distance){
     res.lng = newLong;
 
     return res;
-  },
+  }
 
   // returns the distance from one point on a map to another. 
   getDistanceFrom(coord1,coord2) {
@@ -68,12 +87,11 @@ getOffsetLocation(lat, long, dir, distance){
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
     let d = R * c; // Distance in km
     return d;
-  },
+  }
 
   convertDeg2Rad(deg) {
     return deg * (Math.PI/180); 
-  },
-
+  }
 
 
   showSteps(directionResult) {
@@ -93,7 +111,7 @@ getOffsetLocation(lat, long, dir, distance){
         attachInstructionText(marker, myRoute.steps[i].instructions);
         markerArray[i] = marker;
     }
-  },
+  }
 
   attachInstructionText(marker, text) {
     google.maps.event.addListener(marker, 'click', function() {
@@ -102,3 +120,5 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
+
+}

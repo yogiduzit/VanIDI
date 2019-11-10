@@ -36,6 +36,7 @@ export const Bike =  {
     for(let c in avgCounts){
       avgCounts[c].average = avgCounts[c].total / avgCounts[c].count;
     }
+
     return avgCounts;
   },
   getAverageBikeVolumes(bikeData, volumeData) {
