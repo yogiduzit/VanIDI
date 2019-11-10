@@ -10,7 +10,7 @@ export class JSONUtils{
 //must have heatmaps
 toggleBikeHeatMaps(on){
   let bikeVolumeData = null;
-  if(on == true && this.bikeHeatMapOn == false){
+  if(on && this.bikeHeatMapOn){
 
     Bike.getBikeData().then((bikeData) => {
       Bike.getBikeVolumeCounterLocations().then(volumeData => {
@@ -131,7 +131,8 @@ getOffsetLocation(lat, long, dir, distance){
   }
 
 
-  addBikeAccidentClusters(coords) {
+  async addBikeAccidentClusters() {
+    const coords = Bike.getAccidentCoords(await Bike.getAccidents());
     if (this.bikeAccidentMarkersOn) {
       const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
       const markerCluster = new MarkerClusterer(this.map, markers,
@@ -141,7 +142,8 @@ getOffsetLocation(lat, long, dir, distance){
       );
     }
   }
-  drawUpcomingProjects(paths) {
+  async drawUpcomingProjects() {
+    const paths = Projects.getProjectCoords(await Projects.getUpcomingProjects());
     paths.forEach(path => {
       const flightPath = new google.maps.Polyline({
         path: path,
