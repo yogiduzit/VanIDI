@@ -1,5 +1,13 @@
-#Decode Project
+# VanIDI
 
-##Git Rules
+(description). 
 
-- Branch off from staging, not from master
+
+## Built With
+
+
+## Version Control
+
+We use [GitHub] for version control. For the versions available, see the [tags on this repository](). 
+
+## Authors
