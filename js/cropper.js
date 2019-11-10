@@ -4,7 +4,7 @@ function showNewRect(event) {
     var ne = rectangle.getBounds().getNorthEast();
     var sw = rectangle.getBounds().getSouthWest();
 
-    var contentString = '<b>Rectangle co-ords.</b><br>' +
+    var contentString = '<b>Rectangle co-ords.</b><br>BOIIIIIIIIII<br>' +
         'north-east:' + ne.lat() + ', ' + ne.lng() + '<br>' +
         'south-west: ' + sw.lat() + ', ' + sw.lng();
 
