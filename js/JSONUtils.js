@@ -1,4 +1,4 @@
-import {Bike} from "/js/data/requests.js";
+import {Bike, Projects} from "/js/data/requests.js";
 export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
@@ -129,6 +129,7 @@ getOffsetLocation(lat, long, dir, distance){
       stepDisplay.open(map, marker);
     });
   }
+
 
   addBikeAccidentClusters(coords) {
     if (this.bikeAccidentMarkersOn) {
