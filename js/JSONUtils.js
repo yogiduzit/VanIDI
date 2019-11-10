@@ -155,17 +155,28 @@ export class JSONUtils{
     //robson jervis
   }
   
-  async addBikeAccidentClusters() {
-    const coords = Bike.getAccidentCoords(await Bike.getAccidents());
-    if (this.bikeAccidentMarkersOn) {
+  async addBikeAccidentClusters(on) {
+    if (on && this.bikeAccidentMarkersOn == false) {
+      const coords = Bike.getAccidentCoords(await Bike.getAccidents());
       const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
+      this.layers.bikeAccidentMarkers = markers;
+      this.bikeAccidentMarkersOn = true;
       const markerCluster = new MarkerClusterer(this.map, markers,
         {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
         }
       );
+      this.markerCluster = markerCluster;
+  } else {
+    this.bikeAccidentMarkersOn = false;
+    for (let i = 0; i < this.layers.bikeAccidentMarkers; i++) {
+      this.layers.bikeAccidentMarkers.setMap(null);
     }
+    this.layers.bikeAccidentMarkers = [];
+    this.markerCluster.clearMarkers();
+
   }
+}
   async drawUpcomingProjects() {
     const paths = Projects.getProjectCoords(await Projects.getUpcomingProjects());
     paths.forEach(path => {
@@ -181,11 +192,23 @@ export class JSONUtils{
   }
 
   async downloadBikeAccidentClusters(){
-    const data = Bike.getAccidentCoords(await Bike.getAccidents());
-    console.log(data);
-  }
+    const data = await Bike.getAccidents();
+    let records = [];
+    data.records.forEach((r) =>{
+      let record = {}; 
+      console.log(r);
+      record.lat = r.fields.latitude;
+      record.lng = r.fields.longitude;
+      record.date = r.fields.date;
+      record.type = r.fields.p_type;
+      record.injury = r.fields.injury;
+      records.push(record);
+    });
+    console.log(records);
+    return records;
 
-  async getCroppedEntries(latMin, latMax, lngMin, lngMax) {
+  }
+  async drawCroppedBikeData(latMin, latMax, lngMin, lngMax) {
     let cropData = [];
 
     let bikeData = Bike.getAccidentCoords(await Bike.getAccidents());
@@ -196,7 +219,12 @@ export class JSONUtils{
         }
       }
     });
-    return cropData;
+
+    const markers = cropData.map((coord) => new google.maps.Marker({position: coord}));
+    const markerCluster = new MarkerClusterer(this.map, markers,
+      {
+        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+      }
+    );
   }
 }
-

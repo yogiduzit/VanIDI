@@ -63,8 +63,7 @@ $('#map').on('click', function() {
                 object.maxLng = currentNE.lng();
                 object.minLng = currentSW.lng();
 
-                
-                window.utils.reloadData(object);
+                window.utils.drawCroppedBikeData(object.minLat, object.maxLat, object.minLng, object.maxLng);
             });
         }
         else if(modeCir){
@@ -104,8 +103,6 @@ $('#map').on('click', function() {
         
         counter++;
 
-        
-        
         $('#map').keyup(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
 
