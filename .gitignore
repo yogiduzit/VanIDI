@@ -97,4 +97,15 @@ public/
 #API_KEYS 
 /js/data/url.js
 
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
 # End of https://www.gitignore.io/api/node
