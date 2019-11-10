@@ -198,13 +198,12 @@
   import {Bike, Projects} from '/js/data/requests.js'
 
     const utils = new JSONUtils(map);
-  Bike.getAccidents().then(data => {
     utils.bikeAccidentMarkersOn = true;
-    utils.addBikeAccidentClusters(Bike.getAccidentCoords(data));
-  });
-  Projects.getUpcoming().then(data => {
-    utils.drawUpcomingProjects(Projects.getProjectCoords(data));
-  });
+    utils.bikeHeatMapOn = true;
+    utils.toggleBikeHeatMaps(map);
+    utils.addBikeAccidentClusters();
+    utils.drawUpcomingProjects();
+
 </script>
 </body>
 </html>
