@@ -160,7 +160,7 @@ export const Projects = {
     });
     return flightPaths;
   },
-  async getUpcoming() {
+  async getUpcomingProjects() {
     const res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-upcoming-projects&rows=1000&facet=comp_date&apikey=${APIKEY_VANCOUVER}`);
     const data = await res.json();
 
