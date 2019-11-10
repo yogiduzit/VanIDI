@@ -1,22 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Simple Map</title>
-  <meta name="viewport" content="initial-scale=1.0">
-  <meta charset="utf-8">
-  <!-- Boostrap -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- Animate.css -->
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
-  <!-- Table CSS (Tabulator) -->
-  <link href="https://unpkg.com/tabulator-tables@4.4.3/dist/css/tabulator.min.css" rel="stylesheet">
-  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js" ></script>
-  <!-- Load jQuery -->
-  <script src="js/jquery-3.4.1.js"></script>
-  <!-- Custom -->
-  <link rel="stylesheet" href="stylesheets/stylesheet.css">
-</head>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <!-- Boostrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-- Animate.css -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css"
+    />
+    <!-- Table CSS (Tabulator) -->
+    <link
+      href="https://unpkg.com/tabulator-tables@4.4.3/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"
+    ></script>
+    <!-- Load jQuery -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <!-- Custom -->
+    <link rel="stylesheet" href="stylesheets/stylesheet.css" />
+  </head>
 
+<<<<<<< HEAD
 <body>  
   <div id="container-header" class="container-fluid text-center animated fadeIn">
     <!-- Branding/ Login Row -->
@@ -46,11 +62,23 @@
             <input type="radio" name="options" id="option2" autocomplete="off">
             <img width="32px" height="auto" src="../img/menu-4-64.png">
           </button>
+=======
+  <body>
+    <div
+      id="container-header"
+      class="container-fluid text-center animated fadeIn"
+    >
+      <!-- Branding/ Login Row -->
+      <div id="header-row-1" class="header-row row py-2 align-middle">
+        <h1 id="logo" class="col-2 text-left">
+          <span id="light-van">Van</span><b>IDI</b>
+        </h1>
+        <div class="col-3 text-right ml-auto">
+          <button type="button" class="btn btn-pri">Login</button>
+>>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
         </div>
-        <span id="mode-label">
-          Mode: <span id="modeText">Rectangle Snip</span>
-        </span>
       </div>
+<<<<<<< HEAD
       <!-- Intersection Input Form -->
       <div id="adv-select-section" class="col-5 text-left mr-auto pl-0 pb-3 header-interact">
 <!--         <div class="input-group align-middle">
@@ -116,51 +144,222 @@
                 </ul>
               </div>
             </div>
+=======
+      <!-- Selection Mode  -->
+      <div id="header-row-2" class="header-row row">
+        <div class="col-3 text-left pb-3 header-interact">
+          <div class="btn-group btn-group-toggle pr-3" data-toggle="buttons">
+            <button id="mode-rec-btn" class="btn btn-pri active">
+              <input
+                type="radio"
+                name="options"
+                id="option1"
+                autocomplete="off"
+                checked
+              />
+              <img width="32px" height="auto" src="../img/crop-64.png" />
+            </button>
+            <button id="mode-circ-btn" class="btn btn-pri">
+              <input
+                type="radio"
+                name="options"
+                id="option2"
+                autocomplete="off"
+              />
+              <img
+                width="32px"
+                height="auto"
+                src="../img/circle-outline-64.png"
+              />
+            </button>
+            <button id="mode-poly-btn" class="btn btn-pri">
+              <input
+                type="radio"
+                name="options"
+                id="option2"
+                autocomplete="off"
+              />
+              <img
+                width="32px"
+                height="auto"
+                src="../img/hexagon-outline-64.png"
+              />
+            </button>
+            <button id="mode-adv-btn" class="btn btn-pri">
+              <input
+                type="radio"
+                name="options"
+                id="option2"
+                autocomplete="off"
+              />
+              <img width="32px" height="auto" src="../img/menu-4-64.png" />
+            </button>
           </div>
-          <div class="card">
-            <div class="card-header" id="headingTwo">
-              <h2 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Filters
-                </button>
-              </h2>
+          <span id="mode-label">
+            Mode: <span id="modeText">Rectangle Snip</span>
+          </span>
+        </div>
+        <!-- Intersection Input Form -->
+        <div
+          id="adv-select-section"
+          class="col-5 text-left mr-auto pl-0 pb-3 header-interact"
+        >
+          <div class="input-group align-middle">
+            <span class="mx-2 align-middle">Intersection of</span>
+            <input
+              type="text"
+              class="form-control"
+              name="intersection-street1"
+            />
+            <span class="mx-2 align-middle">and</span>
+            <input
+              type="text"
+              class="form-control"
+              name="intersection-street2"
+            />
+            <span class="mx-2 align-middle">km Radius: </span>
+            <input
+              type="number"
+              class="form-control"
+              name="intersection-radius"
+              min="0"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-pri text-white" type="button">
+                Submit
+              </button>
             </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <div class="card-body">
-                <h6>Data to Include: </h6>
-                <div class="dropdown-divider"></div>
-                <div>
-                  <input type="checkbox" name="Vehicle"> Vehicle Data
+          </div>
+        </div>
+      </div>
+      <!-- Filter SidePane -->
+      <div id="filter-map-row" class="row animated fadeIn">
+        <div
+          id="row-map"
+          class="col-10 p-0 container-fluid"
+          style="pointer-events: none"
+        >
+          <div class="row" style="pointer-events: none">
+            <div id="map" class="col-12" style="pointer-events: auto"></div>
+>>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
+          </div>
+          <div class="row">
+            <!-- TABLE -->
+            <div
+              id="container-table"
+              class="col-12"
+              style="pointer-events: auto;"
+            >
+              <div id="dataTable"></div>
+            </div>
+          </div>
+        </div>
+        <div id="filter-panel" class="col-2 ml-auto text-left pt-3">
+          <h4 id="filter-panel-title" class="mb-3">Filters and Export</h4>
+          <div class="accordion mb-3" id="accordionExample">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                  <button
+                    class="btn btn-link"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseOne"
+                    aria-expanded="false"
+                    aria-controls="collapseOne"
+                  >
+                    Datasets
+                  </button>
+                </h2>
+              </div>
+              <div
+                id="collapseOne"
+                class="collapse show"
+                aria-labelledby="headingOne"
+                data-parent="#accordionExample"
+              >
+                <div class="card-body">
+                  <button
+                    class="btn btn-pri"
+                    data-toggle="modal"
+                    data-target="#select-dataset-modal"
+                  >
+                    + Add a dataset
+                  </button>
                 </div>
-                <div>
-                  <input type="checkbox" name="Bicyclist"> Bike Data
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                  <button
+                    class="btn btn-link collapsed"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    Filters
+                  </button>
+                </h2>
+              </div>
+              <div
+                id="collapseTwo"
+                class="collapse"
+                aria-labelledby="headingTwo"
+                data-parent="#accordionExample"
+              >
+                <div class="card-body">
+                  <h6>Data to Include:</h6>
+                  <div class="dropdown-divider"></div>
+                  <div>
+                    <input type="checkbox" name="Vehicle" /> Vehicle Data
+                  </div>
+                  <div>
+                    <input type="checkbox" name="Bicyclist" /> Bike Data
+                  </div>
+                  <div>
+                    <input type="checkbox" name="Pedestrian" /> Pedestrian
+                  </div>
+                  <div class="dropdown-divider"></div>
                 </div>
-                <div>
-                  <input type="checkbox" name="Pedestrian"> Pedestrian
-                </div>
-                <div class="dropdown-divider"></div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="input-group">
-          <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Enter filename">
-          <div class="input-group-append">
-            <button id="file-type-btn" class="btn btn-pri dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">.csv</button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item file-type-selector" href="#">.csv</a>
-              <a class="dropdown-item file-type-selector" href="#">.xlsx</a>
-              <a class="dropdown-item file-type-selector" href="#">.shp</a>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              aria-label="Text input with dropdown button"
+              placeholder="Enter filename"
+            />
+            <div class="input-group-append">
+              <button
+                id="file-type-btn"
+                class="btn btn-pri dropdown-toggle"
+                type="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                .csv
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item file-type-selector" href="#">.csv</a>
+                <a class="dropdown-item file-type-selector" href="#">.xlsx</a>
+                <a class="dropdown-item file-type-selector" href="#">.shp</a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="text-right mt-3">
-          <button class="btn btn-pri" type="submit">Export</button>
+          <div class="text-right mt-3">
+            <button class="btn btn-pri" type="submit">Export</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+<<<<<<< HEAD
   <!-- Dataset Modal -->
   <div class="modal fade" id="select-dataset-modal" tabindex="-1" role="dialog" aria-labelledby="select-dataset-modal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -189,11 +388,72 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-pri" data-dismiss="modal">Save changes</button>
+=======
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="select-dataset-modal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="select-dataset-modal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="select-dataset-modal-title">
+              Select datasets
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input
+              type="text"
+              class="form-control"
+              id="dataset-modal-search"
+              aria-describedby="dataset-search"
+              placeholder="Search"
+            />
+            <div class="dropdown-divider"></div>
+            <ul id="datasets-list" class="list-group">
+              <li class="list-group-item">
+                <input type="checkbox" name="Pedestrian" /> Bicycle Count
+              </li>
+              <li class="list-group-item">
+                <input type="checkbox" name="Pedestrian" /> Current Road
+                Construction Projects
+              </li>
+              <li class="list-group-item">
+                <input type="checkbox" name="Pedestrian" /> Upcoming Road
+                Conrstruction Projects
+              </li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-pri" data-dismiss="modal">
+              Save changes
+            </button>
+          </div>
+>>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
         </div>
       </div>
     </div>
-  </div>
 
+<<<<<<< HEAD
 
   <!-- Advanced Select Modal -->
   <div class="modal fade" id="select-advanced-modal" tabindex="-1" role="dialog" aria-labelledby="select-advanced-modal" aria-hidden="true">
@@ -231,15 +491,45 @@
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/table.js"></script>
   <!-- JSONUtil Filters -->
+=======
+    <!-- Bootstrap js -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- JS for Map -->
+    <script src="js/map.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
+      async
+      defer
+    ></script>
+    <script
+      src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"
+      async
+      defer
+    ></script>
+    <!-- Cropper JS -->
+    <script src="js/cropper.js"></script>
+    <!-- Main custom -->
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/table.js"></script>
+    <!-- JSONUtil Filters -->
+>>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
 
+    <!-- Cropper JS -->
+    <script src="js/cropper.js" type="module"></script>
 
-  <!-- Cropper JS -->
-  <script src="js/cropper.js" type = "module"></script>
-
-  <script type = "module">
-    import {JSONUtils} from "/js/JSONUtils.js";
-    import {Bike, Projects} from '/js/data/requests.js'
-    window.utils = new JSONUtils(map);
+    <script type="module">
+      import { JSONUtils } from "/js/JSONUtils.js";
+      import { Bike, Projects } from "/js/data/requests.js";
+      window.utils = new JSONUtils(map);
 
       Bike.getAccidents().then(data => {
         utils.bikeAccidentMarkersOn = true;
@@ -250,13 +540,13 @@
       utils.toggleBikeHeatMaps(map);
       utils.addBikeAccidentClusters();
       utils.drawUpcomingProjects();
-  
+
       utils.toggleBikeHeatMaps(true);
       utils.toggleCurrentRoadClosureLocations(true);
-  
-      setTimeout(function(){
+
+      setTimeout(function() {
         utils.reloadData();
       }, 5000);
-  </script>
-</body>
+    </script>
+  </body>
 </html>
