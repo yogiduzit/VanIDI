@@ -125,7 +125,7 @@ export const Projects ={
       // minLng = -123.13281866823723;
     }
     
-    let res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-current-road-closures&rows=1000&facet=comp_date=${APIKEY_VANCOUVER}`);
+    let res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-current-road-closures&rows=10&facet=comp_date=${APIKEY_VANCOUVER}`);
     let data = await res.json();
     let dataArray = [];
     var count = 0;
@@ -182,28 +182,38 @@ export const Projects ={
   },
   getProjectCoords(projects) {
     const coordsArrays = [];
-    projects.records.forEach((record, recIndex) => {
-      let coords = record.fields.geom.coordinates;
-      if (coords) {
-        if (typeof coords[0][0] === "number") {
-          coordsArrays.push(this._coordHelper(coords));
-        } else {
-          coords.forEach(coord => {
-            coordsArrays.push(this._coordHelper(coord));
-          });
-        } 
-      }
+    projects.records.forEach((record) => {
+      let geom = this._parseGeoms(record.fields.geom);
+      coordsArrays.push(geom);
+      
     });
     return coordsArrays;
   },
-  _coordHelper(coords) {
-    const coordPath = [];
-    for (let i = 0; i < 2; i++) {
-      coordPath[i] = {};
-      coordPath[i].lat = coords[i][0];
-      coordPath[i].lng = coords[i][1];
+  _parseGeoms(geom) {
+    const geomArray = [];
+    if (geom.type === "GeometryCollection") {
+      for (let geometry of geom.geometries) {
+        geomArray.push(this._parseGeom(geometry));
+      }
+    } else {
+      geomArray.push(this._parseGeom(geom));
     }
-    return coordPath;
+    return geomArray;
   },
+  _parseGeom(geometry) {
+    switch(geometry.type) {
+      case "LineString":
+        return geometry.coordinates.map((coord) => {
+          return new google.maps.LatLng(coord[0], coord[1]);
+        });
+
+      default:
+          return geometry.coordinates.map((coupleCoord) => {
+            return coupleCoord.map(coord => {
+              return new google.maps.LatLng(coord[0], coord[1]);
+            });
+          }).flat(Infinity);
+    }
+  }
 }
 

@@ -4,6 +4,7 @@ export class JSONUtils{
     this.bikeHeatMapOn = false;
     this.currentRoadClosureLocationsOn = false;
     this.bikeAccidentMarkersOn = false;
+    this.upcomingProjects = false;
     this.layers = {};
     this.map = map;
     
@@ -130,7 +131,7 @@ getOffsetLocation(lat, long, dir, distance){
 
   toggleCurrentRoadClosureLocations(on){
     let currentRoadClosureData = null;
-    if(on == true && this.currentRoadClosureLocationsOn == false){
+    if(on && !this.currentRoadClosureLocationsOn){
       Projects.getCurrentRoadClosureLocations().then((data) => {
         let paths = Projects.drawCurrentRoadClosureLocations(data);
         this.layers.currentRoadClosures = paths;
@@ -145,39 +146,53 @@ getOffsetLocation(lat, long, dir, distance){
   }
   }
 
-  reloadData(params){
+  reloadData(params) {
     if(this.bikeHeatMapOn) this.toggleBikeHeatMaps(false); // turn the bike heat map off if on.
     if(this.currentRoadClosureLocationsOn) this.toggleCurrentRoadClosureLocations(false); // turn the current road collisions map if on.
     //49.28930634203633 -123.12517973696282 49.28619923209591 -123.13281866823723
     //robson jervis
   }
   
-  async addBikeAccidentClusters() {
-    const coords = Bike.getAccidentCoords(await Bike.getAccidents());
-    if (this.bikeAccidentMarkersOn) {
-      const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
-      const markerCluster = new MarkerClusterer(this.map, markers,
-        {
-          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-        }
-      );
+  async addBikeAccidentClusters(on) {
+      if (on && this.bikeAccidentMarkersOn == false) {
+        const coords = Bike.getAccidentCoords(await Bike.getAccidents());
+        const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
+        this.layers.bikeAccidentMarkers = markers;
+        this.bikeAccidentMarkersOn = true;
+        const markerCluster = new MarkerClusterer(this.map, markers,
+          {
+            imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+          }
+        );
+        this.markerCluster = markerCluster;
+    } else {
+      this.bikeAccidentMarkersOn = false;
+      for (let i = 0; i < this.layers.bikeAccidentMarkers; i++) {
+        this.layers.bikeAccidentMarkers.setMap(null);
+      }
+      this.layers.bikeAccidentMarkers = [];
+      this.markerCluster.clearMarkers();
+
     }
   }
+
   async drawUpcomingProjects() {
     const paths = Projects.getProjectCoords(await Projects.getUpcomingProjects());
+
     paths.forEach(path => {
-      const flightPath = new google.maps.Polyline({
-        path: path,
+      console.log(typeof path[0][0].lat)
+      const constructionPath = new google.maps.Polyline({
+        path: path[0],
         geodesic: true,
         strokeColor: '#FFFF00',
         strokeOpacity: 1.0,
-        strokeWeight: 2
+        strokeWeight: 4
       });
-      flightPath.setMap(this.map);
+      constructionPath.setMap(this.map);
     });
   }
 
-  async getCroppedEntries(latMin, latMax, lngMin, lngMax) {
+  async drawCroppedBikeData(latMin, latMax, lngMin, lngMax) {
     let cropData = [];
 
     let bikeData = Bike.getAccidentCoords(await Bike.getAccidents());
@@ -188,7 +203,13 @@ getOffsetLocation(lat, long, dir, distance){
         }
       }
     });
-    return cropData;
+
+    const markers = cropData.map((coord) => new google.maps.Marker({position: coord}));
+    const markerCluster = new MarkerClusterer(this.map, markers,
+      {
+        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+      }
+    );
   }
 }
 
