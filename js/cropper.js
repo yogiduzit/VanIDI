@@ -61,11 +61,9 @@ $('#map').on('click', function() {
                 object.minLat = currentSW.lat();
                 object.maxLng = currentNE.lng();
                 object.minLng = currentSW.lng();
-                localStorage.removeItem("cropData");
                  window.utils.drawCroppedBikeData(object.minLat, object.maxLat, object.minLng, object.maxLng).then(data => {
 
                     localStorage.setItem("cropData", JSON.stringify(data));
-                    console.log(localStorage.getItem('cropData'));
                     window.table.setData(localStorage.getItem('cropData'));
                  });
                
@@ -85,7 +83,13 @@ $('#map').on('click', function() {
                 currentNE = this.getBounds().getNorthEast();
                 currentSW = this.getBounds().getSouthWest();
                 currentShape = this;
-                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+                localStorage.removeItem("cropData");
+                console.log(currentNE.lat(), currentSW.lat(),currentSW.lng(), currentNE.lng());
+                window.utils.drawCroppedBikeData(currentSW.lat(), currentNE.lat(), currentSW.lng(), currentNE.lng()).then(data => {
+                    console.log(data);
+                   localStorage.setItem("cropData", JSON.stringify(data));
+                   window.table.setData(localStorage.getItem('cropData'));
+                });
             });
         }
         else if(modePoly){
