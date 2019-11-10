@@ -49,6 +49,15 @@
                 ]
             },
             {
+                "featureType": "poi.park",
+                "elementType": "all",
+                "stylers": [
+                {
+                    "visibility": "on"
+                }
+                ]
+            },
+            {
                 "featureType": "road",
                 "elementType": "all",
                 "stylers": [
@@ -92,7 +101,7 @@
                 "elementType": "all",
                 "stylers": [
                 {
-                    "color": "#10ade4"
+                    "color": "#67bfe7"
                 },
                 {
                     "visibility": "on"
