@@ -35,3 +35,7 @@ body {
 #col-filter-dropout{
   background-color: #4889b2;
 }
+
+#datatable {
+  z-index: 999;
+}
