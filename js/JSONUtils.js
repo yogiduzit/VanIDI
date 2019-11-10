@@ -1,4 +1,5 @@
-class JSONUtils{
+import {Bike} from "/js/data/requests.js";
+export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
     this.layers = {};
@@ -7,9 +8,14 @@ class JSONUtils{
 
 //must have heatmaps
 toggleBikeHeatMaps(on){
+  let bikeVolumeData = null;
   if(on == true && this.bikeHeatMapOn == false){
-    let bikeData = connectBikeData().then( (data) =>{
-      this.addBikeHeatLayer(data);
+    Bike.getBikeData().then((bikeData) => {
+      Bike.getBikeVolumeCounterLocations().then(volumeData => {
+        bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
+        this.addBikeHeatLayer(bikeVolumeData);
+        this.bikeHeatMapOn = true;
+      });
     });
   }else{
     this.layers.bike.setMap(null);
