@@ -1,26 +1,17 @@
 var rectangle;
+var counter = 0;
+var currentNE;
+var currentSW;
 
-function showNewRect(event) {
-    var ne = rectangle.getBounds().getNorthEast();
-    var sw = rectangle.getBounds().getSouthWest();
-
-    var contentString = '<b>Rectangle co-ords.</b><br>BOIIIIIIIIII<br>' +
-        'north-east:' + ne.lat() + ', ' + ne.lng() + '<br>' +
-        'south-west: ' + sw.lat() + ', ' + sw.lng();
-
-    // Set the info window's content and position.
-    infoWindow.setContent(contentString);
-    infoWindow.setPosition(ne);
-
-    infoWindow.open(map);
-  }
+// function showNewRect(event) {
+//   }
 
 function isCtrlDown(event){
     if(event.ctrlKey){
         google.maps.event.addListener(map, "click", function (event) {
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
-            console.log( latitude + ', ' + longitude );
+            //console.log( latitude + ', ' + longitude );
             var bounds = {
                 north: latitude,
                 south: latitude,
@@ -31,10 +22,29 @@ function isCtrlDown(event){
                 bounds: bounds,
                 editable: true,
                 map: map,
-                draggable: true
+                draggable: true,
+                title: "Window" + counter
             })
-            rectangle.addListener('bounds_changed', showNewRect);
+            counter++;
+
+            var infoWindow = new google.maps.InfoWindow({
+                content: this.title
+              });
+
+              rectangle.addListener('click', function(){
+                currentNE = this.getBounds().getNorthEast();
+                currentSW = this.getBounds().getSouthWest();
+                //infoWindow.setPosition(this.getCenter());
+                infoWindow.open(map);
+                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+            });
+            
+            // google.maps.event.addListener(rectangle, "click", function(e) {
+
+                
+            // });
         });
+       
     }
 }
 
