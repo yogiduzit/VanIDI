@@ -191,7 +191,6 @@
   <!-- JSONUtil Filters -->
 
 
-
   <!-- Cropper JS -->
   <script src="js/cropper.js" type = "module"></script>
 
@@ -200,7 +199,10 @@
     import {Bike, Projects} from '/js/data/requests.js'
     window.utils = new JSONUtils(map);
 
-      var utils = new JSONUtils(map);
+      Bike.getAccidents().then(data => {
+        utils.bikeAccidentMarkersOn = true;
+        utils.addBikeAccidentClusters(Bike.getAccidentCoords(data));
+      });
       utils.bikeAccidentMarkersOn = true;
       utils.bikeHeatMapOn = true;
       utils.toggleBikeHeatMaps(map);
@@ -210,7 +212,6 @@
       utils.toggleBikeHeatMaps(true);
       utils.toggleCurrentRoadClosureLocations(true);
   
-      console.log(utils);
       setTimeout(function(){
         utils.reloadData();
       }, 5000);
