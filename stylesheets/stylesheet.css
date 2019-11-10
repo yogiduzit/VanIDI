@@ -12,6 +12,7 @@ html { font-family: 'Inter', sans-serif; }
   z-index: -1;
 }
 
+
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
@@ -27,6 +28,15 @@ body {
   background-color: #005c82;
 }
 
+.btn-pri{
+  background-color: #0BADBF;
+  color: white;
+}
+
+.btn-mode-active{
+  background-color: #6CB33F !important; 
+}
+
 .interact-none{
   pointer-events: none;
 }
@@ -36,8 +46,8 @@ body {
 }
 
 #adv-select-section{
-  display: none;
   visibility: hidden;
+  display: none;
 }
 
 #container-header{
@@ -80,6 +90,10 @@ body {
 
 #header-row-1{
   color: white;
+}
+
+#header-row-2{
+  
 }
 
 #light-van{
