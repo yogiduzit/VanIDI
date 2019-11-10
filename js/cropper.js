@@ -26,7 +26,7 @@ $().keydown(function(){
 });
 
 
-    $('#map').on('click', function(){
+    $('#map').on('click', function() {
         google.maps.event.addListener(map, "click", function (event) { 
         if(cntrlIsPressed){    
             var latitude = event.latLng.lat();
