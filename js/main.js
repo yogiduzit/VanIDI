@@ -35,9 +35,56 @@ $("#mode-adv-btn").click(function(){
 	$(this).addClass('btn-mode-active');
 	modeRec = false;
 	modeCir = false;
-	modePoly = true;
+	modePoly = false;
 
 });
+
+
+$('#display-heatmap-btn').click(function(){
+	// $('#display-heatmap-btn').toggleClass('btn-mode-active');
+	// console.log(window.utils);
+	// if ($('#display-heatmap-btn').hasClass('btn-mode-active')){
+	// 	window.utils.toggleBikeHeatMaps(true);
+	// } else{
+	// 	window.utils.toggleBikeHeatMaps(false);
+	// }
+});
+
+$('#display-marker-btn').click(function(){
+	// $('#display-marker-btn').toggleClass('btn-mode-active');
+	// if ($('#display-marker-btn').hasClass('btn-mode-active')){
+		
+	// } else{
+		
+	// }
+});
+$("#saveChanges").click(function(){
+	if ($('#dialBicycle').is(":checked")){
+		$('#listBicycle').show();
+	}
+	else{
+		$('#listBicycle').hide();
+	}
+	if ($('#dialCurRoad').is(":checked")){
+		$('#listCurRoad').show();
+	}
+	else {
+		$('#listCurRoad').hide();
+	}
+	if ($('#dialUpRoad').is(":checked")){
+		$('#listUpRoad').show();
+	}
+	else {
+		$('#listUpRoad').hide();
+	}
+
+});
+
+
+$('.close').click(function(){
+	$("#" + $(this).parent().attr('id')).hide();
+	
+})
 
 
 

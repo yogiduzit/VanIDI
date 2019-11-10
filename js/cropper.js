@@ -57,6 +57,7 @@ $('#map').on('click', function() {
                 currentSW = this.getBounds().getSouthWest();
                 currentShape = this;
                 console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+<<<<<<< HEAD
                 let object = {};
                 object.maxLat = currentNE.lat();
                 object.minLat = currentSW.lat();
@@ -64,10 +65,11 @@ $('#map').on('click', function() {
                 object.minLng = currentSW.lng();
 
                 window.utils.drawCroppedBikeData(object.minLat, object.maxLat, object.minLng, object.maxLng);
+=======
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
             });
         }
         else if(modeCir){
-            console.log("test")
             circle = new google.maps.Circle({
                 editable: true,
                 map: map,
@@ -76,7 +78,6 @@ $('#map').on('click', function() {
                 radius: 100,
                 title: "Window" + counter
             })
-            console.log("test");
             circle.addListener('click', function(){
                 currentNE = this.getBounds().getNorthEast();
                 currentSW = this.getBounds().getSouthWest();
@@ -96,16 +97,18 @@ $('#map').on('click', function() {
             rectPoly.addListener('click', function(e) {
                 currentNE = this.getPath();
                 console.log(this.title, currentNE.getAt(0).lat());
+                currentShape = this;
                 //rotatePolygon(rectPoly,10);
             });
 
         }
-        
         counter++;
+<<<<<<< HEAD
 
+=======
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
         $('#map').keyup(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
-
             if(code == 8){
                 currentShape.setMap(null);
             }
@@ -179,19 +182,3 @@ function rotatePoint(point, origin, angle) {
         y: Math.sin(angleRad) * (point.x - origin.x) + Math.cos(angleRad) * (point.y - origin.y) + origin.y
     };
 }
-
-
-$(document).ready(function(){
-    //utils.bikeAccidentMarkersOn = true;
-    //utils.bikeHeatMapOn = true;
-    //utils.toggleBikeHeatMaps(map);
-    //utils.addBikeAccidentClusters();
-    //utils.drawUpcomingProjects();
-
-    //utils.toggleBikeHeatMaps(false);
-    //utils.toggleCurrentRoadClosureLocations(false);
-
-    setTimeout(function(){
-      //utils.reloadData();
-    }, 5000);
-});

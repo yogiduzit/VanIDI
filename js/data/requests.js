@@ -191,6 +191,7 @@ export const Projects ={
   },
 }
 export const Traffic = {
+<<<<<<< HEAD
   async getTrafficData(time){
     let res = await fetch(`${BASE_URL}/?dataset=intersection-counts-2010-2017-mod&refine.year=2017&rows=500&refine.year=2017&refine.peak_hour=${time}%3A00&apikey=${APIKEY}`);
     let data = await res.json();
@@ -218,3 +219,6 @@ export const Traffic = {
   }
 }
 
+=======
+}
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
