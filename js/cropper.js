@@ -2,27 +2,27 @@ var rectangle;
 var counter = 0;
 var currentNE;
 var currentSW;
+
 var rectPoly;
 var currentRectangle;
 
 var cntrlIsPressed = false;
 
-// function showNewRect(event) {
-//   }
-
-$(document).keydown(function(event){
-    if(event.which=="17")
+//key for control is 17 
+$(document).keydown(function (event) {
+    if (event.which == "17")
         cntrlIsPressed = true;
 });
 
-$(document).keyup(function(){
-    if(event.which=="17")
+$(document).keyup(function () {
+    if (event.which == "17")
         cntrlIsPressed = false;
 });
 
 $().keydown(function(){
     if(event.which=="8")
         cntrlIsPressed = false;
+
 });
 
 
@@ -31,6 +31,7 @@ $().keydown(function(){
         if(cntrlIsPressed){    
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
+
             var bounds = {
                 north: latitude,
                 south: latitude,
