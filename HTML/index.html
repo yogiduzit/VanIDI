@@ -12,6 +12,11 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <!-- Table CSS (Tabulator) -->
+    <link
+      href="https://unpkg.com/tabulator-tables@4.4.3/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
     <!-- Custom -->
     <link rel="stylesheet" href="stylesheets/stylesheet.css" />
   </head>
@@ -89,8 +94,6 @@
       </div>
     </div>
 
-    <div id="dataTable"></div>
-
     <!-- Load jQuery -->
     <script src="js/jquery-3.4.1.js"></script>
     <!-- Bootstrap js -->
@@ -115,42 +118,10 @@
     <script src="js/map.js"></script>
     <!-- Cropper JS -->
     <script src="js/cropper.js"></script>
+    <!-- JS for Table -->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"
+    ></script>
   </body>
-
-  <script>
-    var tabledata = [
-      {
-        id: 1,
-        name: "Billy Bob",
-        age: 12,
-        gender: "male",
-        height: 95,
-        col: "red",
-        dob: "14/05/2010"
-      },
-      {
-        id: 2,
-        name: "Jenny Jane",
-        age: 42,
-        gender: "female",
-        height: 142,
-        col: "blue",
-        dob: "30/07/1954"
-      },
-      {
-        id: 3,
-        name: "Steve McAlistaire",
-        age: 35,
-        gender: "male",
-        height: 176,
-        col: "green",
-        dob: "04/11/1982"
-      }
-    ];
-    //define table
-    var table = new Tabulator("#dataTable", {
-      data: tableData,
-      autoColumns: true
-    });
-  </script>
 </html>
