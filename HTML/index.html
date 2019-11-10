@@ -1,33 +1,166 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Simple Map</title>
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
   <!-- Boostrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Animate.css -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+  <!-- Table CSS (Tabulator) -->
+    <link href="dist/css/tabulator.min.css" rel="stylesheet" />
+    <link
+      href="https://unpkg.com/tabulator-tables@4.4.3/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"
+    ></script>
+    <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
   <!-- Custom -->
   <link rel="stylesheet" href="stylesheets/stylesheet.css">
 </head>
 
 <body>
-    <div id="container-header" class="container-fluid text-center">
+  
+  <script>
+      //define data
+      var tabledata = [
+        {
+          id: 1,
+          name: "Oli Bob",
+          location: "United Kingdom",
+          gender: "male",
+          rating: 1,
+          col: "red",
+          dob: "14/04/1984"
+        },
+        {
+          id: 2,
+          name: "Mary May",
+          location: "Germany",
+          gender: "female",
+          rating: 2,
+          col: "blue",
+          dob: "14/05/1982"
+        },
+        {
+          id: 3,
+          name: "Christine Lobowski",
+          location: "France",
+          gender: "female",
+          rating: 0,
+          col: "green",
+          dob: "22/05/1982"
+        },
+        {
+          id: 4,
+          name: "Brendon Philips",
+          location: "USA",
+          gender: "male",
+          rating: 1,
+          col: "orange",
+          dob: "01/08/1980"
+        },
+        {
+          id: 5,
+          name: "Margret Marmajuke",
+          location: "Canada",
+          gender: "female",
+          rating: 5,
+          col: "yellow",
+          dob: "31/01/1999"
+        },
+        {
+          id: 6,
+          name: "Frank Harbours",
+          location: "Russia",
+          gender: "male",
+          rating: 4,
+          col: "red",
+          dob: "12/05/1966"
+        },
+        {
+          id: 7,
+          name: "Jamie Newhart",
+          location: "India",
+          gender: "male",
+          rating: 3,
+          col: "green",
+          dob: "14/05/1985"
+        },
+        {
+          id: 8,
+          name: "Gemma Jane",
+          location: "China",
+          gender: "female",
+          rating: 0,
+          col: "red",
+          dob: "22/05/1982"
+        },
+        {
+          id: 9,
+          name: "Emily Sykes",
+          location: "South Korea",
+          gender: "female",
+          rating: 1,
+          col: "maroon",
+          dob: "11/11/1970"
+        },
+        {
+          id: 10,
+          name: "James Newman",
+          location: "Japan",
+          gender: "male",
+          rating: 5,
+          col: "red",
+          dob: "22/03/1998"
+        }
+      ];
+
+      //define table
+      var table = new Tabulator("#dataTable", {
+        height: "225px",
+        layout: "fitColumns",
+        data: tabledata,
+        autoColumns: true
+      });
+
+      //trigger download of data.csv file
+      $("#download-csv").click(function() {
+        table.download("csv", "data.csv");
+      });
+
+      //trigger download of data.json file
+      $("#download-json").click(function() {
+        table.download("json", "data.json");
+      });
+
+      //trigger download of data.xlsx file
+      $("#download-xlsx").click(function() {
+        table.download("xlsx", "data.xlsx", { sheetName: "My Data" });
+      });
+    </script>
+  
+  
+  <div id="container-header" class="container-fluid text-center animated fadeIn">
     <!-- Branding/ Login Row -->
-    <div class="row my-2 align-middle">
-      <div class="col-2 text-left">Logo</div>
+    <div class="header-row row py-2 align-middle">
+      <h1 class="col-2 text-left">Logo</h1>
       <div class="col-3 text-right ml-auto">
         <button type="button" class="btn btn-primary">Login</button>
       </div>
     </div>
     <!-- Input Row -->
-    <div class="row">
+    <div id="header-row-2" class="header-row row">
       <div class="col-2">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
+          <label class="btn btn-primary active">
             <input type="radio" name="options" id="option1" autocomplete="off" checked> Street Mode
           </label>
-          <label class="btn btn-secondary">
+          <label class="btn btn-primary">
             <input type="radio" name="options" id="option2" autocomplete="off"> Intersection Mode
           </label>
         </div>
@@ -35,21 +168,120 @@
       <!-- Intersection Input Form -->
       <div class="col-5 text-left mr-auto">
         <div class="input-group align-middle">
-          <span class="mx-2">Intersection of</span>
+          <span class="mx-2 align-middle">Intersection of</span>
           <input type="text" class="form-control" name="intersection-street1">
-          <span class="mx-2">and</span>
+          <span class="mx-2 align-middle">and</span>
           <input type="text" class="form-control" name="intersection-street2">
-          <span class="mx-2">km Radius: </span>
+          <span class="mx-2 align-middle">km Radius: </span>
           <input type="number" class="form-control" name="intersection-radius" min="0">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary text-white" type="button">Submit</button>
+            <button class="btn btn-primary text-white" type="button">Submit</button>
           </div>
         </div>
       </div>
-      <div id="col-filter-dropout" class="col-2 ml-auto">Filter panel</div>
     </div>
-    <div id="row-map" class="row">
-          <div id="map"></div>
+    <!-- Filter SidePane -->
+    <div id="filter-map-row" class="row animated fadeIn">
+      <div id="row-map" class="col-10 p-0">
+        <div id="map" onmousedown="isCtrlDown(event)"></div>
+            <!-- TABLE -->
+        <div id="container-table" class="fixed-bottom">
+          <div id="dataTable"></div>
+        </div>
+      </div>
+      <div id="filter-panel" class="col-2 ml-auto text-left pt-3">
+        <h4 id="filter-panel-title" class="mb-3">Filters and Export</h4>        
+        <div class="accordion mb-3" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Datasets
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#select-dataset-modal">+ Add a dataset</button>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Filters
+                </button>
+              </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                <h6>Data to Include: </h6>
+                <div class="dropdown-divider"></div>
+                <div>
+                  <input type="checkbox" name="Vehicle"> Vehicle Data
+                </div>
+                <div>
+                  <input type="checkbox" name="Bicyclist"> Bike Data
+                </div>
+                <div>
+                  <input type="checkbox" name="Pedestrian"> Pedestrian
+                </div>
+
+                <div class="dropdown-divider"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Enter filename">
+          <div class="input-group-append">
+            <button id="file-type-btn" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">.csv</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item file-type-selector" href="#">.csv</a>
+              <a class="dropdown-item file-type-selector" href="#">.xlsx</a>
+              <a class="dropdown-item file-type-selector" href="#">.shp</a>
+            </div>
+          </div>
+        </div>
+        <div class="text-right mt-3">
+          <button class="btn btn-primary" type="submit">Export</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="select-dataset-modal" tabindex="-1" role="dialog" aria-labelledby="select-dataset-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="select-dataset-modal-title">Select datasets</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control" id="dataset-modal-search" aria-describedby="dataset-search" placeholder="Search">
+          <div class="dropdown-divider"></div>
+          <ul id="datasets-list" class="list-group">
+            <li class="list-group-item"> 
+              <input type="checkbox" name="Pedestrian"> Bicycle Count
+            </li>
+            <li class="list-group-item"> 
+              <input type="checkbox" name="Pedestrian"> Current Road Construction Projects
+            </li>
+            <li class="list-group-item"> 
+              <input type="checkbox" name="Pedestrian"> Upcoming Road Conrstruction Projects
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -61,132 +293,33 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!-- Requests -->
   <script src="data/requests.js" type="module"></script>
+  <!-- JSONUTils -->
+  <script type="text/javascript" src="js/JSONUTils.js"></script>
   <!-- JS for Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
   <script src="js/map.js"></script>
   <!-- Cropper JS -->
   <script src="js/cropper.js"></script>
+  <!-- Tabulator JS --> 
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"></script>
+  <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
+  <script type="text/javascript" src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+  <!-- Main custom -->
+  <script type="text/javascript" src="js/main.js"></script>
+  <!-- JSONUtil Filters -->
+  <script type = "module">
+  import {JSONUtils} from "/js/JSONUtils.js";
+  import {Bike, Projects} from '/js/data/requests.js'
 
-</body>
+  // Bike.getAccidents().then(data => {
+  //   utils.bikeAccidentMarkersOn = true;
+  //   utils.addMarkers(Bike.getAccidentCoords(data));
+  // });
 
-</html>
-
-
-<script>
-  let bikeData = connectBikeData().then( (data) =>{
-    addLinesToMap(data);
-
+  Projects.getUpcoming().then(data => {
+    utils.drawUpcomingProjects(Projects.getProjectCoords(data));
   });
-
-async function connectBikeData(){
-
-    let bikeCounts = await getAverageBikeData();
-    let countsLocations = await getBikeLocations();
-    //join data 
-      for(c in bikeCounts){
-        bikeCounts[c].lat = countsLocations[c].lat;
-        bikeCounts[c].lng = countsLocations[c].lng;
-        bikeCounts[c].dir = countsLocations[c].dir;
-
-      }
-    return bikeCounts;
-
-}
-
-async function getAverageBikeData(){
-
-  //Retrieving bike counts information 
-  let resCounts = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-data-2015jan-2019jul&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
-    return res;
-  });
-
-
-  let countsJSON = await resCounts.json().then((data) =>{
-    let countObjects = {};
-    data.records.forEach(element => {
-      for(e in element.fields){
-        if(e == "date") continue;
-        if(countObjects[e]){
-          countObjects[e].total += typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
-          countObjects[e].count++;
-
-        }else{
-          countObjects[e] = {};
-          countObjects[e].total = typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
-          countObjects[e].count = 1;
-        }
-      }
-    });
-
-    for(c in countObjects){
-      countObjects[c].average = countObjects[c].total/countObjects[c].count;
-    }
-    return countObjects;
-  });
-
-  return countsJSON;
-  
-}
-
-async function getBikeLocations(){
-
-    //Retrieving bike location information 
-    let resLocations = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-volume-counter-locations&rows=1000&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
-      return res;
-    });
-
-    let locationObjects = {};
-    let locationData = await resLocations.json().then((data) =>{
-      data.records.forEach(element => {
-
-        //Edit the text names
-        let text = element.fields["counters"];
-        
-        text = text.replace('_', ' ').replace('&', '').replace(/\s{2,}/g,' ').split(' ').filter(word => word !== '-').map(word => word.toLowerCase()).join('_');
-
-        //Add our data to the location objects
-        locationObjects[text] = {};
-        locationObjects[text].lat = element.fields["latitude"];
-        locationObjects[text].lng = element.fields["longitude"];
-
-        switch(true){
-          case text.includes('westb'):
-            locationObjects[text].dir = 'west';
-            break;
-          case text.includes('eastb'):
-            locationObjects[text].dir = 'east';
-            break;
-          case text.includes('northb'):
-            locationObjects[text].dir = 'north';
-            break;
-          default:
-            locationObjects[text].dir = 'south';
-        }
-
-      });    
-    });
-
-
-    return locationObjects;
-}
-
-// returns the distance from one point on a map to another. 
-function getDistanceFrom(coord1,coord2) {
-
-  let R = 6371; // Radius of the earth in km
-  let dLat = deg2rad(coord2.lat-coord1.lat);  // deg2rad below
-  let dLon = deg2rad(coord2.lng-coord1.lng); 
-  let a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-          Math.cos(deg2rad(coord1.lat)) * Math.cos(deg2rad(coord2.lat)) * 
-          Math.sin(dLon/2) * Math.sin(dLon/2); 
-
-  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  let d = R * c; // Distance in km
-  return d;
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI/180); 
-}
 </script>
+</body>
+</html>
