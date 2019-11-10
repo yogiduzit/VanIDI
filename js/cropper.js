@@ -57,13 +57,6 @@ $('#map').on('click', function() {
                 currentSW = this.getBounds().getSouthWest();
                 currentShape = this;
                 console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
-                let object = {};
-                object.maxLat = currentNE.lat();
-                object.minLat = currentSW.lat();
-                object.maxLng = currentNE.lng();
-                object.minLng = currentSW.lng();
-                console.log(object);
-                console.log(window.utils);
             });
         }
         else if(modeCir){
@@ -181,19 +174,3 @@ function rotatePoint(point, origin, angle) {
         y: Math.sin(angleRad) * (point.x - origin.x) + Math.cos(angleRad) * (point.y - origin.y) + origin.y
     };
 }
-
-
-$(document).ready(function(){
-    //utils.bikeAccidentMarkersOn = true;
-    //utils.bikeHeatMapOn = true;
-    //utils.toggleBikeHeatMaps(map);
-    //utils.addBikeAccidentClusters();
-    //utils.drawUpcomingProjects();
-
-    //utils.toggleBikeHeatMaps(false);
-    //utils.toggleCurrentRoadClosureLocations(false);
-
-    setTimeout(function(){
-      //utils.reloadData();
-    }, 5000);
-});

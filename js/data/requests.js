@@ -1,4 +1,4 @@
-import { BASE_URL, B_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/url.js';
+import { BASE_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/url.js';
 
 export const Bike =  {
   async getBikeData() {
