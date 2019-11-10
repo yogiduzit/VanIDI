@@ -141,7 +141,8 @@ getOffsetLocation(lat, long, dir, distance){
       );
     }
   }
-  drawUpcomingProjects(paths) {
+  async drawUpcomingProjects() {
+    const paths = Projects.getProjectCoords(await Projects.getUpcoming());
     paths.forEach(path => {
       const flightPath = new google.maps.Polyline({
         path: path,
@@ -153,4 +154,18 @@ getOffsetLocation(lat, long, dir, distance){
       flightPath.setMap(this.map);
     });
   }
+  async getCroppedEntries(latMin, latMax, lngMin, lngMax) {
+    let cropData = [];
+
+    let bikeData = Bike.getAccidentCoords(await Bike.getAccidents());
+    bikeData.forEach((coord) => {
+      if (coord.lat && coord.lng) {
+        if (coord.lat >= latMin && coord.lat <= latMax && coord.lng >= lngMin && coord.lng <= lngMax) {
+          cropData.push(coord);
+        }
+      }
+    });
+    return cropData;
+  }
+
 }

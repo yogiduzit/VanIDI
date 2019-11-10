@@ -308,10 +308,9 @@
     utils.bikeAccidentMarkersOn = true;
     utils.addBikeAccidentClusters(Bike.getAccidentCoords(data));
   });
-
-  Projects.getUpcoming().then(data => {
-    utils.drawUpcomingProjects(Projects.getProjectCoords(data));
-  });
+  utils.getCroppedEntries(49.248863681, 49.2615734218, -123.147790432 ,-123.104944825).then(data => {
+  })
+  utils.drawUpcomingProjects();
 </script>
 </body>
 </html>
