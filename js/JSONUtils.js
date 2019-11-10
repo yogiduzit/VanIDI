@@ -140,9 +140,7 @@ export class JSONUtils{
   }
 
   reloadData(params){
-    console.log(params);
     if(this.bikeHeatMapOn == true) {
-      console.log('turned off');
       this.toggleBikeHeatMaps(false,null);
     }// turn the bike heat map off if on.
     if(this.currentRoadClosureLocationsOn == true) {
@@ -195,7 +193,6 @@ export class JSONUtils{
     let records = [];
     data.records.forEach((r) =>{
       let record = {}; 
-      console.log(r);
       record.lat = r.fields.latitude;
       record.lng = r.fields.longitude;
       record.date = r.fields.date;
@@ -203,7 +200,6 @@ export class JSONUtils{
       record.injury = r.fields.injury;
       records.push(record);
     });
-    console.log(records);
     return records;
 
   }
