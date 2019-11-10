@@ -3,12 +3,27 @@ var counter = 0;
 var currentNE;
 var currentSW;
 
+var cntrlIsPressed = false;
+
 // function showNewRect(event) {
 //   }
 
-function isCtrlDown(event){
-    if(event.ctrlKey){
-        google.maps.event.addListener(map, "click", function (event) {
+$(document).keydown(function(event){
+    if(event.which=="17")
+        cntrlIsPressed = true;
+        console.log("keyDown");
+});
+
+$(document).keyup(function(){
+    if(event.which=="17")
+        cntrlIsPressed = false;
+        console.log("keyUp");
+});
+
+
+    $('#map').on('click', function(){
+        google.maps.event.addListener(map, "click", function (event) { 
+        if(cntrlIsPressed){    
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
             //console.log( latitude + ', ' + longitude );
@@ -43,8 +58,8 @@ function isCtrlDown(event){
 
                 
             // });
-        });
-       
-    }
-}
+        };
+        cntrlIsPressed = false;
+    });
+    });
 
