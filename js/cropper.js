@@ -1,4 +1,3 @@
-
 //Shapes
 var rectangle;
 var circle;

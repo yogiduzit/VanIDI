@@ -39,8 +39,6 @@ $("#mode-adv-btn").click(function(){
 
 });
 
-
-
 function setModeText(stringToSet){
 	$("#modeText").text(stringToSet);
 }
