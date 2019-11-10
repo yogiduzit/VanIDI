@@ -2,13 +2,14 @@ import { BASE_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/
 
 export const Bike =  {
   async getBikeData() {
-    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&apikey=${APIKEY}`);
+    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&apikey=${APIKEY}&rows=2000`);
     let data = await res.json();
 
     return data;
   },
   async getBikeVolumeCounterLocations() {
-    let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=1082&apikey=${APIKEY}`);
+
+    let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=2000&apikey=${APIKEY}`);
     let data = await res.json();
 
     return data;
@@ -83,9 +84,9 @@ export const Bike =  {
 
       });    
       return bikeVolumeData;
-  },
+  }
 }
-export const Projects ={
+export const Projects = {
   async getCurrentRoadClosureLocations(){
     let res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-current-road-closures&rows=1000&facet=comp_date=${APIKEY_VANCOUVER}`);
     let data = await res.json();
@@ -143,6 +144,55 @@ export const Projects ={
       flightPaths.push(flightPath);
     });
     return flightPaths;
+  },
+  async getAccidents() {
+    const res = await fetch(`${BASE_URL}//?dataset=copy-of-city-of-vancouver&apikey=${APIKEY}&rows=2000`);
+    const data = await res.json();
+
+    return data;
+  },
+  getAccidentCoords(accidentData) {
+    const coords = [];
+    let counter = 0
+    for (let record of accidentData.records) {
+      console.log(record.fields.geopoint);
+      coords[counter] = {};
+      coords[counter].lat = record.fields.geopoint[0];
+      coords[counter].lng = record.fields.geopoint[1];
+      counter++;
+    }
+    return coords;
+  },
+  async getUpcoming() {
+    const res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-upcoming-projects&rows=1000&facet=comp_date&apikey=${APIKEY_VANCOUVER}`);
+    const data = await res.json();
+
+    return data;
+  },
+  getProjectCoords(projects) {
+    const coordsArrays = [];
+    projects.records.forEach((record, recIndex) => {
+      let coords = record.fields.geom.coordinates;
+      if (coords) {
+        if (typeof coords[0][0] === "number") {
+          coordsArrays.push(this._coordHelper(coords));
+        } else {
+          coords.forEach(coord => {
+            coordsArrays.push(this._coordHelper(coord));
+          });
+        } 
+      }
+    });
+    return coordsArrays;
+  },
+  _coordHelper(coords) {
+    const coordPath = [];
+    for (let i = 0; i < 2; i++) {
+      coordPath[i] = {};
+      coordPath[i].lat = coords[i][0];
+      coordPath[i].lng = coords[i][1];
+    }
+    return coordPath;
   }
 }
 

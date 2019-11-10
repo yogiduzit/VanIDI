@@ -2,6 +2,7 @@ import {Bike, Projects} from "/js/data/requests.js";
 export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
+    this.bikeAccidentMarkersOn = false;
     this.layers = {};
     this.map = map;
   }
@@ -10,14 +11,17 @@ export class JSONUtils{
 toggleBikeHeatMaps(on){
   let bikeVolumeData = null;
   if(on == true && this.bikeHeatMapOn == false){
+
     Bike.getBikeData().then((bikeData) => {
       Bike.getBikeVolumeCounterLocations().then(volumeData => {
+
         bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
         this.addBikeHeatLayer(bikeVolumeData);
         this.bikeHeatMapOn = true;
+
       });
     });
-  }else{
+  } else {
     this.layers.bike.setMap(null);
     this.bikeHeatMapOn = false;
   }
@@ -116,8 +120,8 @@ getOffsetLocation(lat, long, dir, distance){
         });
         attachInstructionText(marker, myRoute.steps[i].instructions);
         markerArray[i] = marker;
+      }
     }
-  }
 
   attachInstructionText(marker, text) {
     google.maps.event.addListener(marker, 'click', function() {
@@ -126,10 +130,28 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
-  testProjects(){
 
-    let currentData = Projects.getCurrentRoadClosureLocations().then( (data) =>{
-      Projects.drawCurrentRoadClosureLocations(data);
+  addBikeAccidentClusters(coords) {
+    if (this.bikeAccidentMarkersOn) {
+      const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
+      console.log(markers);
+      const markerCluster = new MarkerClusterer(this.map, markers,
+        {
+          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        }
+      );
+    }
+  }
+  drawUpcomingProjects(paths) {
+    paths.forEach(path => {
+      const flightPath = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: '#FFFF00',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+      flightPath.setMap(this.map);
     });
   }
 }

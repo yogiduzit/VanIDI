@@ -1,4 +1,3 @@
-
     var map;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
@@ -7,6 +6,7 @@
             mapTypeControl: false,
             scaleControl:true,
             zoomControl: false,
+            fullscreenControl: false,
             styles:
             [
             {
