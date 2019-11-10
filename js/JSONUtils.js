@@ -10,14 +10,17 @@ export class JSONUtils{
 toggleBikeHeatMaps(on){
   let bikeVolumeData = null;
   if(on == true && this.bikeHeatMapOn == false){
+
     Bike.getBikeData().then((bikeData) => {
       Bike.getBikeVolumeCounterLocations().then(volumeData => {
+
         bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
         this.addBikeHeatLayer(bikeVolumeData);
         this.bikeHeatMapOn = true;
+
       });
     });
-  }else{
+  } else {
     this.layers.bike.setMap(null);
     this.bikeHeatMapOn = false;
   }
@@ -116,8 +119,8 @@ getOffsetLocation(lat, long, dir, distance){
         });
         attachInstructionText(marker, myRoute.steps[i].instructions);
         markerArray[i] = marker;
+      }
     }
-  }
 
   attachInstructionText(marker, text) {
     google.maps.event.addListener(marker, 'click', function() {
@@ -126,5 +129,14 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
+  addMarkers(coords) {
+    const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
+    console.log(markers);
+    const markerCluster = new MarkerClusterer(this.map, markers,
+      {
+        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+      }
+    );
+  }
 
 }

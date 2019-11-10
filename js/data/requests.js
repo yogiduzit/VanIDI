@@ -83,5 +83,24 @@ export const Bike =  {
 
       });    
       return bikeVolumeData;
+  },
+  async getAccidents() {
+    const res = await fetch(`${BASE_URL}//?dataset=copy-of-city-of-vancouver&apikey=${APIKEY}`);
+    const data = await res.json();
+
+    return data;
+  },
+  getAccidentCoords(accidentData) {
+    const coords = [];
+    let counter = 0
+    for (let record of accidentData.records) {
+      console.log(record.fields.geopoint);
+      coords[counter] = {};
+      coords[counter].lat = record.fields.geopoint[0];
+      coords[counter].lng = record.fields.geopoint[1];
+      counter++;
+    }
+    console.log(coords);
+    return coords;
   }
 }
