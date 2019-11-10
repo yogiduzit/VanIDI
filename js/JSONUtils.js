@@ -134,7 +134,6 @@ getOffsetLocation(lat, long, dir, distance){
   addBikeAccidentClusters(coords) {
     if (this.bikeAccidentMarkersOn) {
       const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
-      console.log(markers);
       const markerCluster = new MarkerClusterer(this.map, markers,
         {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'

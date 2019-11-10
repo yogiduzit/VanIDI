@@ -93,7 +93,6 @@ export const Bike =  {
     const coords = [];
     let counter = 0
     for (let record of accidentData.records) {
-      console.log(record.fields.geopoint);
       coords[counter] = {};
       coords[counter].lat = record.fields.geopoint[0];
       coords[counter].lng = record.fields.geopoint[1];
