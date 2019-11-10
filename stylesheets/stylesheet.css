@@ -1,7 +1,11 @@
-@import url('https://rsms.me/inter/inter.css');
-html { font-family: 'Inter', sans-serif; }
+@import url("https://rsms.me/inter/inter.css");
+html {
+  font-family: "Inter", sans-serif;
+}
 @supports (font-variation-settings: normal) {
-  html { font-family: 'Inter var', sans-serif; }
+  html {
+    font-family: "Inter var", sans-serif;
+  }
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -12,92 +16,143 @@ html { font-family: 'Inter', sans-serif; }
   z-index: -1;
 }
 
+#logo {
+  background: -webkit-linear-gradient(left, #fff 15%, #ff9800 45%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
-.header-row{
+.header-row {
   color: white;
   pointer-events: auto;
-  background-color: #005c82;
+  background: linear-gradient(to right, #025c82 0%, #143143 84%);
 }
 
-.interact-none{
+.btn-pri {
+  background-color: #0badbf;
+  color: white;
+}
+
+.btn-hollow {
+  background-color: none;
+  color: white;
+  font-style: italic;
+}
+
+.btn-hollow:hover {
+  background-color: none;
+  color: cyan;
+  font-style: italic;
+}
+
+.btn-mode-active {
+  background-color: #6cb33f !important;
+}
+
+.interact-none {
   pointer-events: none;
 }
 
-.header-interact{
-  background-color: #005c82;
+.header-interact {
+  background-color: transparent;
 }
 
-#adv-select-section{
-  display: none;
+#adv-select-section {
   visibility: hidden;
+  display: none;
 }
 
-#container-header{
+#container-header {
   top: 0;
   left: 0;
   position: fixed;
   pointer-events: none;
   z-index: 999;
+  background: #005c82;
 }
 
-#col-filter-dropout{
-  
+#col-filter-dropout {
 }
 
-#container-table{
+#container-table {
   min-height: 225px;
   z-index: 999;
 }
 
-
+/*Theme the Tabulator element*/
 #dataTable {
-  
+  background-color: #ccc;
+  border: 1px solid #333;
 }
 
-#filter-map-row{
+/*Theme the header*/
+#dataTable .tabulator-col-content {
+  background-color: #143143;
+  color: #fff;
+  border-bottom: 2px solid #6cb33f;
+}
+
+/*Allow column header names to wrap lines*/
+#dataTable .tabulator-header .tabulator-col,
+#dataTable .tabulator-header .tabulator-col-row-handle {
+  white-space: normal;
+}
+
+#dataTable .tabulator-cell {
+  border-right: 1px solid #005c82;
+}
+/* end tabulator */
+
+#filter-map-row {
   pointer-events: none;
   opacity: 0;
 }
 
-#filter-panel{
+#filter-panel {
   height: 100vh;
   pointer-events: auto;
-  background-color: #005c82;
+  background: linear-gradient(#143143, #025c82);
   overflow-y: auto;
 }
 
-#filter-panel-title{
+#filter-panel-title {
   color: white;
 }
 
-#header-row-1{
+#header-row-1 {
   color: white;
 }
 
-#light-van{
+#header-row-2 {
+}
+
+#light-van {
   font-weight: 200;
 }
 
-#row-map{
+#row-map {
   height: 70vh;
   pointer-events: auto;
 }
 
-#mode-label{
+#mode-label {
   position: absolute;
   margin: 0;
-  top: 25%;
+  top: 19%;
+  font-weight: 300;
+  font-size: 13pt;
 }
 
-#logo{
+#logo {
   font-size: 36pt;
 }
 

@@ -188,7 +188,7 @@ export const Projects ={
       coordPath[i].lng = coords[i][1];
     }
     return coordPath;
-  }
+  },
 }
 export const Traffic = {
   async getTrafficData(time){

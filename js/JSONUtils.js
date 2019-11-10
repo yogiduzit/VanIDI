@@ -185,5 +185,18 @@ export class JSONUtils{
     console.log(data);
   }
 
+  async getCroppedEntries(latMin, latMax, lngMin, lngMax) {
+    let cropData = [];
+
+    let bikeData = Bike.getAccidentCoords(await Bike.getAccidents());
+    bikeData.forEach((coord) => {
+      if (coord.lat && coord.lng) {
+        if (coord.lat >= latMin && coord.lat <= latMax && coord.lng >= lngMin && coord.lng <= lngMax) {
+          cropData.push(coord);
+        }
+      }
+    });
+    return cropData;
+  }
 }
 
