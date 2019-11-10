@@ -7,9 +7,6 @@
   <meta charset="utf-8">
   <!-- Boostrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <!-- Table CSS (Tabulator) -->
-  <link href="https://unpkg.com/tabulator-tables@4.4.3/dist/css/tabulator.min.css"
-        rel="stylesheet"/>
   <!-- Custom -->
   <link rel="stylesheet" href="stylesheets/stylesheet.css">
 </head>
@@ -63,34 +60,133 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!-- Requests -->
-  <script src="/js/data/requests.js" type="module"></script>
-  <!-- JSONUtils-->
-  <script src="/js/JSONUtils.js" type = "module"></script>
+  <script src="data/requests.js" type="module"></script>
   <!-- JS for Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
-  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-  <script src="/js/map.js"></script>
+  <script src="js/map.js"></script>
   <!-- Cropper JS -->
-  <script src="/js/cropper.js"></script>
-  <!-- JS for Table -->
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"></script>
+  <script src="js/cropper.js"></script>
+
 </body>
 
 </html>
 
 
-<script type = "module">
-import {JSONUtils} from "/js/JSONUtils.js";
-import {Bike} from '/js/data/requests.js'
+<script>
+  let bikeData = connectBikeData().then( (data) =>{
+    addLinesToMap(data);
 
-  let utils = new JSONUtils(map);
-  utils.toggleBikeHeatMaps(true);
+  });
 
-  Bike.getAccidents().then(data => {
-    utils.addMarkers(Bike.getAccidentCoords(data));
-  })
+async function connectBikeData(){
+
+    let bikeCounts = await getAverageBikeData();
+    let countsLocations = await getBikeLocations();
+    //join data 
+      for(c in bikeCounts){
+        bikeCounts[c].lat = countsLocations[c].lat;
+        bikeCounts[c].lng = countsLocations[c].lng;
+        bikeCounts[c].dir = countsLocations[c].dir;
+
+      }
+    return bikeCounts;
+
+}
+
+async function getAverageBikeData(){
+
+  //Retrieving bike counts information 
+  let resCounts = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-data-2015jan-2019jul&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
+    return res;
+  });
 
 
+  let countsJSON = await resCounts.json().then((data) =>{
+    let countObjects = {};
+    data.records.forEach(element => {
+      for(e in element.fields){
+        if(e == "date") continue;
+        if(countObjects[e]){
+          countObjects[e].total += typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
+          countObjects[e].count++;
 
+        }else{
+          countObjects[e] = {};
+          countObjects[e].total = typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
+          countObjects[e].count = 1;
+        }
+      }
+    });
+
+    for(c in countObjects){
+      countObjects[c].average = countObjects[c].total/countObjects[c].count;
+    }
+    return countObjects;
+  });
+
+  return countsJSON;
+  
+}
+
+async function getBikeLocations(){
+
+    //Retrieving bike location information 
+    let resLocations = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-volume-counter-locations&rows=1000&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
+      return res;
+    });
+
+    let locationObjects = {};
+    let locationData = await resLocations.json().then((data) =>{
+      data.records.forEach(element => {
+
+        //Edit the text names
+        let text = element.fields["counters"];
+        
+        text = text.replace('_', ' ').replace('&', '').replace(/\s{2,}/g,' ').split(' ').filter(word => word !== '-').map(word => word.toLowerCase()).join('_');
+
+        //Add our data to the location objects
+        locationObjects[text] = {};
+        locationObjects[text].lat = element.fields["latitude"];
+        locationObjects[text].lng = element.fields["longitude"];
+
+        switch(true){
+          case text.includes('westb'):
+            locationObjects[text].dir = 'west';
+            break;
+          case text.includes('eastb'):
+            locationObjects[text].dir = 'east';
+            break;
+          case text.includes('northb'):
+            locationObjects[text].dir = 'north';
+            break;
+          default:
+            locationObjects[text].dir = 'south';
+        }
+
+      });    
+    });
+
+
+    return locationObjects;
+}
+
+// returns the distance from one point on a map to another. 
+function getDistanceFrom(coord1,coord2) {
+
+  let R = 6371; // Radius of the earth in km
+  let dLat = deg2rad(coord2.lat-coord1.lat);  // deg2rad below
+  let dLon = deg2rad(coord2.lng-coord1.lng); 
+  let a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+          Math.cos(deg2rad(coord1.lat)) * Math.cos(deg2rad(coord2.lat)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2); 
+
+  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  let d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180); 
+}
 </script>
