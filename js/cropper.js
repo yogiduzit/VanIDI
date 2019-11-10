@@ -1,3 +1,4 @@
+
 //Shapes
 var rectangle;
 var circle;
@@ -16,107 +17,108 @@ var currentNE;
 var currentSW;
 
 //holder for selected rectangle
-var currentRectangle;
+var currentShape;
 
 //flag for ctrl key press
 var cntrlIsPressed = false;
 
 //key for control is 17 
 $(document).keydown(function (event) {
-    if (event.which == "17")
+    if (event.which == "16")
         cntrlIsPressed = true;
 });
 
 $(document).keyup(function () {
-    if (event.which == "17")
+    if (event.which == "16")
         cntrlIsPressed = false;
 });
 
-$().keydown(function(){
-    if(event.which=="8")
-        cntrlIsPressed = false;
-
-});
-
-    $('#map').on('click', function() {
-        google.maps.event.addListener(map, "click", function (event) { 
-        if(cntrlIsPressed){    
-            var latitude = event.latLng.lat();
-            var longitude = event.latLng.lng();
-
-            var bounds = {
-                north: latitude,
-                south: latitude,
-                east: longitude,
-                west: longitude
-            }
-            if(modeRec){
-                rectangle = new google.maps.Rectangle({
-                    bounds: bounds,
-                    editable: true,
-                    map: map,
-                    draggable: true,
-                    title: "Window" + counter
-                })
-                rectangle.addListener('click', function(){
-                    currentNE = this.getBounds().getNorthEast();
-                    currentSW = this.getBounds().getSouthWest();
-                    currentShape = this;
-                    console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
-                });
-            }
-            else if(modeCir){
-                console.log("test")
-                circle = new google.maps.Circle({
-                    editable: true,
-                    map: map,
-                    draggable: true,
-                    center: {lat: latitude, lng: longitude},
-                    radius: 100,
-                    title: "Window" + counter
-                })
-                console.log("test");
-                circle.addListener('click', function(){
-                    currentNE = this.getBounds().getNorthEast();
-                    currentSW = this.getBounds().getSouthWest();
-                    currentShape = this;
-                    console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
-                });
-            }
-            else if(modePoly){
-                rectangle = new google.maps.Rectangle({
-                    bounds: bounds,
-                    editable: true,
-                    map: map,
-                    draggable: true,
-                    title: "Window" + counter
-                })
-                rectPoly = createPolygonFromRectangle(rectangle);
-                rectPoly.addListener('click', function(e) {
-                    currentNE = this.getPath();
-                    console.log(this.title, currentNE.getAt(0).lat());
-                    //rotatePolygon(rectPoly,10);
-                });
-    
-            }
-           
-            counter++;
-
-           
-            
-            $('#map').keyup(function(e){
-                var code = (e.keyCode ? e.keyCode : e.which);
-
-                if(code == 8){
-                    currentShape.setMap(null);
-                }
+$('#map').on('click', function() {
+    google.maps.event.addListener(map, "click", function (event) { 
+    if(cntrlIsPressed){    
+        var latitude = event.latLng.lat();
+        var longitude = event.latLng.lng();
+        var bounds = {
+            north: latitude,
+            south: latitude,
+            east: longitude,
+            west: longitude
+        }
+        if(modeRec){
+            rectangle = new google.maps.Rectangle({
+                bounds: bounds,
+                editable: true,
+                map: map,
+                draggable: true,
+                title: "Window" + counter
             })
-        };
-        cntrlIsPressed = false;
-    });
-    });
+            rectangle.addListener('click', function(){
+                currentNE = this.getBounds().getNorthEast();
+                currentSW = this.getBounds().getSouthWest();
+                currentShape = this;
+                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+                let object = {};
+                object.maxLat = currentNE.lat();
+                object.minLat = currentSW.lat();
+                object.maxLng = currentNE.lng();
+                object.minLng = currentSW.lng();
+                console.log(object);
+                console.log(window.utils);
+            });
+        }
+        else if(modeCir){
+            console.log("test")
+            circle = new google.maps.Circle({
+                editable: true,
+                map: map,
+                draggable: true,
+                center: {lat: latitude, lng: longitude},
+                radius: 100,
+                title: "Window" + counter
+            })
+            console.log("test");
+            circle.addListener('click', function(){
+                currentNE = this.getBounds().getNorthEast();
+                currentSW = this.getBounds().getSouthWest();
+                currentShape = this;
+                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+            });
+        }
+        else if(modePoly){
+            rectangle = new google.maps.Rectangle({
+                bounds: bounds,
+                editable: true,
+                map: map,
+                draggable: true,
+                title: "Window" + counter
+            })
+            rectPoly = createPolygonFromRectangle(rectangle);
+            rectPoly.addListener('click', function(e) {
+                currentNE = this.getPath();
+                console.log(this.title, currentNE.getAt(0).lat());
+                //rotatePolygon(rectPoly,10);
+            });
 
-    function createPolygonFromRectangle(rectangle) {
+        }
+        
+        counter++;
+
+        
+        
+        $('#map').keyup(function(e){
+            var code = (e.keyCode ? e.keyCode : e.which);
+
+            if(code == 8){
+                currentShape.setMap(null);
+            }
+        })
+    };
+    cntrlIsPressed = false;
+});
+});
+
+
+function createPolygonFromRectangle(rectangle) {
         var map = rectangle.getMap();
       
         var coords = [
@@ -161,7 +163,6 @@ function rotatePolygon(polygon,angle) {
 
     //rectangle.setBounds(coords);
 }
-
 function rotateRectangle(polygon, angle){
     var map = rectangle.getMap();
     var prj = map.getProjection();
@@ -173,7 +174,6 @@ function rotateRectangle(polygon, angle){
      });
      rectangle.setBounds(coords);
 }
-
 function rotatePoint(point, origin, angle) {
     var angleRad = angle * Math.PI / 180.0;
     return {
@@ -182,3 +182,18 @@ function rotatePoint(point, origin, angle) {
     };
 }
 
+
+$(document).ready(function(){
+    //utils.bikeAccidentMarkersOn = true;
+    //utils.bikeHeatMapOn = true;
+    //utils.toggleBikeHeatMaps(map);
+    //utils.addBikeAccidentClusters();
+    //utils.drawUpcomingProjects();
+
+    //utils.toggleBikeHeatMaps(false);
+    //utils.toggleCurrentRoadClosureLocations(false);
+
+    setTimeout(function(){
+      //utils.reloadData();
+    }, 5000);
+});

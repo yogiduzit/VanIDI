@@ -175,8 +175,6 @@
     </div>
   </div>
 
-
- 
   <!-- Bootstrap js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -185,25 +183,37 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
   <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js" async defer></script>
-
-  
   <!-- Cropper JS -->
   <script src="js/cropper.js"></script>
   <!-- Main custom -->
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/table.js"></script>
   <!-- JSONUtil Filters -->
+
+
+
+  <!-- Cropper JS -->
+  <script src="js/cropper.js" type = "module"></script>
+
   <script type = "module">
-  import {JSONUtils} from "/js/JSONUtils.js";
-  import {Bike, Projects} from '/js/data/requests.js'
+    import {JSONUtils} from "/js/JSONUtils.js";
+    import {Bike, Projects} from '/js/data/requests.js'
+    window.utils = new JSONUtils(map);
 
-    const utils = new JSONUtils(map);
-    utils.bikeAccidentMarkersOn = true;
-    utils.bikeHeatMapOn = true;
-    utils.toggleBikeHeatMaps(map);
-    utils.addBikeAccidentClusters();
-    utils.drawUpcomingProjects();
-
-</script>
+      var utils = new JSONUtils(map);
+      utils.bikeAccidentMarkersOn = true;
+      utils.bikeHeatMapOn = true;
+      utils.toggleBikeHeatMaps(map);
+      utils.addBikeAccidentClusters();
+      utils.drawUpcomingProjects();
+  
+      utils.toggleBikeHeatMaps(true);
+      utils.toggleCurrentRoadClosureLocations(true);
+  
+      console.log(utils);
+      setTimeout(function(){
+        utils.reloadData();
+      }, 5000);
+  </script>
 </body>
 </html>
