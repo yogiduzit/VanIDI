@@ -1,5 +1,5 @@
 # VanIDI
-All-in-one data extraction tool 
+Data unified and visualized 
 ## Built With
 * [HTML / CSS](https://www.w3schools.com/html/html_css.asp) - Frameworks for our webpages
 * [Bootstrap](https://getbootstrap.com/) - Bootstrap is an open source toolkit for developing with HTML, CSS, and JS. 
