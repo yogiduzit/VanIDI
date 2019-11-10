@@ -1,6 +1,6 @@
+
     var map;
     function initMap() {
-        let myLatLng = {lat: 49.261433, lng: -123.104965};
         map = new google.maps.Map(document.getElementById('map'), {
             center: { lat: 49.2827, lng: -123.1207 },
             zoom: 15,
@@ -101,5 +101,5 @@
             }
             ]
         });
-        infoWindow = new google.maps.InfoWindow();
+
     }
