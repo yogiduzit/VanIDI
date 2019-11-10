@@ -38,6 +38,33 @@ $("#mode-adv-btn").click(function(){
 	modePoly = true;
 
 });
+$("#saveChanges").click(function(){
+	if ($('#dialBicycle').is(":checked")){
+		$('#listBicycle').show();
+	}
+	else{
+		$('#listBicycle').hide();
+	}
+	if ($('#dialCurRoad').is(":checked")){
+		$('#listCurRoad').show();
+	}
+	else {
+		$('#listCurRoad').hide();
+	}
+	if ($('#dialUpRoad').is(":checked")){
+		$('#listUpRoad').show();
+	}
+	else {
+		$('#listUpRoad').hide();
+	}
+
+});
+
+
+$('.close').click(function(){
+	$("#" + $(this).parent().attr('id')).hide();
+	
+})
 
 
 
