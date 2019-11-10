@@ -2,12 +2,13 @@ import { BASE_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/
 
 export const Bike =  {
   async getBikeData() {
-    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&apikey=${APIKEY}&rows=2000`);
+    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&rows=2000&apikey=${APIKEY}`);
     let data = await res.json();
 
     return data;
   },
   async getBikeVolumeCounterLocations() {
+
     let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=2000&apikey=${APIKEY}`);
     let data = await res.json();
 
@@ -71,8 +72,6 @@ export const Bike =  {
             break;
           default:
             bikeVolumeData[text].dir = null;
-
-
         }
         
         if (bikeData[text]) {
@@ -94,7 +93,6 @@ export const Bike =  {
     const coords = [];
     let counter = 0
     for (let record of accidentData.records) {
-      console.log(record.fields.geopoint);
       coords[counter] = {};
       coords[counter].lat = record.fields.geopoint[0];
       coords[counter].lng = record.fields.geopoint[1];
@@ -103,9 +101,80 @@ export const Bike =  {
     return coords;
   }
 }
+export const Projects ={
 
-export const Projects = {
-  async getUpcoming() {
+  // distance is in metres (1000 is a km)
+  // dir is the direction (west,east,north,south)
+  // long is east (increases) or west (decreases more)
+  // lat is north (increases) or south (decreases)
+  async getCurrentRoadClosureLocations(params){
+
+    let maxLat = 180;
+    let maxLng = 180;
+    let minLat = -180;
+    let minLng = -180;
+
+    if(params !== undefined){
+      maxLat = params.maxLat;
+      maxLng = params.maxLng;
+      minLat = params.minLat;
+      minLng = params.minLng;
+      // maxLat = 49.28930634203633;
+      // maxLng = -123.12517973696282;
+      // minLat = 49.28619923209591;
+      // minLng = -123.13281866823723;
+    }
+    
+    let res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-current-road-closures&rows=1000&facet=comp_date=${APIKEY_VANCOUVER}`);
+    let data = await res.json();
+    let dataArray = [];
+    var count = 0;
+    data.records.forEach((data) =>{
+      //for each name create a new array of coordinates
+      //create a new object to store the key value pair (name, array)
+      let object = {};
+      let coords = [];
+      object.name = data.fields.location;
+      data.fields.geom.coordinates.forEach((geom) =>{
+        //flatten the data
+        //for each element in the new array, add to the coordinate array
+        let arr = geom.flat();
+        for(let i = 0; i < arr.length; i+=2){
+          if(minLat <= arr[i+1] && arr[i+1] <= maxLat && minLng <= arr[i] && arr[i] <= maxLng){
+            let object = {};
+            object.lat = arr[i+1];
+            object.lng = arr[i];
+            coords.push(object);
+          }
+        }
+        //set the coords value to the finished array
+        object.coords = coords;
+      });
+      //add the object to the array
+      dataArray.push(object);
+    });
+    return dataArray;
+  },
+
+  drawCurrentRoadClosureLocations(currentProjects){
+    let data = currentProjects;
+    let flightPaths = [];
+    data.forEach( (d) =>{
+
+      let coords = d.coords;
+      let flightPath = new google.maps.Polyline({
+        path: coords,
+        strokeColor: '#DC143C',
+        strokeOpacity: 0.5,
+        strokeWeight: 5,
+        });
+      
+      flightPath.setMap(map);
+      flightPaths.push(flightPath);
+    });
+    return flightPaths;
+  },
+  async getUpcomingProjects() {
     const res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-upcoming-projects&rows=1000&facet=comp_date&apikey=${APIKEY_VANCOUVER}`);
     const data = await res.json();
 
@@ -137,3 +206,4 @@ export const Projects = {
     return coordPath;
   }
 }
+
