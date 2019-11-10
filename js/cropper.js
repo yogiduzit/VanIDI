@@ -101,11 +101,12 @@ $('#map').on('click', function() {
                 currentNE = this.getPath();
                 console.log(this.title, currentNE.getAt(0).lat());
                 currentShape = this;
-                //rotatePolygon(rectPoly,10);
+
             });
 
         }
         counter++;
+
         $('#map').keyup(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 8){
