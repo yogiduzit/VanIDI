@@ -4,6 +4,7 @@ var currentNE;
 var currentSW;
 var rectPoly;
 
+
 var cntrlIsPressed = false;
 
 // function showNewRect(event) {
@@ -27,7 +28,7 @@ $(document).keyup(function(){
         if(cntrlIsPressed){    
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
-            //console.log( latitude + ', ' + longitude );
+            console.log(latitude + ', ' + longitude);
             var bounds = {
                 north: latitude,
                 south: latitude,
@@ -59,8 +60,6 @@ $(document).keyup(function(){
             // });
             
             // google.maps.event.addListener(rectangle, "click", function(e) {
-
-                
             // });
         };
         cntrlIsPressed = false;
@@ -69,6 +68,7 @@ $(document).keyup(function(){
 
     function createPolygonFromRectangle(rectangle) {
         var map = rectangle.getMap();
+
       
         var coords = [
           { lat: rectangle.getBounds().getNorthEast().lat(), lng: rectangle.getBounds().getNorthEast().lng() },
@@ -96,6 +96,7 @@ $(document).keyup(function(){
     rectPoly.setMap(map);
     return rectPoly;
 }
+
 function rotatePolygon(polygon,angle) {
     var map = polygon.getMap();
     var prj = map.getProjection();
@@ -116,4 +117,3 @@ function rotatePoint(point, origin, angle) {
         y: Math.sin(angleRad) * (point.x - origin.x) + Math.cos(angleRad) * (point.y - origin.y) + origin.y
     };
 }
-
