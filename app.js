@@ -17,10 +17,8 @@ app.use('/js', express.static('js'));
 app.get('/', function (req, res) {
   let doc = fs.readFileSync('./html/index.html', "utf8");
   res.send(doc);
-})
+});
 
 app.listen(PORT, ADDRESS, () => {
   console.log(`Listening on ${PORT}:${ADDRESS}`);
-})
-
-
+});

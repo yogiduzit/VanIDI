@@ -38,6 +38,11 @@ body {
   
 }
 
+
+#datatable {
+  z-index: 999;
+}
+
 #filter-map-row{
   pointer-events: none;
   opacity: 0;
@@ -54,13 +59,13 @@ body {
   color: white;
 }
 
+#header-row-2{
+  padding-bottom: 10px;
+}
+
 #row-map{
   height: 70vh;
   pointer-events: auto;
-}
-
-#header-row-2{
-  padding-bottom: 10px;
 }
 
 /*
