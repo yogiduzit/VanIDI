@@ -7,6 +7,7 @@ export const Bike =  {
 
     return data;
   },
+
   async getBikeVolumeCounterLocations() {
 
     let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=2000&apikey=${APIKEY}`);
@@ -96,6 +97,9 @@ export const Bike =  {
       coords[counter] = {};
       coords[counter].lat = record.fields.geopoint[0];
       coords[counter].lng = record.fields.geopoint[1];
+      coords[counter].date = record.fields.date;
+      coords[counter].type = record.fields.p_type;
+      coords[counter].injury = record.fields.injury;
       counter++;
     }
     return coords;
@@ -107,27 +111,11 @@ export const Projects ={
   // dir is the direction (west,east,north,south)
   // long is east (increases) or west (decreases more)
   // lat is north (increases) or south (decreases)
-  async getCurrentRoadClosureLocations(params){
-
-    let maxLat = 180;
-    let maxLng = 180;
-    let minLat = -180;
-    let minLng = -180;
-
-    if(params !== undefined){
-      maxLat = params.maxLat;
-      maxLng = params.maxLng;
-      minLat = params.minLat;
-      minLng = params.minLng;
-      // maxLat = 49.28930634203633;
-      // maxLng = -123.12517973696282;
-      // minLat = 49.28619923209591;
-      // minLng = -123.13281866823723;
-    }
-    
+  async getCurrentRoadClosureLocations(){
     let res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-current-road-closures&rows=1000&facet=comp_date=${APIKEY_VANCOUVER}`);
     let data = await res.json();
     let dataArray = [];
+    console.log(data);
     var count = 0;
     data.records.forEach((data) =>{
       //for each name create a new array of coordinates
@@ -140,12 +128,10 @@ export const Projects ={
         //for each element in the new array, add to the coordinate array
         let arr = geom.flat();
         for(let i = 0; i < arr.length; i+=2){
-          if(minLat <= arr[i+1] && arr[i+1] <= maxLat && minLng <= arr[i] && arr[i] <= maxLng){
-            let object = {};
-            object.lat = arr[i+1];
-            object.lng = arr[i];
-            coords.push(object);
-          }
+          let object = {};
+          object.lat = arr[i+1];
+          object.lng = arr[i];
+          coords.push(object);
         }
         //set the coords value to the finished array
         object.coords = coords;
@@ -164,11 +150,12 @@ export const Projects ={
       let coords = d.coords;
       let flightPath = new google.maps.Polyline({
         path: coords,
+        geodesic: true,
         strokeColor: '#DC143C',
         strokeOpacity: 0.5,
         strokeWeight: 5,
         });
-      
+        
       flightPath.setMap(map);
       flightPaths.push(flightPath);
     });
@@ -205,5 +192,32 @@ export const Projects ={
     }
     return coordPath;
   },
+}
+export const Traffic = {
+  async getTrafficData(time){
+    let res = await fetch(`${BASE_URL}/?dataset=intersection-counts-2010-2017-mod&refine.year=2017&rows=500&refine.year=2017&refine.peak_hour=${time}%3A00&apikey=${APIKEY}`);
+    let data = await res.json();
+    return data;
+  },
+//time is a string like 11
+  getTrafficCoords(data, time) {
+    let records = [];
+    data.records.forEach((d) => {
+      let record = {};
+      record.peak = d.fields.peak_hour == undefined ? 0 :d.fields.peak_hour;
+      record.peakped = d.fields.ped == undefined ? 0 :d.fields.ped;
+      record.peakbike = d.fields.bike == undefined ? 0 :d.fields.bike;
+      record.peaknum = d.fields.pk_hr_vol == undefined ? 0 :d.fields.pk_hr_vol;
+      record.lat = d.geometry.coordinates[1];
+      record.lng = d.geometry.coordinates[0];
+      record.id = d.fields.int_id;
+      records.push(record);
+    });
+    return records;
+  },
+  filterTrafficData(data, time){
+
+    console.log('hi');
+  }
 }
 

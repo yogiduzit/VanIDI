@@ -56,18 +56,23 @@ $('#map').on('click', function() {
                 currentNE = this.getBounds().getNorthEast();
                 currentSW = this.getBounds().getSouthWest();
                 currentShape = this;
-                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
                 let object = {};
                 object.maxLat = currentNE.lat();
                 object.minLat = currentSW.lat();
                 object.maxLng = currentNE.lng();
                 object.minLng = currentSW.lng();
-                console.log(object);
-                console.log(window.utils);
+                localStorage.removeItem("cropData");
+                 window.utils.drawCroppedBikeData(object.minLat, object.maxLat, object.minLng, object.maxLng).then(data => {
+
+                    localStorage.setItem("cropData", JSON.stringify(data));
+                    console.log(localStorage.getItem('cropData'));
+                    window.table.setData(localStorage.getItem('cropData'));
+                 });
+               
+
             });
         }
         else if(modeCir){
-            console.log("test")
             circle = new google.maps.Circle({
                 editable: true,
                 map: map,
@@ -76,7 +81,6 @@ $('#map').on('click', function() {
                 radius: 100,
                 title: "Window" + counter
             })
-            console.log("test");
             circle.addListener('click', function(){
                 currentNE = this.getBounds().getNorthEast();
                 currentSW = this.getBounds().getSouthWest();
@@ -97,15 +101,14 @@ $('#map').on('click', function() {
                 currentNE = this.getPath();
                 console.log(this.title, currentNE.getAt(0).lat());
                 currentShape = this;
+
             });
 
         }
-        
         counter++;
 
         $('#map').keyup(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
-
             if(code == 8){
                 currentShape.setMap(null);
             }
@@ -179,19 +182,3 @@ function rotatePoint(point, origin, angle) {
         y: Math.sin(angleRad) * (point.x - origin.x) + Math.cos(angleRad) * (point.y - origin.y) + origin.y
     };
 }
-
-
-$(document).ready(function(){
-    //utils.bikeAccidentMarkersOn = true;
-    //utils.bikeHeatMapOn = true;
-    //utils.toggleBikeHeatMaps(map);
-    //utils.addBikeAccidentClusters();
-    //utils.drawUpcomingProjects();
-
-    //utils.toggleBikeHeatMaps(false);
-    //utils.toggleCurrentRoadClosureLocations(false);
-
-    setTimeout(function(){
-      //utils.reloadData();
-    }, 5000);
-});
