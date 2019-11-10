@@ -1,3 +1,23 @@
+<<<<<<< HEAD
+$(document).ready(function(){
+
+  window.utils.downloadBikeAccidentClusters().then( (res) =>{
+    //define data
+    var table = new Tabulator("#dataTable", {
+      height: "250px",
+      width: "100%",
+      layout: "fitColumns",
+      columns:[
+        {title:"Latitude", field:"lat"},
+        {title:"Longitude", field:"lng"},
+        {title:"Date", field:"date"},
+        {title:"Type", field:"type"},
+        {title:"Injury", field:"injury"},
+      ]
+    });
+    table.setData(res);
+  });
+=======
       //define data
       var tableData = [
         {
@@ -106,6 +126,7 @@
         console.log(ext);
         table.download(ext, name + "." + ext);
       });
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
       //trigger download of data.csv file
       $("#download-csv").click(function() {
         table.download("csv", "data.csv");
@@ -118,3 +139,4 @@
       $("#download-xlsx").click(function() {
         table.download("xlsx", "data.xlsx", { sheetName: "My Data" });
       });
+});

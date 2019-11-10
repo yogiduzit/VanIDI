@@ -257,18 +257,26 @@
   <script type="text/javascript" src="js/cropper.js"></script>
   <!-- Main custom -->
   <script type="text/javascript" src="js/main.js"></script>
-  <script type="text/javascript" src="js/table.js"></script>
   <!-- JSONUtil Filters -->
 
     <script type="module">
       import { JSONUtils } from "/js/JSONUtils.js";
       import { Bike, Projects } from "/js/data/requests.js";
       window.utils = new JSONUtils(map);
-
-      Bike.getAccidents().then(data => {
-        utils.bikeAccidentMarkersOn = true;
-        utils.addBikeAccidentClusters(Bike.getAccidentCoords(data));
+      window.utils.toggleBikeHeatMaps(true);
+      window.utils.downloadBikeAccidentClusters();
+      window.utils.addBikeAccidentClusters(true);
+      let data;
+      Projects.getUpcomingProjects().then( (res) =>{
+        data = res;
+        var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(data));
+        var dlAnchorElem = document.getElementsByClassName('dropdown-item file-type-selector')[0];
+        dlAnchorElem.setAttribute("href",dataStr);
+        dlAnchorElem.setAttribute("download", "results.json");
       });
+<<<<<<< HEAD
+      
+=======
       utils.bikeAccidentMarkersOn = true;
       utils.bikeHeatMapOn = true;
       utils.toggleBikeHeatMaps(map);
@@ -281,6 +289,8 @@
       setTimeout(function() {
         utils.reloadData();
       }, 5000);
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
     </script>
+    <script type="text/javascript" src="js/table.js"></script>
   </body>
 </html>

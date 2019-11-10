@@ -1,4 +1,4 @@
-import {Bike, Projects} from "/js/data/requests.js";
+import {Bike, Projects, Traffic} from "/js/data/requests.js";
 export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
@@ -8,24 +8,95 @@ export class JSONUtils{
   }
 
 //must have heatmaps
+<<<<<<< HEAD
+  toggleBikeHeatMaps(on){
+    let bikeVolumeData = null;
+    if(on == true && !this.bikeHeatMapOn){
+      Bike.getBikeData().then((bikeData) => {
+        Bike.getBikeVolumeCounterLocations().then(volumeData => {
+          bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
+          this.addBikeHeatLayer(bikeVolumeData);
+          this.bikeHeatMapOn = true;
+        });
+      });
+    } else {
+      this.layers.bike.setMap(null);
+      this.bikeHeatMapOn = false;
+    }
+=======
 toggleBikeHeatMaps(on){
   let bikeVolumeData = null;
   if(on && this.bikeHeatMapOn){
     //console.log(Bike.getFWS());
     Bike.getBikeData().then((bikeData) => {
       Bike.getBikeVolumeCounterLocations().then(volumeData => {
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
 
-        bikeVolumeData = Bike.getAverageBikeVolumes(bikeData, volumeData);
-        this.addBikeHeatLayer(bikeVolumeData);
-        this.bikeHeatMapOn = true;
-
-      });
-    });
-  } else {
-    this.layers.bike.setMap(null);
-    this.bikeHeatMapOn = false;
   }
 
+  toggleCurrentRoadClosureLocations(on){
+    let currentRoadClosureData = null;
+    if(on == true && !this.currentRoadClosureLocationsOn){
+      Projects.getCurrentRoadClosureLocations().then((data) => {
+        let paths = Projects.drawCurrentRoadClosureLocations(data);
+        this.layers.currentRoadClosures = paths;
+        this.currentRoadClosureLocationsOn = true;
+      });
+    }else{
+      this.layers.currentRoadClosures.forEach( (path) =>{
+        path.setMap(null);
+      });
+      this.layers.currentRoadClosures = null;
+      this.currentRoadClosureLocationsOn = false;
+  }
+  }
+  //requires google maps
+  addBikeHeatLayer(data){
+      let heatMapData = [];
+      for(let p in data){
+        let myLatLng = {};
+        myLatLng.lat = parseFloat(data[p].lat);
+        myLatLng.lng = parseFloat(data[p].lng);
+        heatMapData.push({location: new google.maps.LatLng(myLatLng.lat, myLatLng.lng), weight: (data[p].average/100)});
+      }
+      let heatmap = new google.maps.visualization.HeatmapLayer({
+          data: heatMapData,
+          opacity: 0.5,
+          radius: 50,
+      });
+      this.layers.bike = heatmap;
+      heatmap.setMap(map);
+  }
+
+<<<<<<< HEAD
+
+  // distance is in metres (1000 is a km)
+  // dir is the direction (west,east,north,south)
+  // long is east (increases) or west (decreases more)
+  // lat is north (increases) or south (decreases)
+  getOffsetLocation(lat, long, dir, distance){
+      let res = {};
+      const EARTH = 6378.137;
+      const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
+      cos = Math.cos;
+      let newLat = lat;
+      let newLong = long;
+
+
+      switch(dir){
+        case 'west':
+          newLong += ( distance * M )/ (cos(newLat * (Math.PI / 180)));
+          break;
+        case 'east':
+          newLong -= (distance*M) / cos(newLat * (Math.PI / 180));
+          break;
+        case 'north':
+          newLat += distance * M;
+          break;
+        default:
+          newLat -= distance * M;
+      }
+=======
 }
 
 
@@ -77,11 +148,12 @@ getOffsetLocation(lat, long, dir, distance){
       default:
         newLat -= distance * M;
     }
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
 
-    res.lat = newLat;
-    res.lng = newLong;
+      res.lat = newLat;
+      res.lng = newLong;
 
-    return res;
+      return res;
   }
 
   // returns the distance from one point on a map to another. 
@@ -130,18 +202,50 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
+<<<<<<< HEAD
+  reloadData(params){
+    console.log(params);
+    if(this.bikeHeatMapOn == true) {
+      console.log('turned off');
+      this.toggleBikeHeatMaps(false,null);
+    }// turn the bike heat map off if on.
+    if(this.currentRoadClosureLocationsOn == true) {
+      this.toggleCurrentRoadClosureLocations(false);
+    } 
+    
+    // turn the current road collisions map if on.
+    //49.28930634203633 -123.12517973696282 49.28619923209591 -123.13281866823723
+    //robson jervis
+  }
+  
+  async addBikeAccidentClusters(on) {
+    if (on && this.bikeAccidentMarkersOn == false) {
+      const coords = Bike.getAccidentCoords(await Bike.getAccidents());
+=======
 
   async addBikeAccidentClusters() {
     const coords = Bike.getAccidentCoords(await Bike.getAccidents());
     if (this.bikeAccidentMarkersOn) {
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
       const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
+      this.layers.bikeAccidentMarkers = markers;
+      this.bikeAccidentMarkersOn = true;
       const markerCluster = new MarkerClusterer(this.map, markers,
         {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
         }
       );
+      this.markerCluster = markerCluster;
+  } else {
+    this.bikeAccidentMarkersOn = false;
+    for (let i = 0; i < this.layers.bikeAccidentMarkers; i++) {
+      this.layers.bikeAccidentMarkers.setMap(null);
     }
+    this.layers.bikeAccidentMarkers = [];
+    this.markerCluster.clearMarkers();
+
   }
+}
   async drawUpcomingProjects() {
     const paths = Projects.getProjectCoords(await Projects.getUpcomingProjects());
     paths.forEach(path => {
@@ -155,4 +259,45 @@ getOffsetLocation(lat, long, dir, distance){
       flightPath.setMap(this.map);
     });
   }
+<<<<<<< HEAD
+
+  async downloadBikeAccidentClusters(){
+    const data = await Bike.getAccidents();
+    let records = [];
+    data.records.forEach((r) =>{
+      let record = {}; 
+      console.log(r);
+      record.lat = r.fields.latitude;
+      record.lng = r.fields.longitude;
+      record.date = r.fields.date;
+      record.type = r.fields.p_type;
+      record.injury = r.fields.injury;
+      records.push(record);
+    });
+    console.log(records);
+    return records;
+
+  }
+  async drawCroppedBikeData(latMin, latMax, lngMin, lngMax) {
+    let cropData = [];
+
+    let bikeData = Bike.getAccidentCoords(await Bike.getAccidents());
+    bikeData.forEach((coord) => {
+      if (coord.lat && coord.lng) {
+        if (coord.lat >= latMin && coord.lat <= latMax && coord.lng >= lngMin && coord.lng <= lngMax) {
+          cropData.push(coord);
+        }
+      }
+    });
+
+    const markers = cropData.map((coord) => new google.maps.Marker({position: coord}));
+    const markerCluster = new MarkerClusterer(this.map, markers,
+      {
+        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+      }
+    );
+  }
 }
+=======
+}
+>>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
