@@ -161,162 +161,31 @@
   <!-- JSONUTils -->
   <script type="text/javascript" src="js/JSONUTils.js"></script>
   <!-- JS for Map -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&callback=initMap"
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
   <script src="js/map.js"></script>
   <!-- Cropper JS -->
   <script src="js/cropper.js"></script>
   <!-- Main custom -->
   <script type="text/javascript" src="js/main.js"></script>
+  <!-- JSONUtil Filters -->
+  <script type = "module">
+  import {JSONUtils} from "/js/JSONUtils.js";
+  import {Bike, Projects} from '/js/data/requests.js'
+
+  // Bike.getAccidents().then(data => {
+  //   utils.bikeAccidentMarkersOn = true;
+  //   utils.addMarkers(Bike.getAccidentCoords(data));
+  // });
+
+  Projects.getUpcoming().then(data => {
+    utils.drawUpcomingProjects(Projects.getProjectCoords(data));
+  });
+</script>
 </body>
 </html>
 
 
-<script>
-connectBikeData();
-async function connectBikeData(){
-
-    let bikeCounts = await getAverageBikeData();
-    let countsLocations = await getBikeLocations();
-
-    console.log(bikeCounts);
-    console.log(countsLocations);
-
-      for(c in bikeCounts){
-        bikeCounts[c].lat = countsLocations[c].lat;
-        bikeCounts[c].lng = countsLocations[c].lng;
-        bikeCounts[c].dir = countsLocations[c].dir;
-
-      }
-}
-
-async function getAverageBikeData(){
-
-  //Retrieving bike counts information 
-  let resCounts = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-data-2015jan-2019jul&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
-    return res;
-  });
-
-
-  let countsJSON = await resCounts.json().then((data) =>{
-    let countObjects = {};
-    data.records.forEach(element => {
-      for(e in element.fields){
-        if(e == "date") continue;
-        if(countObjects[e]){
-          countObjects[e].total += typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
-          countObjects[e].count++;
-
-        }else{
-          countObjects[e] = {};
-          countObjects[e].total = typeof(element.fields[e]) == "string" ? parseInt(element.fields[e]):(element.fields[e]);
-          countObjects[e].count = 1;
-        }
-      }
-    });
-
-    for(c in countObjects){
-      countObjects[c].average = countObjects[c].total/countObjects[c].count;
-    }
-    return countObjects;
-  });
-
-  return countsJSON;
-  
-}
-
-async function getBikeLocations(){
-
-    //Retrieving bike location information 
-    let resLocations = await fetch('https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search/?dataset=bike-volume-counter-locations&rows=1000&apikey=303b3ded3bc5bc79e593dd1d6605d4f2a7b2b6261354474526cc8309', (res) => {
-      return res;
-    });
-
-    let locationObjects = {};
-    let locationData = await resLocations.json().then((data) =>{
-      data.records.forEach(element => {
-
-        //Edit the text names
-        let text = element.fields["counters"];
-        
-        text = text.replace('_', ' ').replace('&', '').replace(/\s{2,}/g,' ').split(' ').filter(word => word !== '-').map(word => word.toLowerCase()).join('_');
-
-        //Add our data to the location objects
-        locationObjects[text] = {};
-        locationObjects[text].lat = element.fields["latitude"];
-        locationObjects[text].lng = element.fields["longitude"];
-
-        switch(true){
-          case text.includes('westb'):
-            locationObjects[text].dir = 'west';
-            break;
-          case text.includes('eastb'):
-            locationObjects[text].dir = 'east';
-            break;
-          case text.includes('northb'):
-            locationObjects[text].dir = 'north';
-            break;
-          default:
-            locationObjects[text].dir = 'south';
-        }
-
-      });    
-    });
-
-
-    return locationObjects;
-}
 
 
 
-// distance is in metres (1000 is a km)
-// dir is the direction (west,east,north,south)
-// long is east (increases) or west (decreases more)
-// lat is north (increases) or south (decreases)
-function getOffsetLocation(lat, long, dir, distance){
-
-  let res = {};
-  const EARTH = 6378.137;
-  const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
-  cos = Math.cos;
-  let newLat = lat;
-  let newLong = long;
-
-  switch(dir){
-    case 'west':
-      newLong += (distance*M)/(cos(newLat * (Math.PI / 180)));
-      break;
-    case 'east':
-      newLong -= (distance*M)/cos(newLat * (Math.PI / 180));
-      break;
-    case 'north':
-      newLat += distance*M;
-      break;
-    default:
-      newLat -= distance*M;
-  }
-
-  res.lat = newLat;
-  res.lng = newLong;
-  return res;
-}
-
-// returns the distance from one point on a map to another. 
-function getDistanceFrom(coord1,coord2) {
-
-  let R = 6371; // Radius of the earth in km
-  let dLat = deg2rad(coord2.lat-coord1.lat);  // deg2rad below
-  let dLon = deg2rad(coord2.lng-coord1.lng); 
-  let a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-          Math.cos(deg2rad(coord1.lat)) * Math.cos(deg2rad(coord2.lat)) * 
-          Math.sin(dLon/2) * Math.sin(dLon/2); 
-
-  let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  let d = R * c; // Distance in km
-  return d;
-}
-
-function deg2rad(deg) {
-  return deg * (Math.PI/180); 
-}
-</script>
