@@ -1,3 +1,4 @@
+
 var rectangle;
 var counter = 0;
 var currentNE;
@@ -16,7 +17,6 @@ $(document).keyup(function () {
         cntrlIsPressed = false;
     console.log("keyUp");
 });
-
 
     $('#map').on('click', function(){
         google.maps.event.addListener(map, "click", function (event) { 
@@ -38,24 +38,21 @@ $(document).keyup(function () {
                 title: "Window" + counter
             })
             counter++;
-<<<<<<< HEAD
-                      
-=======
           
-           
->>>>>>> 6d2526300fd38e4ae113d838feb564f768e4fdac
-            rectangle.addListener('click', function () {
+                rectangle.addListener('click', function () {
                 currentNE = this.getBounds().getNorthEast();
                 currentSW = this.getBounds().getSouthWest();
                 console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+                params.maxLat = currentNE.lat();
+                params.maxLng = currentNE.lng();
+                params.minLat = currentSW.lat();
+                params.minLng = currentSW.lng();
+                console.log(params);
+                console.log(utils);
+                utils.reload(params);
+                console.log(JSONUtils.reloadData);
             });
         };
         cntrlIsPressed = false;
     });
-<<<<<<< HEAD
 });
-
-
-=======
-});
->>>>>>> 6d2526300fd38e4ae113d838feb564f768e4fdac

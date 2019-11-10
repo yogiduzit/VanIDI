@@ -5,7 +5,7 @@
             zoom: 15,
             mapTypeControl: false,
             scaleControl:true,
-            zoomControl: false,
+            zoomControl: false, 
             fullscreenControl: false,
             styles:
             [
@@ -101,6 +101,4 @@
             }
             ]
         });
-
-
     }
