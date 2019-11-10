@@ -96,15 +96,13 @@ $('#map').on('click', function() {
             rectPoly.addListener('click', function(e) {
                 currentNE = this.getPath();
                 console.log(this.title, currentNE.getAt(0).lat());
-                //rotatePolygon(rectPoly,10);
+                currentShape = this;
             });
 
         }
         
         counter++;
 
-        
-        
         $('#map').keyup(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
 
