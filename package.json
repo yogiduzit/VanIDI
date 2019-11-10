@@ -21,7 +21,6 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "fs": "0.0.1-security",
-    "nodemon": "^1.19.4",
-    "tabulator-tables": "^4.4.3"
+    "nodemon": "^1.19.4"
   }
 }
