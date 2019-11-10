@@ -14,10 +14,6 @@
 </head>
 
 <body>
- 
-
-
-
   <div id="container-header" class="container-fluid text-center animated fadeIn">
     <!-- Branding/ Login Row -->
     <div class="header-row row py-2 align-middle">
@@ -59,8 +55,8 @@
         <div id="map" onmousedown="isCtrlDown(event)"></div>
       </div>
       <div id="filter-panel" class="col-2 ml-auto text-left pt-3">
-        <h4 class="mb-3">Filters and Export</h4>        
-        <div class="accordion" id="accordionExample">
+        <h4 id="filter-panel-title" class="mb-3">Filters and Export</h4>        
+        <div class="accordion mb-3" id="accordionExample">
           <div class="card">
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
@@ -71,7 +67,7 @@
             </div>
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
               <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                <button class="btn btn-primary" data-toggle="modal" data-target="#select-dataset-modal">+ Add a dataset</button>
               </div>
             </div>
           </div>
@@ -85,21 +81,19 @@
             </div>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
               <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header" id="headingThree">
-              <h2 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Export Options
-                </button>
-              </h2>
-            </div>
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-              <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                <h6>Data to Include: </h6>
+                <div class="dropdown-divider"></div>
+                <div>
+                  <input type="checkbox" name="Vehicle"> Vehicle Data
+                </div>
+                <div>
+                  <input type="checkbox" name="Bicyclist"> Bike Data
+                </div>
+                <div>
+                  <input type="checkbox" name="Pedestrian"> Pedestrian
+                </div>
+
+                <div class="dropdown-divider"></div>
               </div>
             </div>
           </div>
@@ -107,16 +101,50 @@
         <div class="input-group">
           <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Enter filename">
           <div class="input-group-append">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">.csv</button>
+            <button id="file-type-btn" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">.csv</button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">.csv</a>
-              <a class="dropdown-item" href="#">.xlsx</a>
-              <a class="dropdown-item" href="#">.shp</a>
+              <a class="dropdown-item file-type-selector" href="#">.csv</a>
+              <a class="dropdown-item file-type-selector" href="#">.xlsx</a>
+              <a class="dropdown-item file-type-selector" href="#">.shp</a>
             </div>
           </div>
         </div>
         <div class="text-right mt-3">
           <button class="btn btn-primary" type="submit">Export</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="select-dataset-modal" tabindex="-1" role="dialog" aria-labelledby="select-dataset-modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="select-dataset-modal-title">Select datasets</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control" id="dataset-modal-search" aria-describedby="dataset-search" placeholder="Search">
+          <div class="dropdown-divider"></div>
+          <ul id="datasets-list" class="list-group">
+            <li class="list-group-item"> 
+              <input type="checkbox" name="Pedestrian"> Bicycle Count
+            </li>
+            <li class="list-group-item"> 
+              <input type="checkbox" name="Pedestrian"> Current Road Construction Projects
+            </li>
+            <li class="list-group-item"> 
+              <input type="checkbox" name="Pedestrian"> Upcoming Road Conrstruction Projects
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
         </div>
       </div>
     </div>

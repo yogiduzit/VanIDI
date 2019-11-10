@@ -20,11 +20,6 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6{
-  color: white;
-}
-
-
 .header-row{
   background-color: #005c82;
   color: white;
@@ -55,6 +50,9 @@ h1, h2, h3, h4, h5, h6{
   overflow-y: auto;
 }
 
+#filter-panel-title{
+  color: white;
+}
 
 #row-map{
   height: 70vh;

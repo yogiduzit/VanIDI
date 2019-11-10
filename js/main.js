@@ -1,10 +1,5 @@
-$('.filter-menu-toggle').click(function(){
-	console.log("Hello World");
-	$('#filter-panel').toggle();
+//Changes the label of the file type export
+$(".file-type-selector").click(function(){
+	var fileToSetTo = $(this).text();
+	$("#file-type-btn").text(fileToSetTo);
 });
-
-// $('#container-header').one('webkitAnimationEnd oanimationend msAnimationEnd animationend',   
-//         function(e) {
-//             $('#filter-row').addClass("animated fadeInRight");
-//         }
-//     );
