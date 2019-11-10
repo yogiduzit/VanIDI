@@ -7,8 +7,9 @@ html { font-family: 'Inter', sans-serif; }
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
 #map {
-  height: 100vh;
+  height: 66vh;
   width: 100%;
+  z-index: -1;
 }
 
 /* Optional: Makes the sample page fill the window. */
@@ -21,9 +22,22 @@ body {
 }
 
 .header-row{
-  background-color: #005c82;
   color: white;
   pointer-events: auto;
+  background-color: #005c82;
+}
+
+.interact-none{
+  pointer-events: none;
+}
+
+.header-interact{
+  background-color: #005c82;
+}
+
+#adv-select-section{
+  display: none;
+  visibility: hidden;
 }
 
 #container-header{
@@ -31,16 +45,21 @@ body {
   left: 0;
   position: fixed;
   pointer-events: none;
-
+  z-index: 999;
 }
 
 #col-filter-dropout{
   
 }
 
+#container-table{
+  min-height: 225px;
+  z-index: 999;
+}
+
 
 #dataTable {
-  z-index: 999;
+  
 }
 
 #filter-map-row{
@@ -59,13 +78,27 @@ body {
   color: white;
 }
 
-#header-row-2{
-  padding-bottom: 10px;
+#header-row-1{
+  color: white;
+}
+
+#light-van{
+  font-weight: 200;
 }
 
 #row-map{
   height: 70vh;
   pointer-events: auto;
+}
+
+#mode-label{
+  position: absolute;
+  margin: 0;
+  top: 25%;
+}
+
+#logo{
+  font-size: 36pt;
 }
 
 /*
