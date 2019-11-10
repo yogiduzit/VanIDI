@@ -16,13 +16,12 @@ html {
   z-index: -1;
 }
 
-
 #logo {
-  background: -webkit-linear-gradient(left, #FFF 15%, #ff9800 45%);
+  background: -webkit-linear-gradient(left, #fff 15%, #ff9800 45%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-}
+
 /* Optional: Makes the sample page fill the window. */
 html,
 body {
@@ -35,11 +34,7 @@ body {
 .header-row {
   color: white;
   pointer-events: auto;
-<<<<<<< HEAD
-  
-=======
   background: linear-gradient(to right, #025c82 0%, #143143 84%);
->>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
 }
 
 .btn-pri {
@@ -47,37 +42,28 @@ body {
   color: white;
 }
 
-<<<<<<< HEAD
-.btn-hollow{
+.btn-hollow {
   background-color: none;
   color: white;
   font-style: italic;
 }
 
-.btn-hollow:hover{
+.btn-hollow:hover {
   background-color: none;
   color: cyan;
   font-style: italic;
 }
 
-.btn-mode-active{
-  background-color: #6CB33F !important; 
-=======
 .btn-mode-active {
   background-color: #6cb33f !important;
->>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
 }
 
 .interact-none {
   pointer-events: none;
 }
 
-<<<<<<< HEAD
-.header-interact{
-=======
 .header-interact {
   background-color: transparent;
->>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
 }
 
 #adv-select-section {
@@ -91,7 +77,7 @@ body {
   position: fixed;
   pointer-events: none;
   z-index: 999;
-  background: #005c82
+  background: #005c82;
 }
 
 #col-filter-dropout {
@@ -134,11 +120,7 @@ body {
 #filter-panel {
   height: 100vh;
   pointer-events: auto;
-<<<<<<< HEAD
-  background: #005c82;
-=======
   background: linear-gradient(#143143, #025c82);
->>>>>>> 8202bbdfe0bf8eff3fea51324d5f9af80f1c1dbd
   overflow-y: auto;
 }
 
