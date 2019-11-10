@@ -1,14 +1,14 @@
-import { BASE_URL, APIKEY } from '/js/data/url.js';
+import { BASE_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/url.js';
 
 export const Bike =  {
   async getBikeData() {
-    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&apikey=${APIKEY}`);
+    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&apikey=${APIKEY}&rows=2000`);
     let data = await res.json();
 
     return data;
   },
   async getBikeVolumeCounterLocations() {
-    let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=1000&apikey=${APIKEY}`);
+    let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=2000&apikey=${APIKEY}`);
     let data = await res.json();
 
     return data;
@@ -85,7 +85,7 @@ export const Bike =  {
       return bikeVolumeData;
   },
   async getAccidents() {
-    const res = await fetch(`${BASE_URL}//?dataset=copy-of-city-of-vancouver&apikey=${APIKEY}`);
+    const res = await fetch(`${BASE_URL}//?dataset=copy-of-city-of-vancouver&apikey=${APIKEY}&rows=2000`);
     const data = await res.json();
 
     return data;
@@ -100,7 +100,40 @@ export const Bike =  {
       coords[counter].lng = record.fields.geopoint[1];
       counter++;
     }
-    console.log(coords);
     return coords;
+  }
+}
+
+export const Projects = {
+  async getUpcoming() {
+    const res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-upcoming-projects&rows=1000&facet=comp_date&apikey=${APIKEY_VANCOUVER}`);
+    const data = await res.json();
+
+    return data;
+  },
+  getProjectCoords(projects) {
+    const coordsArrays = [];
+    projects.records.forEach((record, recIndex) => {
+      let coords = record.fields.geom.coordinates;
+      if (coords) {
+        if (typeof coords[0][0] === "number") {
+          coordsArrays.push(this._coordHelper(coords));
+        } else {
+          coords.forEach(coord => {
+            coordsArrays.push(this._coordHelper(coord));
+          });
+        } 
+      }
+    });
+    return coordsArrays;
+  },
+  _coordHelper(coords) {
+    const coordPath = [];
+    for (let i = 0; i < 2; i++) {
+      coordPath[i] = {};
+      coordPath[i].lat = coords[i][0];
+      coordPath[i].lng = coords[i][1];
+    }
+    return coordPath;
   }
 }

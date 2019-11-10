@@ -1,26 +1,29 @@
 var rectangle;
+var counter = 0;
+var currentNE;
+var currentSW;
+var cntrlIsPressed = false;
 
-function showNewRect(event) {
-    var ne = rectangle.getBounds().getNorthEast();
-    var sw = rectangle.getBounds().getSouthWest();
+//key for control is 17 
+$(document).keydown(function (event) {
+    if (event.which == "17")
+        cntrlIsPressed = true;
+    console.log("keyDown");
+});
 
-    var contentString = '<b>Rectangle co-ords.</b><br>' +
-        'north-east:' + ne.lat() + ', ' + ne.lng() + '<br>' +
-        'south-west: ' + sw.lat() + ', ' + sw.lng();
+$(document).keyup(function () {
+    if (event.which == "17")
+        cntrlIsPressed = false;
+    console.log("keyUp");
+});
 
-    // Set the info window's content and position.
-    infoWindow.setContent(contentString);
-    infoWindow.setPosition(ne);
 
-    infoWindow.open(map);
-  }
-
-function isCtrlDown(event){
-    if(event.ctrlKey){
-        google.maps.event.addListener(map, "click", function (event) {
+    $('#map').on('click', function(){
+        google.maps.event.addListener(map, "click", function (event) { 
+        if(cntrlIsPressed){    
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
-            console.log( latitude + ', ' + longitude );
+            console.log(latitude + ', ' + longitude);
             var bounds = {
                 north: latitude,
                 south: latitude,
@@ -31,10 +34,18 @@ function isCtrlDown(event){
                 bounds: bounds,
                 editable: true,
                 map: map,
-                draggable: true
+                draggable: true,
+                title: "Window" + counter
             })
-            rectangle.addListener('bounds_changed', showNewRect);
-        });
-    }
-}
-
+            counter++;
+          
+           
+            rectangle.addListener('click', function () {
+                currentNE = this.getBounds().getNorthEast();
+                currentSW = this.getBounds().getSouthWest();
+                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+            });
+        };
+        cntrlIsPressed = false;
+    });
+});
