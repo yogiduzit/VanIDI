@@ -9,7 +9,6 @@
   <!-- Animate.css -->
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
   <!-- Table CSS (Tabulator) -->
-    <link href="dist/css/tabulator.min.css" rel="stylesheet" />
     <link
       href="https://unpkg.com/tabulator-tables@4.4.3/dist/css/tabulator.min.css"
       rel="stylesheet"
@@ -18,16 +17,19 @@
       type="text/javascript"
       src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"
     ></script>
-    <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
+    <!-- Load jQuery -->
+    <script src="js/jquery-3.4.1.js"></script>
   <!-- Custom -->
   <link rel="stylesheet" href="stylesheets/stylesheet.css">
 </head>
 
 <body>
-  
+  <div class="fixed-bottom">
+  <div id="dataTable" ></div>
+</div>
   <script>
       //define data
-      var tabledata = [
+      var tableData = [
         {
           id: 1,
           name: "Oli Bob",
@@ -124,7 +126,7 @@
       var table = new Tabulator("#dataTable", {
         height: "225px",
         layout: "fitColumns",
-        data: tabledata,
+        data: tableData,
         autoColumns: true
       });
 
@@ -183,7 +185,7 @@
     <!-- Filter SidePane -->
     <div id="filter-map-row" class="row animated fadeIn">
       <div id="row-map" class="col-10 p-0">
-        <div id="map" onmousedown="isCtrlDown(event)"></div>
+        <div id="map" onmousedown="cntrlIsPressed(event)"></div>
             <!-- TABLE -->
         <div id="container-table" class="fixed-bottom">
           <div id="dataTable"></div>
@@ -286,25 +288,19 @@
   </div>
 
 
-  <!-- Load jQuery -->
-  <script src="js/jquery-3.4.1.js"></script>
+ 
   <!-- Bootstrap js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <!-- Requests -->
-  <script src="/js/data/requests.js" type="module"></script>
-  <!-- JSONUTils -->
-  <script type="module" src="js/JSONUTils.js"></script>
   <!-- JS for Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
   <script src="js/map.js"></script>
+  
   <!-- Cropper JS -->
   <script src="js/cropper.js"></script>
-  <!-- Tabulator JS --> 
-  <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"></script>
-  <script type="text/javascript" src="dist/js/tabulator.min.js"></script>
-  <script type="text/javascript" src="http://oss.sheetjs.com/js-xlsx/xlsx.full.min.js"></script>
+
   <!-- Main custom -->
   <script type="text/javascript" src="js/main.js"></script>
   <!-- JSONUtil Filters -->
@@ -315,7 +311,7 @@
     const utils = new JSONUtils(map);
   Bike.getAccidents().then(data => {
     utils.bikeAccidentMarkersOn = true;
-    utils.addMarkers(Bike.getAccidentCoords(data));
+    utils.addBikeAccidentClusters(Bike.getAccidentCoords(data));
   });
 
   Projects.getUpcoming().then(data => {
