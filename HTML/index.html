@@ -66,6 +66,7 @@
   <!-- JS for Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
   <script src="/js/map.js"></script>
   <!-- Cropper JS -->
   <script src="/js/cropper.js"></script>
@@ -76,13 +77,15 @@
 
 <script type = "module">
 import {JSONUtils} from "/js/JSONUtils.js";
+import {Bike} from '/js/data/requests.js'
 
   let utils = new JSONUtils(map);
   utils.toggleBikeHeatMaps(true);
 
-  setTimeout(function(){
-     utils.toggleBikeHeatMaps(false);
-   }, 5000);
+  Bike.getAccidents().then(data => {
+    utils.addMarkers(Bike.getAccidentCoords(data));
+  })
+
 
 
 </script>
