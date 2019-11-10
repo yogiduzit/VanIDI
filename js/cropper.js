@@ -61,8 +61,15 @@ $('#map').on('click', function() {
                 object.minLat = currentSW.lat();
                 object.maxLng = currentNE.lng();
                 object.minLng = currentSW.lng();
+                localStorage.removeItem("cropData");
+                 window.utils.drawCroppedBikeData(object.minLat, object.maxLat, object.minLng, object.maxLng).then(data => {
 
-                window.utils.drawCroppedBikeData(object.minLat, object.maxLat, object.minLng, object.maxLng);
+                    localStorage.setItem("cropData", JSON.stringify(data));
+                    console.log(localStorage.getItem('cropData'));
+                    window.table.setData(localStorage.getItem('cropData'));
+                 });
+               
+
             });
         }
         else if(modeCir){
