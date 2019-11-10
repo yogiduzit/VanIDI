@@ -7,6 +7,7 @@
             scaleControl:true,
             zoomControl: false,
             fullscreenControl: false,
+            disableDoubleClickZoom: true,
             styles:
             [
             {
