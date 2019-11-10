@@ -1,10 +1,12 @@
 //Shapes
 var rectangle;
 var circle;
+var rectPoly;
 
 //flags for different shape modes
-var modeRec = false;
-var modeCir = true;
+var modeRec = true;
+var modeCir = false;
+var modePoly = false;
 
 //counter for naming windows -- global to all shapes
 var counter = 0;
@@ -12,9 +14,6 @@ var counter = 0;
 //Square coordinates
 var currentNE;
 var currentSW;
-
-//polygon if we use it later
-//var rectPoly;
 
 //holder for selected rectangle
 var currentRectangle;
@@ -84,17 +83,26 @@ $().keydown(function(){
                     console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
                 });
             }
+            else if(modePoly){
+                rectangle = new google.maps.Rectangle({
+                    bounds: bounds,
+                    editable: true,
+                    map: map,
+                    draggable: true,
+                    title: "Window" + counter
+                })
+                rectPoly = createPolygonFromRectangle(rectangle);
+                rectPoly.addListener('click', function(e) {
+                    currentNE = this.getPath();
+                    console.log(this.title, currentNE.getAt(0).lat());
+                    //rotatePolygon(rectPoly,10);
+                });
+    
+            }
            
             counter++;
 
-            //rectPoly = createPolygonFromRectangle(rectangle);
-            // rectPoly.addListener('click', function(e) {
-            //     currentNE = this.getPath();
-            //     //infoWindow.setPosition(this.getCenter());
-            //     console.log(this.title, currentNE.getAt(0).lat());
-            //     //rotatePolygon(rectPoly,10);
-            // });
-
+           
             
             $('#map').keyup(function(e){
                 var code = (e.keyCode ? e.keyCode : e.which);
