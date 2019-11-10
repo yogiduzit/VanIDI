@@ -2,6 +2,7 @@ import {Bike} from "/js/data/requests.js";
 export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
+    this.bikeAccidentMarkersOn = false;
     this.layers = {};
     this.map = map;
   }
@@ -129,14 +130,27 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
-  addMarkers(coords) {
-    const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
-    console.log(markers);
-    const markerCluster = new MarkerClusterer(this.map, markers,
-      {
-        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-      }
-    );
+  addBikeAccidentClusters(coords) {
+    if (this.bikeAccidentMarkersOn) {
+      const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
+      console.log(markers);
+      const markerCluster = new MarkerClusterer(this.map, markers,
+        {
+          imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+        }
+      );
+    }
   }
-
+  drawUpcomingProjects(paths) {
+    paths.forEach(path => {
+      const flightPath = new google.maps.Polyline({
+        path: path,
+        geodesic: true,
+        strokeColor: '#FFFF00',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+      });
+      flightPath.setMap(this.map);
+    });
+  }
 }
