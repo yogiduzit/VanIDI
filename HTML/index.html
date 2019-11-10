@@ -5,30 +5,35 @@
   <title>Simple Map</title>
   <meta name="viewport" content="initial-scale=1.0">
   <meta charset="utf-8">
-
   <!-- Boostrap -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Animate.css -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
   <!-- Custom -->
   <link rel="stylesheet" href="stylesheets/stylesheet.css">
 </head>
 
 <body>
-    <div id="container-header" class="container-fluid text-center">
+ 
+
+
+
+  <div id="container-header" class="container-fluid text-center animated fadeIn">
     <!-- Branding/ Login Row -->
-    <div class="row my-2 align-middle">
-      <div class="col-2 text-left">Logo</div>
+    <div class="header-row row py-2 align-middle">
+      <h1 class="col-2 text-left">Logo</h1>
       <div class="col-3 text-right ml-auto">
         <button type="button" class="btn btn-primary">Login</button>
       </div>
     </div>
     <!-- Input Row -->
-    <div class="row">
+    <div id="header-row-2" class="header-row row">
       <div class="col-2">
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label class="btn btn-secondary active">
+          <label class="btn btn-primary active">
             <input type="radio" name="options" id="option1" autocomplete="off" checked> Street Mode
           </label>
-          <label class="btn btn-secondary">
+          <label class="btn btn-primary">
             <input type="radio" name="options" id="option2" autocomplete="off"> Intersection Mode
           </label>
         </div>
@@ -36,21 +41,84 @@
       <!-- Intersection Input Form -->
       <div class="col-5 text-left mr-auto">
         <div class="input-group align-middle">
-          <span class="mx-2">Intersection of</span>
+          <span class="mx-2 align-middle">Intersection of</span>
           <input type="text" class="form-control" name="intersection-street1">
-          <span class="mx-2">and</span>
+          <span class="mx-2 align-middle">and</span>
           <input type="text" class="form-control" name="intersection-street2">
-          <span class="mx-2">km Radius: </span>
+          <span class="mx-2 align-middle">km Radius: </span>
           <input type="number" class="form-control" name="intersection-radius" min="0">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary text-white" type="button">Submit</button>
+            <button class="btn btn-primary text-white" type="button">Submit</button>
           </div>
         </div>
       </div>
-      <div id="col-filter-dropout" class="col-2 ml-auto">Filter panel</div>
     </div>
-    <div id="row-map" class="row">
-          <div id="map" onmousedown="isCtrlDown(event)"></div>
+    <!-- Filter SidePane -->
+    <div id="filter-map-row" class="row animated fadeIn">
+      <div id="row-map" class="col-10 p-0">
+        <div id="map" onmousedown="isCtrlDown(event)"></div>
+      </div>
+      <div id="filter-panel" class="col-2 ml-auto text-left pt-3">
+        <h4 class="mb-3">Filters and Export</h4>        
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                  Datasets
+                </button>
+              </h2>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  Filters
+                </button>
+              </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  Export Options
+                </button>
+              </h2>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <input type="text" class="form-control" aria-label="Text input with dropdown button" placeholder="Enter filename">
+          <div class="input-group-append">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">.csv</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">.csv</a>
+              <a class="dropdown-item" href="#">.xlsx</a>
+              <a class="dropdown-item" href="#">.shp</a>
+            </div>
+          </div>
+        </div>
+        <div class="text-right mt-3">
+          <button class="btn btn-primary" type="submit">Export</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -62,12 +130,16 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <!-- Requests -->
   <script src="data/requests.js" type="module"></script>
+  <!-- JSONUTils -->
+  <script type="text/javascript" src="js/JSONUTils.js"></script>
   <!-- JS for Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&callback=initMap"
   async defer></script>
   <script src="js/map.js"></script>
   <!-- Cropper JS -->
   <script src="js/cropper.js"></script>
+  <!-- Main custom -->
+  <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
 
@@ -88,12 +160,6 @@ async function connectBikeData(){
         bikeCounts[c].dir = countsLocations[c].dir;
 
       }
-
-
-
-
-
-
 }
 
 async function getAverageBikeData(){

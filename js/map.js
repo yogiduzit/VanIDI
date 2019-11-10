@@ -8,6 +8,7 @@
             mapTypeControl: false,
             scaleControl:true,
             zoomControl: false,
+            fullscreenControl: false,
             styles:
             [
             {
