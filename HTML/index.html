@@ -116,7 +116,6 @@
           dob: "22/03/1998"
         }
       ];
-
       //define table
       var table = new Tabulator("#dataTable", {
         height: "225px",
@@ -124,17 +123,14 @@
         data: tableData,
         autoColumns: true
       });
-
       //trigger download of data.csv file
       $("#download-csv").click(function() {
         table.download("csv", "data.csv");
       });
-
       //trigger download of data.json file
       $("#download-json").click(function() {
         table.download("json", "data.json");
       });
-
       //trigger download of data.xlsx file
       $("#download-xlsx").click(function() {
         table.download("xlsx", "data.xlsx", { sheetName: "My Data" });
