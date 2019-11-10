@@ -60,11 +60,6 @@ export class JSONUtils{
       heatmap.setMap(map);
   }
 
-  async addTrafficCountClusters() {
-    const data = Traffic.getTrafficCoords(await Traffic.getTrafficData("07:00"));
-    // const filteredData = filterTrafficData(data, "07:00");
-    
-  }
 
   // distance is in metres (1000 is a km)
   // dir is the direction (west,east,north,south)
