@@ -3,6 +3,7 @@ var counter = 0;
 var currentNE;
 var currentSW;
 var rectPoly;
+var currentRectangle;
 
 var cntrlIsPressed = false;
 
@@ -12,13 +13,16 @@ var cntrlIsPressed = false;
 $(document).keydown(function(event){
     if(event.which=="17")
         cntrlIsPressed = true;
-        console.log("keyDown");
 });
 
 $(document).keyup(function(){
     if(event.which=="17")
         cntrlIsPressed = false;
-        console.log("keyUp");
+});
+
+$().keydown(function(){
+    if(event.which=="8")
+        cntrlIsPressed = false;
 });
 
 
@@ -27,7 +31,6 @@ $(document).keyup(function(){
         if(cntrlIsPressed){    
             var latitude = event.latLng.lat();
             var longitude = event.latLng.lng();
-            //console.log( latitude + ', ' + longitude );
             var bounds = {
                 north: latitude,
                 south: latitude,
@@ -43,25 +46,27 @@ $(document).keyup(function(){
             })
             counter++;
 
-            rectPoly = createPolygonFromRectangle(rectangle);
-            rectPoly.addListener('click', function(e) {
-                currentNE = this.getPath();
-                //infoWindow.setPosition(this.getCenter());
-                console.log(this.title, currentNE.getAt(0).lat());
-                rotatePolygon(rectPoly,10);
-            });
-
-            // rectangle.addListener('click', function(){
-            //     currentNE = this.getBounds().getNorthEast();
-            //     currentSW = this.getBounds().getSouthWest();
+            //rectPoly = createPolygonFromRectangle(rectangle);
+            // rectPoly.addListener('click', function(e) {
+            //     currentNE = this.getPath();
             //     //infoWindow.setPosition(this.getCenter());
-            //     console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+            //     console.log(this.title, currentNE.getAt(0).lat());
+            //     //rotatePolygon(rectPoly,10);
             // });
-            
-            // google.maps.event.addListener(rectangle, "click", function(e) {
 
-                
-            // });
+            rectangle.addListener('click', function(){
+                currentNE = this.getBounds().getNorthEast();
+                currentSW = this.getBounds().getSouthWest();
+                currentRectangle = this;
+                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
+            });
+            $('#map').keyup(function(e){
+                var code = (e.keyCode ? e.keyCode : e.which);
+
+                if(code == 8){
+                    currentRectangle.setMap(null);
+                }
+            })
         };
         cntrlIsPressed = false;
     });
@@ -98,15 +103,31 @@ $(document).keyup(function(){
 }
 function rotatePolygon(polygon,angle) {
     var map = polygon.getMap();
+
     var prj = map.getProjection();
     var origin = prj.fromLatLngToPoint(polygon.getPath().getAt(0)); //rotate around first point
 
     var coords = polygon.getPath().getArray().map(function(latLng){
+
        var point = prj.fromLatLngToPoint(latLng);
        var rotatedLatLng =  prj.fromPointToLatLng(rotatePoint(point,origin,angle));
        return {lat: rotatedLatLng.lat(), lng: rotatedLatLng.lng()};
     });
     polygon.setPath(coords);
+
+    //rectangle.setBounds(coords);
+}
+
+function rotateRectangle(polygon, angle){
+    var map = rectangle.getMap();
+    var prj = map.getProjection();
+    var origin = prj.fromLatLngToPoint(rectangle.getBounds().getNorthEast()); //rotate around first point
+    var coords = rectangle.getBounds().getArray().map(function(latLng){
+        var point = prj.fromLatLngToPoint(latLng);
+        var rotatedLatLng =  prj.fromPointToLatLng(rotatePoint(point,origin,angle));
+        return {lat: rotatedLatLng.lat(), lng: rotatedLatLng.lng()};
+     });
+     rectangle.setBounds(coords);
 }
 
 function rotatePoint(point, origin, angle) {
