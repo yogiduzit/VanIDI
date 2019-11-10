@@ -60,7 +60,6 @@ $('#map').on('click', function() {
             });
         }
         else if(modeCir){
-            console.log("test")
             circle = new google.maps.Circle({
                 editable: true,
                 map: map,
@@ -69,7 +68,6 @@ $('#map').on('click', function() {
                 radius: 100,
                 title: "Window" + counter
             })
-            console.log("test");
             circle.addListener('click', function(){
                 currentNE = this.getBounds().getNorthEast();
                 currentSW = this.getBounds().getSouthWest();
@@ -89,18 +87,14 @@ $('#map').on('click', function() {
             rectPoly.addListener('click', function(e) {
                 currentNE = this.getPath();
                 console.log(this.title, currentNE.getAt(0).lat());
+                currentShape = this;
                 //rotatePolygon(rectPoly,10);
             });
 
         }
-        
         counter++;
-
-        
-        
         $('#map').keyup(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
-
             if(code == 8){
                 currentShape.setMap(null);
             }

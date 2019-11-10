@@ -99,6 +99,13 @@
         data: tableData,
         autoColumns: true,
       });
+      $("#exportBtn").click(function() {
+        var name = $('#fileName').val();
+        var ext = $('#file-type-btn').text();
+        ext.trim();
+        console.log(ext);
+        table.download(ext, name + "." + ext);
+      });
       //trigger download of data.csv file
       $("#download-csv").click(function() {
         table.download("csv", "data.csv");
