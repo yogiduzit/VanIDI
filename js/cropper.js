@@ -16,7 +16,7 @@ var currentNE;
 var currentSW;
 
 //holder for selected rectangle
-var currentRectangle;
+var currentShape;
 
 //flag for ctrl key press
 var cntrlIsPressed = false;
@@ -32,11 +32,6 @@ $(document).keyup(function () {
         cntrlIsPressed = false;
 });
 
-$().keydown(function(){
-    if(event.which=="8")
-        cntrlIsPressed = false;
-
-});
 
     $('#map').on('click', function() {
         google.maps.event.addListener(map, "click", function (event) { 
@@ -106,7 +101,6 @@ $().keydown(function(){
             
             $('#map').keyup(function(e){
                 var code = (e.keyCode ? e.keyCode : e.which);
-
                 if(code == 8){
                     currentShape.setMap(null);
                 }

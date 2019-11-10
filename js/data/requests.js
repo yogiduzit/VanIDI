@@ -1,6 +1,12 @@
-import { BASE_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/url.js';
+import { BASE_URL, B_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/url.js';
 
 export const Bike =  {
+  async getFWS(){
+    let res = await fetch(`${B_URL}&rows=1000&apikey=${APIKEY}`);
+    let data = await res.json();
+
+    return data;
+  },
   async getBikeData() {
     let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&rows=2000&apikey=${APIKEY}`);
     let data = await res.json();

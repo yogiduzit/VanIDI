@@ -11,7 +11,7 @@ export class JSONUtils{
 toggleBikeHeatMaps(on){
   let bikeVolumeData = null;
   if(on && this.bikeHeatMapOn){
-
+    console.log(Bike.getFWS());
     Bike.getBikeData().then((bikeData) => {
       Bike.getBikeVolumeCounterLocations().then(volumeData => {
 
