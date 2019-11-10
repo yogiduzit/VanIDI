@@ -1,8 +1,8 @@
 $(document).ready(function(){
-
+ 
   window.utils.downloadBikeAccidentClusters().then( (res) =>{
     //define data
-    var table = new Tabulator("#dataTable", {
+    window.table = new Tabulator("#dataTable", {
       height: "250px",
       width: "100%",
       layout: "fitColumns",
@@ -14,18 +14,21 @@ $(document).ready(function(){
         {title:"Injury", field:"injury"},
       ]
     });
-    table.setData(res);
+    window.table.setData(res);
   });
       //trigger download of data.csv file
       $("#download-csv").click(function() {
-        table.download("csv", "data.csv");
+        window.table.download("csv", "data.csv");
       });
       //trigger download of data.json file
       $("#download-json").click(function() {
-        table.download("json", "data.json");
+        window.table.download("json", "data.json");
       });
       //trigger download of data.xlsx file
       $("#download-xlsx").click(function() {
-        table.download("xlsx", "data.xlsx", { sheetName: "My Data" });
+        window.table.download("xlsx", "data.xlsx", { sheetName: "My Data" });
       });
 });
+
+
+

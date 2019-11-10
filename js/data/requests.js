@@ -97,6 +97,9 @@ export const Bike =  {
       coords[counter] = {};
       coords[counter].lat = record.fields.geopoint[0];
       coords[counter].lng = record.fields.geopoint[1];
+      coords[counter].date = record.fields.date;
+      coords[counter].type = record.fields.p_type;
+      coords[counter].injury = record.fields.injury;
       counter++;
     }
     return coords;
