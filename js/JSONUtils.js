@@ -1,8 +1,29 @@
+class JSONUtils{
+  constructor(map){
+    this.bikeHeatMapOn = false;
+    this.layers = {};
+    this.map = map;
+  }
+
+//must have heatmaps
+toggleBikeHeatMaps(on){
+  if(on == true && this.bikeHeatMapOn == false){
+    let bikeData = connectBikeData().then( (data) =>{
+      this.addBikeHeatLayer(data);
+    });
+  }else{
+    this.layers.bike.setMap(null);
+    this.bikeHeatMapOn = false;
+  }
+
+}
+
+
 //requires google maps
-function addLinesToMap(data){
+addBikeHeatLayer(data){
     let heatMapData = [];
 
-    for(p in data){
+    for(let p in data){
       let myLatLng = {};
       myLatLng.lat = parseFloat(data[p].lat);
       myLatLng.lng = parseFloat(data[p].lng);
@@ -13,15 +34,17 @@ function addLinesToMap(data){
         opacity: 0.5,
         radius: 50,
     });
-
+    this.layers.bike = heatmap;
     heatmap.setMap(map);
 }
+
+
 
 // distance is in metres (1000 is a km)
 // dir is the direction (west,east,north,south)
 // long is east (increases) or west (decreases more)
 // lat is north (increases) or south (decreases)
-function getOffsetLocation(lat, long, dir, distance){
+getOffsetLocation(lat, long, dir, distance){
 
     let res = {};
     const EARTH = 6378.137;
@@ -50,7 +73,7 @@ function getOffsetLocation(lat, long, dir, distance){
   }
 
 
-  function showSteps(directionResult) {
+  showSteps(directionResult) {
     // For each step, place a marker, and add the text to the marker's
     // info window. Also attach the marker to an array so we
     // can keep track of it and remove it when calculating new
@@ -69,9 +92,12 @@ function getOffsetLocation(lat, long, dir, distance){
     }
   }
 
-  function attachInstructionText(marker, text) {
+  attachInstructionText(marker, text) {
     google.maps.event.addListener(marker, 'click', function() {
       stepDisplay.setContent(text);
       stepDisplay.open(map, marker);
     });
   }
+
+
+}

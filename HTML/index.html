@@ -67,7 +67,7 @@
   <!-- Requests -->
   <script src="data/requests.js" type="module"></script>
   <!-- JSONUtils-->
-  <script src="js/JSONUtils.js" type="module"></script>
+  <script src="js/JSONUtils.js"></script>
   <!-- JS for Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
@@ -80,10 +80,13 @@
 
 
 <script>
-  let bikeData = connectBikeData().then( (data) =>{
-    addLinesToMap(data);
 
-  });
+  let utils = new JSONUtils(map);
+  utils.toggleBikeHeatMaps(true);
+
+  setTimeout(function(){
+    utils.toggleBikeHeatMaps(false);
+  }, 5000);
 
 async function connectBikeData(){
 
