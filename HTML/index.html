@@ -67,8 +67,7 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3JV6v8W19iItY1AvkMOtjaMSgidnp-vQ&libraries=visualization&callback=initMap"
   async defer></script>
   <script src="/js/map.js"></script>
-  <!-- Cropper JS -->
-  <script src="/js/cropper.js"></script>
+  
 </body>
 
 </html>
@@ -77,13 +76,13 @@
 <script type = "module">
 import {JSONUtils} from "/js/JSONUtils.js";
 
-  let utils = new JSONUtils(map);
-  utils.testProjects();
+  var utils = new JSONUtils(map);
   utils.toggleBikeHeatMaps(true);
+  utils.toggleCurrentRoadClosureLocations(true);
 
   setTimeout(function(){
-     utils.toggleBikeHeatMaps(false);
+     utils.reloadData();
    }, 5000);
 
-
 </script>
+

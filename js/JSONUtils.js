@@ -2,6 +2,7 @@ import {Bike, Projects} from "/js/data/requests.js";
 export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
+    this.currentRoadClosureLocationsOn = false;
     this.layers = {};
     this.map = map;
   }
@@ -24,7 +25,6 @@ toggleBikeHeatMaps(on){
 
 }
 
-
 //requires google maps
 addBikeHeatLayer(data){
     let heatMapData = [];
@@ -43,8 +43,6 @@ addBikeHeatLayer(data){
     this.layers.bike = heatmap;
     heatmap.setMap(map);
 }
-
-
 
 // distance is in metres (1000 is a km)
 // dir is the direction (west,east,north,south)
@@ -126,10 +124,31 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
-  testProjects(){
-
-    let currentData = Projects.getCurrentRoadClosureLocations().then( (data) =>{
-      Projects.drawCurrentRoadClosureLocations(data);
-    });
+  toggleCurrentRoadClosureLocations(on){
+    let currentRoadClosureData = null;
+    if(on == true && this.currentRoadClosureLocationsOn == false){
+      Projects.getCurrentRoadClosureLocations().then((data) => {
+        let paths = Projects.drawCurrentRoadClosureLocations(data);
+        this.layers.currentRoadClosures = paths;
+        this.currentRoadClosureLocationsOn = true;
+      });
+    }else{
+      this.layers.currentRoadClosures.forEach( (path) =>{
+        path.setMap(null);
+      });
+      this.layers.currentRoadClosuures = null;
+      this.currentRoadClosureLocationsOn = false;
   }
+  }
+
+  reloadData(params){
+    if(this.bikeHeatMapOn) this.toggleBikeHeatMaps(false); // turn the bike heat map off if on.
+    if(this.currentRoadClosureLocationsOn) this.toggleCurrentRoadClosureLocations(false); // turn the current road collisions map if on.
+    //49.28930634203633 -123.12517973696282 49.28619923209591 -123.13281866823723
+    //robson jervis
+  }
+
+
+
 }
+
