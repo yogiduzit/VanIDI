@@ -1,4 +1,4 @@
-import { BASE_URL, APIKEY } from '/data/url.js';
+import { BASE_URL, APIKEY } from '/js/data/url.js';
 
 export const Bike =  {
   async getBikeData() {
