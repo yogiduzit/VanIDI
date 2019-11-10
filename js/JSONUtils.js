@@ -1,4 +1,4 @@
-import {Bike} from "/js/data/requests.js";
+import {Bike, Projects} from "/js/data/requests.js";
 export class JSONUtils{
   constructor(map){
     this.bikeHeatMapOn = false;
@@ -126,5 +126,10 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
+  testProjects(){
 
+    let currentData = Projects.getCurrentRoadClosureLocations().then( (data) =>{
+      Projects.drawCurrentRoadClosureLocations(data);
+    });
+  }
 }

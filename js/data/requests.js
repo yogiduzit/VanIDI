@@ -1,4 +1,4 @@
-import { BASE_URL, APIKEY } from '/js/data/url.js';
+import { BASE_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/url.js';
 
 export const Bike =  {
   async getBikeData() {
@@ -8,7 +8,7 @@ export const Bike =  {
     return data;
   },
   async getBikeVolumeCounterLocations() {
-    let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=1000&apikey=${APIKEY}`);
+    let res = await fetch(`${BASE_URL}/?dataset=bike-volume-counter-locations&rows=1082&apikey=${APIKEY}`);
     let data = await res.json();
 
     return data;
@@ -83,5 +83,66 @@ export const Bike =  {
 
       });    
       return bikeVolumeData;
+  },
+}
+export const Projects ={
+  async getCurrentRoadClosureLocations(){
+    let res = await fetch(`${BASE_URL_VANCOUVER}/?dataset=road-ahead-current-road-closures&rows=1000&facet=comp_date=${APIKEY_VANCOUVER}`);
+    let data = await res.json();
+    let dataArray = [];
+    var count = 0;
+    data.records.forEach((data) =>{
+      //for each name create a new array of coordinates
+      //create a new object to store the key value pair (name, array)
+      let object = {};
+      let coords = [];
+      object.name = data.fields.location;
+      data.fields.geom.coordinates.forEach((geom) =>{
+        //flatten the data
+        //for each element in the new array, add to the coordinate array
+        let arr = geom.flat();
+        for(let i = 0; i < arr.length; i+=2){
+          let object = {};
+          object.lat = arr[i+1];
+          object.lng = arr[i];
+          coords.push(object);
+        }
+        //set the coords value to the finished array
+        object.coords = coords;
+      });
+      //add the object to the array
+      dataArray.push(object);
+    });
+    return dataArray;
+  },
+
+  drawCurrentRoadClosureLocations(currentProjects){
+    let data = currentProjects;
+    let flightPaths = [];
+    data.forEach( (d) =>{
+
+      let coords = d.coords;
+      let flightPath = new google.maps.Polyline({
+        path: coords,
+        geodesic: true,
+        strokeColor: '#DC143C',
+        strokeOpacity: 0.5,
+        strokeWeight: 5,
+        });
+        
+      var lineSymbol = new google.maps.Marker({
+        icon: {
+        scaledSize: new google.maps.Size(1000, 100),
+        size: new google.maps.Size(1000, 1000),
+        url: "./img/no-entry.svg"
+        },
+        position: coords[coords[0]],
+        map: map
+      });
+      flightPath.setMap(map);
+      flightPaths.push(flightPath);
+    });
+    return flightPaths;
   }
 }
+
