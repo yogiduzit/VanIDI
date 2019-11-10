@@ -8,7 +8,6 @@ export class JSONUtils{
   }
 
 //must have heatmaps
-<<<<<<< HEAD
   toggleBikeHeatMaps(on){
     let bikeVolumeData = null;
     if(on == true && !this.bikeHeatMapOn){
@@ -23,14 +22,6 @@ export class JSONUtils{
       this.layers.bike.setMap(null);
       this.bikeHeatMapOn = false;
     }
-=======
-toggleBikeHeatMaps(on){
-  let bikeVolumeData = null;
-  if(on && this.bikeHeatMapOn){
-    //console.log(Bike.getFWS());
-    Bike.getBikeData().then((bikeData) => {
-      Bike.getBikeVolumeCounterLocations().then(volumeData => {
->>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
 
   }
 
@@ -68,7 +59,6 @@ toggleBikeHeatMaps(on){
       heatmap.setMap(map);
   }
 
-<<<<<<< HEAD
 
   // distance is in metres (1000 is a km)
   // dir is the direction (west,east,north,south)
@@ -96,59 +86,6 @@ toggleBikeHeatMaps(on){
         default:
           newLat -= distance * M;
       }
-=======
-}
-
-
-//requires google maps
-addBikeHeatLayer(data){
-    let heatMapData = [];
-
-    for(let p in data){
-      let myLatLng = {};
-      myLatLng.lat = parseFloat(data[p].lat);
-      myLatLng.lng = parseFloat(data[p].lng);
-      heatMapData.push({location: new google.maps.LatLng(myLatLng.lat, myLatLng.lng), weight: (data[p].average/100)});
-    }
-    let heatmap = new google.maps.visualization.HeatmapLayer({
-        data: heatMapData,
-        opacity: 0.5,
-        radius: 50,
-    });
-    this.layers.bike = heatmap;
-    heatmap.setMap(map);
-}
-
-
-
-// distance is in metres (1000 is a km)
-// dir is the direction (west,east,north,south)
-// long is east (increases) or west (decreases more)
-// lat is north (increases) or south (decreases)
-getOffsetLocation(lat, long, dir, distance){
-
-    let res = {};
-    const EARTH = 6378.137;
-    const M = (1 / ((Math.PI / 180) * EARTH)) / 1000;  //1 meter in degree
-    cos = Math.cos;
-    let newLat = lat;
-    let newLong = long;
-
-
-    switch(dir){
-      case 'west':
-        newLong += ( distance * M )/ (cos(newLat * (Math.PI / 180)));
-        break;
-      case 'east':
-        newLong -= (distance*M) / cos(newLat * (Math.PI / 180));
-        break;
-      case 'north':
-        newLat += distance * M;
-        break;
-      default:
-        newLat -= distance * M;
-    }
->>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
 
       res.lat = newLat;
       res.lng = newLong;
@@ -202,11 +139,8 @@ getOffsetLocation(lat, long, dir, distance){
     });
   }
 
-<<<<<<< HEAD
   reloadData(params){
-    console.log(params);
     if(this.bikeHeatMapOn == true) {
-      console.log('turned off');
       this.toggleBikeHeatMaps(false,null);
     }// turn the bike heat map off if on.
     if(this.currentRoadClosureLocationsOn == true) {
@@ -221,12 +155,6 @@ getOffsetLocation(lat, long, dir, distance){
   async addBikeAccidentClusters(on) {
     if (on && this.bikeAccidentMarkersOn == false) {
       const coords = Bike.getAccidentCoords(await Bike.getAccidents());
-=======
-
-  async addBikeAccidentClusters() {
-    const coords = Bike.getAccidentCoords(await Bike.getAccidents());
-    if (this.bikeAccidentMarkersOn) {
->>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
       const markers = coords.map((coord) => new google.maps.Marker({position: coord}));
       this.layers.bikeAccidentMarkers = markers;
       this.bikeAccidentMarkersOn = true;
@@ -259,14 +187,12 @@ getOffsetLocation(lat, long, dir, distance){
       flightPath.setMap(this.map);
     });
   }
-<<<<<<< HEAD
 
   async downloadBikeAccidentClusters(){
     const data = await Bike.getAccidents();
     let records = [];
     data.records.forEach((r) =>{
       let record = {}; 
-      console.log(r);
       record.lat = r.fields.latitude;
       record.lng = r.fields.longitude;
       record.date = r.fields.date;
@@ -274,7 +200,6 @@ getOffsetLocation(lat, long, dir, distance){
       record.injury = r.fields.injury;
       records.push(record);
     });
-    console.log(records);
     return records;
 
   }
@@ -298,6 +223,3 @@ getOffsetLocation(lat, long, dir, distance){
     );
   }
 }
-=======
-}
->>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725

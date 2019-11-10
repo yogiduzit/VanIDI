@@ -56,8 +56,6 @@ $('#map').on('click', function() {
                 currentNE = this.getBounds().getNorthEast();
                 currentSW = this.getBounds().getSouthWest();
                 currentShape = this;
-                console.log(this.title, currentNE.lat(), currentNE.lng(), currentSW.lat(), currentSW.lng());
-<<<<<<< HEAD
                 let object = {};
                 object.maxLat = currentNE.lat();
                 object.minLat = currentSW.lat();
@@ -65,8 +63,6 @@ $('#map').on('click', function() {
                 object.minLng = currentSW.lng();
 
                 window.utils.drawCroppedBikeData(object.minLat, object.maxLat, object.minLng, object.maxLng);
-=======
->>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
             });
         }
         else if(modeCir){
@@ -103,10 +99,6 @@ $('#map').on('click', function() {
 
         }
         counter++;
-<<<<<<< HEAD
-
-=======
->>>>>>> c17e59dc6a2130c0e4b67ee239b1d52ce6843725
         $('#map').keyup(function(e){
             var code = (e.keyCode ? e.keyCode : e.which);
             if(code == 8){
