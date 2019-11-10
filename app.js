@@ -13,7 +13,6 @@ app.use(parser.urlencoded({  extended: true}));
 app.use('/stylesheets', express.static('stylesheets'));
 app.use('/html', express.static('html'));
 app.use('/js', express.static('js'));
-app.use('/data', express.static('js/data'));
 
 app.get('/', function (req, res) {
   let doc = fs.readFileSync('./html/index.html', "utf8");

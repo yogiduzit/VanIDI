@@ -1,3 +1,9 @@
+@import url('https://rsms.me/inter/inter.css');
+html { font-family: 'Inter', sans-serif; }
+@supports (font-variation-settings: normal) {
+  html { font-family: 'Inter var', sans-serif; }
+}
+
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
 #map {
@@ -11,6 +17,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Inter', sans-serif;
 }
 
 #container-header{
@@ -18,9 +25,13 @@ body {
   left: 0;
   position: fixed;
   background-color: #005c82;
-  color: white;
+  color: black;
 }
 
 #row-map{
   height: 100vh;
+}
+
+#col-filter-dropout{
+  background-color: #4889b2;
 }
