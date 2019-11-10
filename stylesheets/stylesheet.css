@@ -25,12 +25,24 @@ body {
 .header-row{
   color: white;
   pointer-events: auto;
-  background-color: #005c82;
+  
 }
 
 .btn-pri{
   background-color: #0BADBF;
   color: white;
+}
+
+.btn-hollow{
+  background-color: none;
+  color: white;
+  font-style: italic;
+}
+
+.btn-hollow:hover{
+  background-color: none;
+  color: cyan;
+  font-style: italic;
 }
 
 .btn-mode-active{
@@ -42,7 +54,6 @@ body {
 }
 
 .header-interact{
-  background-color: #005c82;
 }
 
 #adv-select-section{
@@ -56,6 +67,7 @@ body {
   position: fixed;
   pointer-events: none;
   z-index: 999;
+  background: #005c82
 }
 
 #col-filter-dropout{
@@ -80,7 +92,7 @@ body {
 #filter-panel{
   height: 100vh;
   pointer-events: auto;
-  background-color: #005c82;
+  background: #005c82;
   overflow-y: auto;
 }
 
