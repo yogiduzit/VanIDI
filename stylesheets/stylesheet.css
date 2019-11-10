@@ -17,7 +17,7 @@ html {
 }
 
 #logo {
-  background: -webkit-linear-gradient(left, #fff 15%, #ff9800 45%);
+  background: -webkit-linear-gradient(left, #fff 6%, #ff9800 15%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
