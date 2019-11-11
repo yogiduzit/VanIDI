@@ -13,7 +13,7 @@ app.use(parser.urlencoded({  extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-  let doc = fs.readFileSync('./index.html', "utf8");
+  let doc = fs.readFileSync('./public/index.html', "utf8");
   res.send(doc);
 });
 
