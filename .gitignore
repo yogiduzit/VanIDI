@@ -92,7 +92,7 @@ typings/
 .dynamodb/
 
 #API_KEYS 
-./public/js/data/url.js
+public/js/data/url.js
 
 
 # OS generated files #
