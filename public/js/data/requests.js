@@ -1,8 +1,13 @@
-import { BASE_URL, APIKEY, BASE_URL_VANCOUVER, APIKEY_VANCOUVER} from '/js/data/url.js';
+import { DECODE_API_URL, VANCOUVER_API_URL, DECODE_APIKEY, VANCOUVER_APIKEY} from '/js/data/url.js';
+
+const BASE_URL = DECODE_API_URL || process.env.DECODE_API_URL;
+const BASE_URL_VANCOUVER = VANCOUVER_API_URL || process.env.VANCOUVER_API_URL;
+const APIKEY = DECODE_APIKEY || process.env.DECODE_APIKEY;
+const APIKEY_VANCOUVER = VANCOUVER_APIKEY || process.env.VANCOUVER_APIKEY;
 
 export const Bike =  {
   async getBikeData() {
-    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&rows=2000&apikey=${APIKEY}`);
+    let res = await fetch(`${BASE_URL}/?dataset=bike-data-2015jan-2019jul&rows=2000&apikey=${APIKEY || process.env.APIKEY}`);
     let data = await res.json();
 
     return data;
