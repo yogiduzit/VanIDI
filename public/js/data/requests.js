@@ -1,9 +1,8 @@
-import { DECODE_API_URL, VANCOUVER_API_URL, DECODE_APIKEY, VANCOUVER_APIKEY} from '/js/data/url.js';
+const APIKEY = 'aa7cd35bcc973c447d631653338d40cb1b56fc3ec9f7c84adcae891c';
+const APIKEY_VANCOUVER = 'a13a45ad00eaf30d3a54126a0130eaa6e3cd9627aa6f8abde595b600';
+const BASE_URL = 'https://decode-congestion-vancouver.opendatasoft.com/api/records/1.0/search';
+const BASE_URL_VANCOUVER = 'https://opendata.vancouver.ca/api/records/1.0/search';
 
-const BASE_URL = DECODE_API_URL || process.env.DECODE_API_URL;
-const BASE_URL_VANCOUVER = VANCOUVER_API_URL || process.env.VANCOUVER_API_URL;
-const APIKEY = DECODE_APIKEY || process.env.DECODE_APIKEY;
-const APIKEY_VANCOUVER = VANCOUVER_APIKEY || process.env.VANCOUVER_APIKEY;
 
 export const Bike =  {
   async getBikeData() {
@@ -28,7 +27,7 @@ export const Bike =  {
         if(e == "date") continue;
 
         const value = element.fields[e];
-        if (avgCounts[e]){
+        if (avgCounts[e]) {
           avgCounts[e].total += (typeof value == "string") ? parseInt(value) : (value);
           avgCounts[e].count++;
 
